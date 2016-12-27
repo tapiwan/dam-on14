@@ -11,9 +11,12 @@
         | DiAM-ON
     .collapse.navbar-collapse
       ul.nav.navbar-nav
-      //  li(class=(title == 'Home') ? 'active' : undefined)
+        li(class=(title == 'Home') ? 'active' : undefined)
           a(href='/') Home
-        li(class=(title == 'API Examples') ? 'active' : undefined)
+        if user
+          li(class=(title == 'Collections') ? 'active' : undefined)
+            a(href='/collections') Collections
+      //  li(class=(title == 'API Examples') ? 'active' : undefined)
           a(href='/api') API Examples
         li(class=(title == 'Contact') ? 'active' : undefined)
           a(href='/contact') Contact
