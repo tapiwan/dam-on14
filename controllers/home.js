@@ -3,7 +3,12 @@
  * Home page.
  */
 exports.index = (req, res) => {
-  res.render('home', {
-    title: 'Home'
-  });
+  res.redirect('/login');
+
+};
+
+exports.imprint = (req, res) => {
+    res.render('imprint', {
+        title: 'Imprint'
+    });
 };

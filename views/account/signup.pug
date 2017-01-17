@@ -1,24 +1,47 @@
 extends ../layout
 
 block content
-  .page-header
-    h3 Sign up
-  form.form-horizontal(id='signup-form', method='POST')
-    input(type='hidden', name='_csrf', value=_csrf)
-    .form-group
-      label.col-sm-3.control-label(for='email') Email
-      .col-sm-7
-        input.form-control(type='email', name='email', id='email', placeholder='Email', autofocus, required)
-    .form-group
-      label.col-sm-3.control-label(for='password') Password
-      .col-sm-7
-        input.form-control(type='password', name='password', id='password', placeholder='Password', required)
-    .form-group
-      label.col-sm-3.control-label(for='confirmPassword') Confirm Password
-      .col-sm-7
-        input.form-control(type='password', name='confirmPassword', id='confirmPassword', placeholder='Confirm Password', required)
-    .form-group
-      .col-sm-offset-3.col-sm-7
-        button.btn.btn-success(type='submit')
-          i.fa.fa-user-plus
-          | Signup
+  .row(style="margin-top:50px")
+    .col-md-8.col-md-offset-2
+      .row.text-center.status
+        .col-md-4.active
+          img(src="img/status-btn-active.png")
+          br
+          br
+          span Your Contact Information
+        .col-md-4
+          img(src="img/status-btn.png")
+          br
+          br
+          span Create Account
+        .col-md-4
+          img(src="img/status-btn.png")
+          br
+          br
+          span Start with
+          strong
+            |  DiAM
+
+    .col-md-8.col-md-offset-2.box
+      .col-md-8.col-md-offset-2
+        h3.text-center Sign up
+        form.form-horizontal(id='signup-form', method='POST')
+          input(type='hidden', name='_csrf', value=_csrf)
+          .form-group
+              input.form-control(type='name', name='name', id='name', placeholder='Name', autofocus, required)
+          .form-group
+              input.form-control(type='email', name='email', id='email', placeholder='Email', autofocus, required)
+          .form-group
+              input.form-control(type='password', name='password', id='password', placeholder='Password', required)
+          .form-group
+              input.form-control(type='password', name='confirmPassword', id='confirmPassword', placeholder='Confirm Password', required)
+          .form-group
+            .row
+              .col-md-3
+                button.btn.btn-primary.pull-left(type='submit')
+                  | Signup
+              .col-md-3
+                a.btn.btn-empty(href='/login')
+                  | Have an account? Log in
+
+

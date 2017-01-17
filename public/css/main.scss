@@ -13,10 +13,133 @@ html {
   min-height: 100%;
 }
 
+h1,h2,h3,h4,h5 {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  margin: 0 0 20px 0;
+
+}
+
+
+
+h1.bold {
+  font-weight: 900;
+  font-size: 24px;
+}
+
+.mt30 {
+  margin-top: 30px;
+}
+.mt50 {
+  margin-top: 50px;
+}
+
+.box {
+  border-top: 3px solid $brand-primary;
+  border-bottom: 2px solid $grey;
+  background-color: $white;
+  padding: 30px;
+}
+
+
 body {
   padding-top: 60px;
   margin-bottom: 75px;
+  background-color: #e9e9e9;
 }
+
+img {
+  max-width: 100%;
+}
+.form-control {
+  border-color: $grey
+}
+
+
+
+// SIGN UP
+.status {
+  margin-bottom: 50px;
+
+  .col-md-4 {
+    background: url("../img/status-line.png") repeat-x top left;
+    background-position: left 0px top 10px;
+
+    span, strong {
+      opacity: 0.5;
+    }
+  }
+
+  .col-md-4.active {
+    span {
+      opacity: 1;
+      font-weight: bold;
+    }
+  }
+}
+// LOGIN
+.gradient {
+  background-image: -ms-linear-gradient(left, #EFF6F7 15%, #21C4C8 85%);
+  background-image: -moz-linear-gradient(left, #EFF6F7 15%, #21C4C8 85%);
+  background-image: -o-linear-gradient(left, #EFF6F7 15%, #21C4C8 85%);
+  background-image: -webkit-gradient(linear, left top, right top, color-stop(15, #EFF6F7), color-stop(85, #21C4C8));
+  background-image: -webkit-linear-gradient(left, #EFF6F7 15%, #21C4C8 85%);
+  background-image: linear-gradient(to right, #EFF6F7 15%, #21C4C8 85%);
+}
+
+.login {
+
+  .sociallogin {
+    margin-top: 20px;
+
+    .btn-empty {
+      color: $grey;
+      background-color: $input-bg;
+      border-color: currentColor;
+    }
+    .btn-empty:hover {
+      background-color: $brand-primary;
+      color: white;
+    }
+
+    i {
+      float: left;
+      margin-left: 10px;
+    }
+  }
+  .logo {
+    width: 320px;
+    margin-bottom: 40px;
+  }
+  h1 {
+    font-weight: 300;
+    line-height: 1.3;
+  }
+  h3 {
+    font-weight: 300;
+
+  }
+
+}
+.footernavi {
+  ul, li {
+    margin: 0;
+    padding:0;
+  }
+
+  li {
+    display: inline;
+    margin-right: 20px;
+
+    a {
+      color: $brand-second;
+    }
+  }
+  li:last-child {
+    margin-right: 0;
+  }
+}
+
 
 footer {
   position: absolute;
@@ -27,9 +150,171 @@ footer {
 
   p, ul {
     margin-bottom: 0;
+    color: $brand-second
+  }
+
+  .active {
+    a{
+      font-weight: bold;
+    }
   }
 }
 
+
+
+// DASHBOARD
+
+// DASHBOARD
+
+.folderlist {
+  padding: 0;
+  margin-left: 0;
+  margin-bottom: 0;
+
+    li {
+      background-color: $grey;
+      list-style: none;
+      cursor: pointer;
+      padding: 7px;
+      transition: background-color 1s, color 1s;
+
+      a {
+        display: block;
+        font-size: 15px;
+        color: $brand-second;
+
+      }
+      a:before {
+        font-family: 'FontAwesome';
+        content: '';
+        margin-right: 8px;
+
+      }
+      a:hover {
+        text-decoration: none;
+      }
+      a:hover:before {
+      }
+    }
+
+  li:nth-child(2n+0) {
+    background: none
+
+  }
+
+  li:hover {
+    background-color: $brand-primary;
+    a {
+      color: $white
+    }
+
+  }
+}
+
+.activity {
+
+  table {
+    margin-bottom: 0;
+
+    td {
+      font-size: 15px;
+    }
+  }
+  .table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: $grey
+  }
+
+  tr td {
+    padding: 7px!important;
+  }
+}
+
+.upload-area {
+  height: 220px;
+  border: 1px solid $grey;
+  display: flex;
+  align-content: flex-end;
+  align-items: flex-end;
+  justify-content: center;
+  background: url("../img/upload.png") no-repeat top center;
+}
+
+//COLLECTION
+.assetlist {
+
+
+  li {
+    padding: 12px;
+    list-style: none;
+    border: 1px solid $grey;
+    height: 156px;
+    position: relative;
+    cursor: pointer;
+
+    h5{
+      margin-top: 10px;
+      margin-bottom: 0;
+    }
+
+    .fileicon {
+      height: 105px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    img {
+      object-fit: cover;
+      width: 100%;
+      height: 105px;
+
+    }
+
+    .filetype {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+
+      i {
+        height:auto;
+      }
+    }
+
+    .editbar {
+      opacity:0;
+      transition: opacity .5s;
+      background-color: $brand-primary;
+      padding: 7px 0;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+
+      a {
+        color: $white;
+        cursor: pointer;
+        margin: 0 10px;
+
+
+        span {
+          margin: 0 5px;
+          font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+      }
+      a:hover {
+        text-decoration: none;
+        color: $grey
+      }
+
+    }
+
+  }
+  li:hover {
+    .editbar {
+      opacity:1;
+    }
+  }
+
+}
 // Input Fields
 // -------------------------
 

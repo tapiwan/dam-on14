@@ -1,0 +1,54 @@
+extends layout
+
+block content
+
+  h1.bold.mt30 Dashboard
+
+  .row.mt30
+    .col-md-5.box
+      h3 Collections
+
+      ul.folderlist
+        li
+          a() Testordner
+        li
+          a() Testordner
+        li
+          a() Testordner
+
+    .col-md-2
+
+    .col-md-5.box.activity
+      h3 Your Activity
+
+      table.table.table-striped
+        tbody
+          tr
+            td
+              i.fa.fa-cloud-download
+            td 19.01.17
+            td IMG_12332.jpg
+            td
+              i.fa.fa-file-image-o
+          tr
+            td
+              i.fa.fa-cloud-download
+            td 18.01.17
+            td MOV_112.mp4
+            td
+              i.fa.fa-file-video-o
+          tr
+            td
+              i.fa.fa-cloud-upload
+            td 15.01.17
+            td Calculation.pdf
+            td
+              i.fa.fa-file-pdf-o
+
+
+  .row.mt30
+    .col-md-12.box
+      h3 Upload Area
+      .row
+        .col-md-12.upload-area.text-center
+          h4 Drag and Drop Area

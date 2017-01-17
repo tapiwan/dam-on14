@@ -10,7 +10,7 @@ const User = require('../models/User');
  */
 exports.getLogin = (req, res) => {
   if (req.user) {
-    return res.redirect('/');
+    return res.redirect('/dashboard');
   }
   res.render('account/login', {
     title: 'Login'
@@ -42,7 +42,7 @@ exports.postLogin = (req, res, next) => {
     req.logIn(user, (err) => {
       if (err) { return next(err); }
       req.flash('success', { msg: 'Success! You are logged in.' });
-      res.redirect(req.session.returnTo || '/');
+      res.redirect('/dashboard');
     });
   })(req, res, next);
 };
@@ -53,7 +53,7 @@ exports.postLogin = (req, res, next) => {
  */
 exports.logout = (req, res) => {
   req.logout();
-  res.redirect('/');
+  res.redirect('/login');
 };
 
 /**
@@ -87,6 +87,7 @@ exports.postSignup = (req, res, next) => {
   }
 
   const user = new User({
+    profile: {name:req.body.name},
     email: req.body.email,
     password: req.body.password
   });
@@ -273,6 +274,7 @@ exports.postReset = (req, res, next) => {
         });
     },
     function sendResetPasswordEmail(user, done) {
+
       const transporter = nodemailer.createTransport({
         service: 'SendGrid',
         auth: {
@@ -280,6 +282,7 @@ exports.postReset = (req, res, next) => {
           pass: process.env.SENDGRID_PASSWORD
         }
       });
+
       const mailOptions = {
         to: user.email,
         from: 'hackathon@starter.com',

@@ -1,3 +1,28 @@
 footer
-  .container.text-center
-    p.pull-left © 2017 DiAM-ON. All Rights Reserved
+  .container
+    .row
+      .col-md-6
+        ul.footernavi.pull-left
+          if !user
+            li(class=(title == 'Login') ? 'active' : undefined)
+              a(href='/login') Login
+            li(class=(title == 'Create Account') ? 'active' : undefined)
+              a(href='/signup') Create Account
+
+
+
+      .col-md-6
+        ul.footernavi.pull-right
+          li
+            a.m-r-2(href="/imprint") Imprint
+          li(class=(title == 'Contact') ? 'active' : undefined)
+            a(href="/contact") Contact
+          li
+            span © 2017 DiAM-ON. All Rights Reserved
+
+
+
+
+
+
+
