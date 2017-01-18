@@ -35,6 +35,7 @@ const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
 const collectionController = require('./controllers/collection');
+const assetController = require('./controllers/asset');
 const dashboardController = require('./controllers/dashboard');
 
 /**
@@ -138,6 +139,11 @@ app.post('/account/delete', passportConfig.isAuthenticated, userController.postD
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 app.get('/collections', passportConfig.isAuthenticated, collectionController.getCollections);
 app.get('/dashboard', passportConfig.isAuthenticated, dashboardController.showDashboard);
+
+/**
+ * Upload assets
+ */
+app.post('/upload/assets', passportConfig.isAuthenticated, assetController.upload);
 
 /**
  * API examples routes.
