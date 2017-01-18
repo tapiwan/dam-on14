@@ -16,6 +16,7 @@ exports.getCollections = (req, res) => {
               title: 'Collections',
               collections : results
           });
+         
       }
 
   });
@@ -50,4 +51,3 @@ exports.addCollection = (req, res) => {
     });
 
 }
-

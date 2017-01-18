@@ -5,6 +5,16 @@ const Asset = require('../models/Asset');
  * Upload assets to collection.
  */
 
+exports.getAssets = (req, res) => {
+    var collectionId = req.params.id;
+
+    Asset.find({_collectionId: collectionId}).exec(function (err, results) {
+        if (!err) {
+            res.json(results);
+        }
+    });
+}
+
 exports.upload = (req, res) => {
     new Asset({
         name: req.body.name,

@@ -143,8 +143,9 @@ app.post('/collections/add', passportConfig.isAuthenticated, collectionControlle
 app.get('/dashboard', passportConfig.isAuthenticated, dashboardController.showDashboard);
 
 /**
- * Upload assets
+ * Assets
  */
+app.get('/assets/:id', passportConfig.isAuthenticated, assetController.getAssets);
 app.post('/upload/assets', passportConfig.isAuthenticated, assetController.upload);
 
 /**

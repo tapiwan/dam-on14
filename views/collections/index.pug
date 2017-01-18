@@ -11,20 +11,20 @@ block content
 
 
 
-  .row.mt30
+  .row.mt30(data-collections)
 
     if collections.length != 0
 
       each collection, index in collections
 
         .col-md-12.box.collectionlist
-          h3(data-toggle='collapse', data-target= '#'+collection.name.replace(/\s+/g, '')+'-'+index)
+          h3(data-toggle='collapse', data-target= '#'+collection.name.replace(/\s+/g, '')+'-'+index, @click='loadAssets("'+collection.id+'")')
             | #{collection.name}
             i.fa.fa-caret-down
 
           div(id = collection.name.replace(/\s+/g, '')+'-'+index).collapse.collectionresults
             .row
-              ul.assetlist.col-md-12.text-center
+              ul.assetlist.col-md-12.text-center(@click)
                 li.col-md-2
                   img(src="assets/example/platzhalter.jpg")
                   h5
@@ -87,5 +87,3 @@ block content
             .form-group
               button.btn.btn-primary(type='submit')
                 | Add collection
-
-
