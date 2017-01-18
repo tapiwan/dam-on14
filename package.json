@@ -1,15 +1,15 @@
 {
-  "name": "hackathon-starter",
-  "version": "4.3.0",
-  "description": "A boilerplate for Node.js web applications",
+  "name": "diam",
+  "version": "0.1.0",
+  "description": "A digital asset management system based on ExpressJS",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sahat/hackathon-starter.git"
+    "url": "https://github.com/tapiwan/dam-on14.git"
   },
-  "author": "Sahat Yalkabov",
+  "author": "Dominik Speh, Elisabeth Ackermann-Jones, Ann-Kathrin Vögele, Dirk Englert",
   "license": "MIT",
   "scripts": {
-    "start": "node app.js",
+    "start": "nodemon app.js",
     "test": "mocha --reporter spec"
   },
   "dependencies": {
