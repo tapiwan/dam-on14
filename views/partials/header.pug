@@ -7,13 +7,11 @@
         span.icon-bar
         span.icon-bar
       if !user
-        a.navbar-brand(href='/')
-          i.fa.fa-cube
-          | DiAM-ON
+        a.logo(href='/')
+          img(src="/img/diam_logo_no_text.png")
       if user
-        a.navbar-brand(href='/dashboard')
-          i.fa.fa-cube
-          | DiAM-ON
+        a.logo(href='/dashboard')
+          img(src="/img/diam_logo_no_text.png")
     .collapse.navbar-collapse
       ul.nav.navbar-nav
         //if !user
