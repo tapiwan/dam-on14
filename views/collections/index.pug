@@ -6,110 +6,62 @@ block content
 
 
   .row.mt30
-    .col-md-12.box
-      h3 Collection 1
-      h5.pull-right 13 Assets
-      .row
-        ul.assetlist.col-md-12.text-center
-          li.col-md-2
-            .crop
-              img(src="assets/example/platzhalter.jpg")
-            h5
-              i.fa.fa-file-image-o
-              | Test.jpg
-            .editbar
-              a.fa.fa-edit
-                span Edit
-              a.fa.fa-trash-o
-                span Delete
 
-          li.col-md-2
-            img(src="assets/example/platzhalter2.jpg")
-            h5
-              i.fa.fa-file-image-o
-              | Test.jpg
-            .editbar
-              a.fa.fa-edit
-                span Edit
-              a.fa.fa-trash-o
-                span Delete
+    if collections.length != 0
 
-          li.col-md-2
-            i.fileicon.fa.fa-image.fa-4x
-            h5
-              i.fa.fa-file-image-o
-              | Test.jpg
-            .editbar
-              a.fa.fa-edit
-                span Edit
-              a.fa.fa-trash-o
-                span Delete
+      each collection, index in collections
 
-          li.col-md-2
-            i.fileicon.fa.fa-image.fa-4x
-            h5
-              i.fa.fa-file-image-o
-              | Test.jpg
-            .editbar
-              a.fa.fa-edit
-                span Edit
-              a.fa.fa-trash-o
-                span Delete
+        .col-md-12.box.collectionlist
+          h3(data-toggle='collapse', data-target= '#'+collection.name.replace(/\s+/g, '')+'-'+index)
+            | #{collection.name}
+            i.fa.fa-caret-down
 
-          li.col-md-2
-            i.fileicon.fa.fa-image.fa-4x
-            h5
-              i.fa.fa-file-image-o
-              | Test.jpg
-            .editbar
-              a.fa.fa-edit
-                span Edit
-              a.fa.fa-trash-o
-                span Delete
+          div(id = collection.name.replace(/\s+/g, '')+'-'+index).collapse.collectionresults
+            .row
+              ul.assetlist.col-md-12.text-center
+                li.col-md-2
+                  img(src="assets/example/platzhalter.jpg")
+                  h5
+                    i.fa.fa-file-image-o
+                    | Test.jpg
+                  .editbar
+                    a.fa.fa-edit
+                      span Edit
+                    a.fa.fa-trash-o
+                      span Delete
 
-          li.col-md-2
-            i.fileicon.fa.fa-image.fa-4x
-            h5
-              i.fa.fa-file-image-o
-              | Test.jpg
-            .editbar
-              a.fa.fa-edit
-                span Edit
-              a.fa.fa-trash-o
-                span Delete
+                li.col-md-2
+                  img(src="assets/example/platzhalter2.jpg")
+                  h5
+                    i.fa.fa-file-image-o
+                    | Test.jpg
+                  .editbar
+                    a.fa.fa-edit
+                      span Edit
+                    a.fa.fa-trash-o
+                      span Delete
 
-          li.col-md-2
-            i.fileicon.fa.fa-image.fa-4x
-            h5
-              i.fa.fa-file-image-o
-              | Test.jpg
-            .editbar
-              a.fa.fa-edit
-                span Edit
-              a.fa.fa-trash-o
-                span Delete
+                li.col-md-2
+                  i.fileicon.fa.fa-image.fa-4x
+                  h5
+                    i.fa.fa-file-image-o
+                    | Test.jpg
+                  .editbar
+                    a.fa.fa-edit
+                      span Edit
+                    a.fa.fa-trash-o
+                      span Delete
 
-          li.col-md-2
-            i.fileicon.fa.fa-image.fa-4x
-            h5
-              i.fa.fa-file-image-o
-              | Test.jpg
-            .editbar
-              a.fa.fa-edit
-                span Edit
-              a.fa.fa-trash-o
-                span Delete
 
-          li.col-md-2
-            i.fileicon.fa.fa-image.fa-4x
-            h5
-              i.fa.fa-file-image-o
-              | Test.jpg
-            .editbar
-              a.fa.fa-edit
-                span Edit
-              a.fa.fa-trash-o
-                span Delete
+    else
+      .col-md-12.box
+        h2 No collection exists
+        p Please add some
+
+
+
+
+
 
   .row.mt30
     .col-md-5.box

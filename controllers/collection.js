@@ -3,16 +3,21 @@ const Collection = require('../models/Collection');
  * GET /collections
  * Collection page.
  */
+
+var collections = "";
+
 exports.getCollections = (req, res) => {
 
-  Collection.find().sort('_id').exec(function (err, collections) {
+  Collection.find().sort('_id').exec(function (err, results) {
       if (!err) {
-          console.log(collections)
+          collections = results
       }
 
   });
+
   res.render('collections/index', {
-    title: 'Collections'
+      title: 'Collections',
+      collections : collections
   });
-};
+}
 

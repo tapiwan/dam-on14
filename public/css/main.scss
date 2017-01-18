@@ -240,6 +240,24 @@ footer {
 }
 
 //COLLECTION
+.collectionlist {
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 10px;
+
+  h3 {
+    margin: 0;
+    padding: 30px;
+
+    i {
+      float: right;
+    }
+  }
+
+}
+.collectionresults {
+  padding:0 30px;
+}
 .assetlist {
 
 

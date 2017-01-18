@@ -27,8 +27,6 @@ Collection.find(function (err, collections) {
 
     }).save();
 
-
-
     console.log("Testcollection hinzugefügt");
 });
 module.exports = Collection;
