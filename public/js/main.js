@@ -7,7 +7,8 @@ $(document).ready(function() {
             el: '[data-collection-id="'+collectionID+'"]',
             data: {
                 open: false,
-                assets: null
+                assets: null,
+                collectionSize:  null,
             },
             methods: {
                 loadAssets: function() {
@@ -20,6 +21,7 @@ $(document).ready(function() {
                             })
                             .done(function(json) {
                                 that.assets = json;
+                                that.collectionSize =  Object.keys(json).length;
                                 that.open = true;
                             });
                     } else {

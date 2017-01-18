@@ -25,7 +25,7 @@ block content
           div(id = collection.name.replace(/\s+/g, '')+'-'+index).collapse.collectionresults
             .row
               ul.assetlist.col-md-12.text-center
-                li.col-md-2(v-if="assets.length > 0", v-for="asset in assets")
+                li.col-md-2(v-if="collectionSize > 0", v-for="asset in assets")
                   img(src="assets/example/platzhalter.jpg")
                   h5
                     i.fa.fa-file-image-o
@@ -35,7 +35,7 @@ block content
                       span Edit
                     a.fa.fa-trash-o
                       span Delete
-                li.col-md-12(v-if="assets == null")
+                li.col-md-12(v-if="collectionSize == 0")
                     h5
                       | This collection has no assets yet.
 
