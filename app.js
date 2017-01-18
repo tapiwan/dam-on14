@@ -137,6 +137,8 @@ app.post('/account/password', passportConfig.isAuthenticated, userController.pos
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 app.get('/collections', passportConfig.isAuthenticated, collectionController.getCollections);
+app.post('/collections/add', passportConfig.isAuthenticated, collectionController.addCollection);
+
 app.get('/dashboard', passportConfig.isAuthenticated, dashboardController.showDashboard);
 
 /**

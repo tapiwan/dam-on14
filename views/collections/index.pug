@@ -2,7 +2,13 @@ extends ../layout
 
 block content
 
-  h1.bold.mt30 Collections
+  .row.mt30
+    .col-md-10.p0
+      h1.bold Collections
+    .col-md-2.p0
+      button.btn.btn-primary.pull-right(type='button', data-toggle='modal', data-target='#addCollection')
+        | Add collection
+
 
 
   .row.mt30
@@ -63,48 +69,23 @@ block content
 
 
 
-  .row.mt30
-    .col-md-5.box
-      h3 More Collections
 
 
-      ul.folderlist
-        li
-          a() Testordner
-        li
-          a() Testordner
-        li
-          a() Testordner
-
-    .col-md-2
-
-
-    .col-md-5.box.activity
-      h3 Your Activity
-
-      table.table.table-striped
-        tbody
-          tr
-            td
-              i.fa.fa-cloud-download
-            td 19.01.17
-            td IMG_12332.jpg
-            td
-               a Collection 1
-          tr
-            td
-              i.fa.fa-cloud-download
-            td 18.01.17
-            td MOV_112.mp4
-            td
-              a Collection 2
-          tr
-            td
-              i.fa.fa-cloud-upload
-            td 15.01.17
-            td Calculation.pdf
-            td
-              a Collection 1
-
+  // MODALS
+  #addCollection.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+          h4#myModalLabel.modal-title Add a collection
+        .modal-body
+          form(method='POST' action='/collections/add')
+            input(type='hidden', name='_csrf', value=_csrf)
+            .form-group
+              input.form-control(type='text', name='name', id='name', placeholder='Collection Title', autofocus, required)
+            .form-group
+              button.btn.btn-primary(type='submit')
+                | Add collection
 
 
