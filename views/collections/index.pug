@@ -11,52 +11,33 @@ block content
 
 
 
-  .row.mt30(data-collections)
+  .row.mt30
 
     if collections.length != 0
 
       each collection, index in collections
 
-        .col-md-12.box.collectionlist
-          h3(data-toggle='collapse', data-target= '#'+collection.name.replace(/\s+/g, '')+'-'+index, @click='loadAssets("'+collection.id+'")')
+        .col-md-12.box.collectionlist(data-collection, data-collection-id=collection.id)
+          h3(data-toggle='collapse', data-target= '#'+collection.name.replace(/\s+/g, '')+'-'+index, @click='loadAssets')
             | #{collection.name}
             i.fa.fa-caret-down
 
           div(id = collection.name.replace(/\s+/g, '')+'-'+index).collapse.collectionresults
             .row
-              ul.assetlist.col-md-12.text-center(@click)
-                li.col-md-2
+              ul.assetlist.col-md-12.text-center
+                li.col-md-2(v-if="assets.length > 0", v-for="asset in assets")
                   img(src="assets/example/platzhalter.jpg")
                   h5
                     i.fa.fa-file-image-o
-                    | Test.jpg
+                    | {{asset.name}}{{asset.suffix}}
                   .editbar
                     a.fa.fa-edit
                       span Edit
                     a.fa.fa-trash-o
                       span Delete
-
-                li.col-md-2
-                  img(src="assets/example/platzhalter2.jpg")
-                  h5
-                    i.fa.fa-file-image-o
-                    | Test.jpg
-                  .editbar
-                    a.fa.fa-edit
-                      span Edit
-                    a.fa.fa-trash-o
-                      span Delete
-
-                li.col-md-2
-                  i.fileicon.fa.fa-image.fa-4x
-                  h5
-                    i.fa.fa-file-image-o
-                    | Test.jpg
-                  .editbar
-                    a.fa.fa-edit
-                      span Edit
-                    a.fa.fa-trash-o
-                      span Delete
+                li.col-md-12(v-if="assets == null")
+                    h5
+                      | This collection has no assets yet.
 
 
     else
