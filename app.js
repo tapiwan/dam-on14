@@ -35,6 +35,7 @@ const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
 const collectionController = require('./controllers/collection');
+const assetController = require('./controllers/asset');
 const dashboardController = require('./controllers/dashboard');
 
 /**
@@ -140,6 +141,11 @@ app.get('/collections', passportConfig.isAuthenticated, collectionController.get
 app.post('/collections/add', passportConfig.isAuthenticated, collectionController.addCollection);
 
 app.get('/dashboard', passportConfig.isAuthenticated, dashboardController.showDashboard);
+
+/**
+ * Upload assets
+ */
+app.post('/upload/assets', passportConfig.isAuthenticated, assetController.upload);
 
 /**
  * API examples routes.
