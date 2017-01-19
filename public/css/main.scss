@@ -256,14 +256,42 @@ footer {
     margin: 0;
     padding: 30px;
 
-    i {
-      float: right;
-    }
   }
+
+
+  .collectioneditbar {
+    position: absolute;
+    top:5px;
+    left: 30px;
+
+    .trash, .edit {
+      cursor: pointer;
+      font-size: 17px;
+      color: $grey;
+      transition: color 1s;
+    }
+
+    .trash {
+      margin-left: 5px;
+    }
+
+  }
+
+}
+.collectionlist:hover {
+    .trash, .edit {
+      color: $brand-second;
+      transition: color 1s;
+    }
+    .trash:hover, .edit:hover {
+      color: $brand-primary
+    }
 
 }
 .collectionresults {
   padding:0 30px;
+
+
 }
 .assetlist {
 

@@ -51,3 +51,12 @@ exports.addCollection = (req, res) => {
     });
 
 }
+
+exports.deleteCollection = (req,res) => {
+    console.log(req.body.collectionID);
+    Collection.remove({ _id: req.body.collectionID }, (err) => {
+        if (err) { return next(err); }
+        req.flash('info', { msg: 'The collection has been deleted.' });
+        res.redirect('/collections');
+    });
+}

@@ -18,15 +18,23 @@ block content
       each collection, index in collections
 
         .col-md-12.box.collectionlist(data-collection, data-collection-id=collection.id)
-          h3(data-toggle='collapse', data-target= '#'+collection.name.replace(/\s+/g, '')+'-'+index, @click='loadAssets')
-            | #{collection.name}
-            i.fa.fa-caret-down
+          h3(data-toggle='collapse', data-target= '#'+collection.name.replace(/\s+/g, '')+'-'+index, @click='loadAssets') #{collection.name}
+            i.pull-right.fa.fa-caret-down
+
+          .collectioneditbar
+            i.edit.fa.fa-edit
+            i.trash.fa.fa-trash-o(@click='deleteCollection')
+
+
+
 
           div(id = collection.name.replace(/\s+/g, '')+'-'+index).collapse.collectionresults
+            span.pull-right(v-if="collectionSize > 1" ) {{collectionSize}} Assets
+            span.pull-right(v-if="collectionSize == 1" ) {{collectionSize}} Asset
             .row
               ul.assetlist.col-md-12.text-center
                 li.col-md-2(v-if="collectionSize > 0", v-for="asset in assets")
-                  img(src="assets/example/platzhalter.jpg")
+                  img(src="/assets/example/platzhalter.jpg")
                   h5
                     i.fa.fa-file-image-o
                     | {{asset.name}}{{asset.suffix}}
@@ -38,6 +46,7 @@ block content
                 li.col-md-12(v-if="collectionSize == 0")
                     h5
                       | This collection has no assets yet.
+
 
 
     else
@@ -62,7 +71,7 @@ block content
           h4#myModalLabel.modal-title Add a collection
         .modal-body
           form(method='POST' action='/collections/add')
-            input(type='hidden', name='_csrf', value=_csrf)
+            input.csrf(type='hidden', name='_csrf', value=_csrf)
             .form-group
               input.form-control(type='text', name='name', id='name', placeholder='Collection Title', autofocus, required)
             .form-group
