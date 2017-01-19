@@ -53,10 +53,32 @@ exports.addCollection = (req, res) => {
 }
 
 exports.deleteCollection = (req,res) => {
-    console.log(req.body.collectionID);
+
     Collection.remove({ _id: req.body.collectionID }, (err) => {
         if (err) { return next(err); }
         req.flash('info', { msg: 'The collection has been deleted.' });
         res.redirect('/collections');
+    });
+}
+
+exports.editCollection = (req, res) => {
+    Collection.findOne({ name: req.body.collectionName }, (err, existingCollection) => {
+        if (err) { return next(err); }
+        if (existingCollection) {
+            req.flash('errors', { msg: 'Collection Name already exists.' });
+            return res.redirect('/collections');
+        }
+        Collection.findOne({ _id: req.body.collectionIDName }, (err, collection) => {
+            if(err){
+                console.log(err);
+            }
+            collection.name = req.body.collectionName;
+
+            collection.save((err) => {
+                req.flash('success', { msg: 'Collection Title has been updated.' });
+                res.redirect('/collections');
+            });
+        })
+
     });
 }

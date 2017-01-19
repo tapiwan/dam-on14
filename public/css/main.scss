@@ -267,8 +267,11 @@ footer {
     .trash, .edit {
       cursor: pointer;
       font-size: 17px;
+      opacity: 0;
       color: $grey;
-      transition: color 1s;
+
+      transition: opacity 1s;
+
     }
 
     .trash {
@@ -280,8 +283,8 @@ footer {
 }
 .collectionlist:hover {
     .trash, .edit {
-      color: $brand-second;
-      transition: color 1s;
+      opacity: 1;
+
     }
     .trash:hover, .edit:hover {
       color: $brand-primary
