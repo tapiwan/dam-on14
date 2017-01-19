@@ -23,7 +23,7 @@ block content
 
           .collectioneditbar
             i.edit.fa.fa-edit
-            i.trash.fa.fa-trash-o(@click='deleteCollection')
+            i.trash.fa.fa-trash-o(data-toggle='modal', data-target='#deleteCollection', @click='deleteCollection')
 
 
 
@@ -77,3 +77,20 @@ block content
             .form-group
               button.btn.btn-primary(type='submit')
                 | Add collection
+
+  #deleteCollection.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') ×
+          h4#deleteLabel.modal-title Delete Collection
+        .modal-body
+          form(method='POST' action='/collections/delete')
+            input.csrf(type='hidden', name='_csrf', value=_csrf)
+            .form-group
+              p Do you really want to delete this collection?
+              input.form-control(type='hidden', name='collectionID', id='collectionID')
+            .form-group
+              button.btn.btn-danger(type='submit')
+                | Delete Collection

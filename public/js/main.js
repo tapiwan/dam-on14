@@ -12,16 +12,8 @@ $(document).ready(function() {
             },
             methods: {
                 deleteCollection: function () {
+                    $("form #collectionID").val(collectionID);
 
-                    $.ajax({
-                        method: "POST",
-                        url: "/collections/delete",
-                        data: {
-                            _csrf: $(".csrf").val(),
-                            collectionID : collectionID}
-                    }).done(function() {
-                        location.reload();
-                    });
                 },
                 loadAssets: function() {
                     var that = this;
