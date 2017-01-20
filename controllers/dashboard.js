@@ -1,9 +1,22 @@
+const Collection = require('../models/Collection');
+
 /**
  * GET /
  * Dashboard
  */
 exports.showDashboard = (req, res) => {
-  res.render('dashboard', {
-    title: 'Dashboard'
+
+  Collection.find().sort({'_id': -1}).limit(3).exec(function (err, results) {
+
+    if (!err) {
+
+      res.render('dashboard', {
+        title: 'Dashboard',
+        collections : results
+      });
+
+    }
+
   });
 };
+

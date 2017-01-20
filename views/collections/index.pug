@@ -2,57 +2,59 @@ extends ../layout
 
 block content
 
-  .row.mt30
-    .col-md-10.p0
-      h1.bold Collections
-    .col-md-2.p0
-      button.btn.btn-primary.pull-right(type='button', data-toggle='modal', data-target='#addCollection')
-        | Add collection
+  #collections
+
+    .row.mt30
+      .col-md-10.p0
+        h1.bold Collections
+      .col-md-2.p0
+        button.btn.btn-primary.pull-right(type='button', data-toggle='modal', data-target='#addCollection')
+          | Add collection
 
 
 
-  .row.mt30
+    .row.mt30
 
-    if collections.length != 0
+      if collections.length != 0
 
-      each collection, index in collections
+        each collection, index in collections
 
-        .col-md-12.box.collectionlist(data-collection, data-collection-id=collection.id)
-          h3(data-toggle='collapse', data-target= '#'+collection.name.replace(/\s+/g, '')+'-'+index, @click='loadAssets') #{collection.name}
-            i.pull-right.fa.fa-caret-down
+          .col-md-12.box.collectionlist(id = collection.name ,data-collection, data-collection-id=collection.id)
+            h3(data-toggle='collapse', data-target= '#'+collection.name.replace(/\s+/g, '')+'-'+index, @click='loadAssets') #{collection.name}
+              i.pull-right.fa.fa-caret-down
 
-          .collectioneditbar
-            i.edit.fa.fa-edit(data-toggle='modal', data-target='#editCollection', @click='editCollection')
-            i.trash.fa.fa-trash-o(data-toggle='modal', data-target='#deleteCollection', @click='deleteCollection')
-
-
+            .collectioneditbar
+              i.edit.fa.fa-edit(data-toggle='modal', data-target='#editCollection', @click='editCollection')
+              i.trash.fa.fa-trash-o(data-toggle='modal', data-target='#deleteCollection', @click='deleteCollection')
 
 
-          div(id = collection.name.replace(/\s+/g, '')+'-'+index).collapse.collectionresults
-            span.pull-right(v-if="collectionSize > 1" ) {{collectionSize}} Assets
-            span.pull-right(v-if="collectionSize == 1" ) {{collectionSize}} Asset
-            .row
-              ul.assetlist.col-md-12.text-center
-                li.col-md-2(v-if="collectionSize > 0", v-for="asset in assets")
-                  img(src="/assets/example/platzhalter.jpg")
-                  h5
-                    i.fa.fa-file-image-o
-                    | {{asset.name}}{{asset.suffix}}
-                  .editbar
-                    a.fa.fa-edit
-                      span Edit
-                    a.fa.fa-trash-o
-                      span Delete
-                li.col-md-12(v-if="collectionSize == 0")
+
+
+            div(id = collection.name.replace(/\s+/g, '')+'-'+index, data-collection-hash = '#'+collection.name ).collapse.collectionresults
+              span.pull-right(v-if="collectionSize > 1" ) {{collectionSize}} Assets
+              span.pull-right(v-if="collectionSize == 1" ) {{collectionSize}} Asset
+              .row
+                ul.assetlist.col-md-12.text-center
+                  li.col-md-2(v-if="collectionSize > 0", v-for="asset in assets")
+                    img(src="/assets/example/platzhalter.jpg")
                     h5
-                      | This collection has no assets yet.
+                      i.fa.fa-file-image-o
+                      | {{asset.name}}{{asset.suffix}}
+                    .editbar
+                      a.fa.fa-edit
+                        span Edit
+                      a.fa.fa-trash-o
+                        span Delete
+                  li.col-md-12(v-if="collectionSize == 0")
+                      h5
+                        | This collection has no assets yet.
 
 
 
-    else
-      .col-md-12.box
-        h2 No collection exists
-        p Please add some
+      else
+        .col-md-12.box
+          h2 No collection exists
+          p Please add some
 
 
 
@@ -61,53 +63,53 @@ block content
 
 
 
-  // MODALS
-  #addCollection.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
-    .modal-dialog(role='document')
-      .modal-content
-        .modal-header
-          button.close(type='button', data-dismiss='modal', aria-label='Close')
-            span(aria-hidden='true') ×
-          h4#myModalLabel.modal-title Add a collection
-        .modal-body
-          form(method='POST' action='/collections/add')
-            input.csrf(type='hidden', name='_csrf', value=_csrf)
-            .form-group
-              input.form-control(type='text', name='name', id='name', placeholder='Collection Title', autofocus, required)
-            .form-group
-              button.btn.btn-primary(type='submit')
-                | Add collection
+    // MODALS
+    #addCollection.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') ×
+            h4#myModalLabel.modal-title Add a collection
+          .modal-body
+            form(method='POST' action='/collections/add')
+              input.csrf(type='hidden', name='_csrf', value=_csrf)
+              .form-group
+                input.form-control(type='text', name='name', id='name', placeholder='Collection Title', autofocus, required)
+              .form-group
+                button.btn.btn-primary(type='submit')
+                  | Add collection
 
-  #editCollection.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
-    .modal-dialog(role='document')
-      .modal-content
-        .modal-header
-          button.close(type='button', data-dismiss='modal', aria-label='Close')
-            span(aria-hidden='true') ×
-          h4#editLabel.modal-title Change Collection Title
-        .modal-body
-          form(method='POST' action='/collections/edit')
-            input.csrf(type='hidden', name='_csrf', value=_csrf)
-            .form-group
-              input.form-control(type='hidden', name='collectionIDName', id='collectionIDName' value='')
-              input.form-control(type='text', name='collectionName', id='collectionName' value='Title')
-            .form-group
-              button.btn.btn-primary(type='submit')
-                | Change Title
+    #editCollection.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') ×
+            h4#editLabel.modal-title Change Collection Title
+          .modal-body
+            form(method='POST' action='/collections/edit')
+              input.csrf(type='hidden', name='_csrf', value=_csrf)
+              .form-group
+                input.form-control(type='hidden', name='collectionIDName', id='collectionIDName' value='')
+                input.form-control(type='text', name='collectionName', id='collectionName' value='Title')
+              .form-group
+                button.btn.btn-primary(type='submit')
+                  | Change Title
 
-  #deleteCollection.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
-    .modal-dialog(role='document')
-      .modal-content
-        .modal-header
-          button.close(type='button', data-dismiss='modal', aria-label='Close')
-            span(aria-hidden='true') ×
-          h4#deleteLabel.modal-title Delete Collection
-        .modal-body
-          form(method='POST' action='/collections/delete')
-            input.csrf(type='hidden', name='_csrf', value=_csrf)
-            .form-group
-              p Do you really want to delete this collection?
-              input.form-control(type='hidden', name='collectionID', id='collectionID')
-            .form-group
-              button.btn.btn-danger(type='submit')
-                | Delete Collection
+    #deleteCollection.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') ×
+            h4#deleteLabel.modal-title Delete Collection
+          .modal-body
+            form(method='POST' action='/collections/delete')
+              input.csrf(type='hidden', name='_csrf', value=_csrf)
+              .form-group
+                p Do you really want to delete this collection?
+                input.form-control(type='hidden', name='collectionID', id='collectionID')
+              .form-group
+                button.btn.btn-danger(type='submit')
+                  | Delete Collection

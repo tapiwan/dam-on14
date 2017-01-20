@@ -1,4 +1,25 @@
 $(document).ready(function() {
+    var hash = window.location.hash;
+
+
+    if(hash) {
+        $('html, body').animate({
+            scrollTop: $(hash).offset().top+300
+        }, 1000);
+
+
+        setTimeout(function () {
+            $(hash + ' h3').click();
+            window.location.hash = ''; // for older browsers, leaves a # behind
+            history.pushState('', document.title, window.location.pathname); // nice and clean
+        }, 1100)
+
+    }
+
+
+
+
+
 
     $('[data-collection]').each(function() {
         var collectionID = $(this).data('collection-id');
@@ -11,6 +32,7 @@ $(document).ready(function() {
                 assets: null,
                 collectionSize:  null,
             },
+
             methods: {
                 editCollection: function () {
                     $("form #collectionIDName").val(collectionID);
@@ -42,4 +64,9 @@ $(document).ready(function() {
         });
     });
 
+
+
+
 });
+
+

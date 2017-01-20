@@ -9,12 +9,11 @@ block content
       h3 Collections
 
       ul.folderlist
-        li
-          a() Testordner
-        li
-          a() Testordner
-        li
-          a() Testordner
+        each collection, index in collections
+
+          li
+            a(href="/collections#"+collection.name+"") #{collection.name}
+
 
     .col-md-2
 
