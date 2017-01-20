@@ -1,4 +1,5 @@
 const Collection = require('../models/Collection');
+
 /**
  * GET /collections
  * Collection page.

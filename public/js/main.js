@@ -41,6 +41,11 @@ $(document).ready(function() {
                 collectionSize:  null,
             },
 
+            mounted: function () {
+
+
+            },
+
             methods: {
                 editCollection: function () {
                     $("form #collectionIDName").val(collectionID);

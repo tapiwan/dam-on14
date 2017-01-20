@@ -257,6 +257,21 @@ footer {
     padding: 30px;
 
   }
+  .date {
+    position: absolute;
+    right: 20px;
+    top: 6px;
+    color: $grey;
+    opacity: 0;
+    transition: opacity 1s;
+
+
+    span {
+      margin-left: 10px;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+
+    }
+  }
 
 
   .collectioneditbar {
@@ -282,11 +297,11 @@ footer {
 
 }
 .collectionlist:hover {
-    .trash, .edit {
+    .trash, .edit, .date {
       opacity: 1;
 
     }
-    .trash:hover, .edit:hover {
+    .trash:hover, .edit:hover, .date:hover {
       color: $brand-primary
     }
 

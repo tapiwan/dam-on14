@@ -21,11 +21,16 @@ block content
 
           .col-md-12.box.collectionlist(id = collection.name.replace(/\s+/g, '') ,data-collection, data-collection-id=collection.id)
             h3(data-toggle='collapse', data-target= '#'+collection.name.replace(/\s+/g, '')+'-'+index, @click='loadAssets') #{collection.name}
+
               i.pull-right.fa.fa-caret-down
 
             .collectioneditbar
               i.edit.fa.fa-edit(data-toggle='modal', data-target='#editCollection', @click='editCollection')
               i.trash.fa.fa-trash-o(data-toggle='modal', data-target='#deleteCollection', @click='deleteCollection')
+
+            .date.fa.fa-calendar-o
+              span= moment(collection.createdAt).format("DD.MM.YY - HH:mm") + ' Uhr'
+
 
 
 
