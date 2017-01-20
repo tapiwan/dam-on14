@@ -12,7 +12,7 @@ block content
         each collection, index in collections
 
           li
-            a(href="/collections#"+collection.name+"") #{collection.name}
+            a(href="/collections#"+collection.name.replace(/\s+/g, '')+"") #{collection.name}
 
 
     .col-md-2

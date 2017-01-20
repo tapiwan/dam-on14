@@ -1,7 +1,7 @@
 $(document).ready(function() {
+
+    // SCROLL TO COLLECTION IF HASH IS AVAILABLE
     var hash = window.location.hash;
-
-
     if(hash) {
         $('html, body').animate({
             scrollTop: $(hash).offset().top+300
@@ -10,11 +10,19 @@ $(document).ready(function() {
 
         setTimeout(function () {
             $(hash + ' h3').click();
-            window.location.hash = ''; // for older browsers, leaves a # behind
-            history.pushState('', document.title, window.location.pathname); // nice and clean
         }, 1100)
 
     }
+
+    // MODAL INPUT FOCUS
+    $('#editCollection, #addCollection').on('shown.bs.modal', function () {
+        $(this).find('input').focus();
+    })
+
+    // COLLAPSE
+    $('#collections').on('show.bs.collapse', function () {
+        $('#collections .in').collapse('hide');
+    });
 
 
 
@@ -44,6 +52,7 @@ $(document).ready(function() {
                 },
                 loadAssets: function() {
                     var that = this;
+
 
                     if (!that.open) {
                         $.ajax({

@@ -19,7 +19,7 @@ block content
 
         each collection, index in collections
 
-          .col-md-12.box.collectionlist(id = collection.name ,data-collection, data-collection-id=collection.id)
+          .col-md-12.box.collectionlist(id = collection.name.replace(/\s+/g, '') ,data-collection, data-collection-id=collection.id)
             h3(data-toggle='collapse', data-target= '#'+collection.name.replace(/\s+/g, '')+'-'+index, @click='loadAssets') #{collection.name}
               i.pull-right.fa.fa-caret-down
 
