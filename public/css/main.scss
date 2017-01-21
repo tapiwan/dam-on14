@@ -261,6 +261,7 @@ footer {
     position: absolute;
     right: 20px;
     top: 6px;
+    font-size: 15px;
     color: $grey;
     opacity: 0;
     transition: opacity 1s;
@@ -276,7 +277,7 @@ footer {
 
   .collectioneditbar {
     position: absolute;
-    top:5px;
+    top:0px;
     left: 30px;
 
     .trash, .edit {
@@ -296,7 +297,8 @@ footer {
   }
 
 }
-.collectionlist:hover {
+
+.collectionlist:hover, .collectionlist [aria-expanded='true']  {
     .trash, .edit, .date {
       opacity: 1;
 

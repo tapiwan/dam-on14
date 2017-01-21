@@ -9,7 +9,7 @@
   "author": "Dominik Speh, Elisabeth Ackermann-Jones, Ann-Kathrin Vögele, Dirk Englert",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "nodemon app.js -e js,html",
     "test": "mocha --reporter spec"
   },
   "dependencies": {

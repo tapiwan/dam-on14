@@ -31,7 +31,7 @@ $(document).ready(function() {
 
     $('[data-collection]').each(function() {
         var collectionID = $(this).data('collection-id');
-        var collectionName = $(this).find('h3').text();
+        var collectionName = $(this).find('h3 .cname').text();
 
         var collection = new Vue({
             el: '[data-collection-id="'+collectionID+'"]',
