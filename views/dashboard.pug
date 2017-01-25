@@ -49,5 +49,6 @@ block content
     .col-md-12.box
       h3 Upload Area
       .row
-        .col-md-12.upload-area.text-center
-          h4 Drag and Drop Area
+        form#uploadWidget.col-md-12.dropzone.upload-area.text-center(enctype='multipart/form-data', action='/upload/assets', method='post')
+          .fallback
+            input(name='assets', type='file')

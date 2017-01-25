@@ -66,7 +66,7 @@ exports.editCollection = (req, res) => {
     Collection.findOne({ name: req.body.collectionName }, (err, existingCollection) => {
         if (err) { return next(err); }
         if (existingCollection) {
-            req.flash('errors', { msg: 'Collection Name already exists.' });
+            req.flash('errors', { msg: 'Collection name already exists.' });
             return res.redirect('/collections');
         }
         Collection.findOne({ _id: req.body.collectionIDName }, (err, collection) => {
@@ -76,7 +76,7 @@ exports.editCollection = (req, res) => {
             collection.name = req.body.collectionName;
 
             collection.save((err) => {
-                req.flash('success', { msg: 'Collection Title has been updated.' });
+                req.flash('success', { msg: 'Collection title has been updated.' });
                 res.redirect('/collections');
             });
         })

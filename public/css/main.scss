@@ -245,6 +245,15 @@ footer {
   justify-content: center;
   background: url("../img/upload.png") no-repeat top center;
 }
+.dropzone {
+  .dz-message {
+    text-align: center;
+    margin: 0em 0;
+  }
+  .dz-preview.dz-image-preview {
+    background: none;
+  }
+}
 
 //COLLECTION
 .collectionlist {
