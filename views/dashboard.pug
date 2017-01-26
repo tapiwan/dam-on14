@@ -45,10 +45,43 @@ block content
               i.fa.fa-file-pdf-o
 
 
-  .row.mt30
-    .col-md-12.box
+  .row.mt30.box
+
       h3 Upload Area
-      .row
-        form#uploadWidget.col-md-12.dropzone.upload-area.text-center(enctype='multipart/form-data', action='/upload/assets', method='post')
-          .fallback
-            input(name='assets', type='file')
+
+          #actions.row.upload-area
+
+              .col-lg-7
+                // The fileinput-button span is used to style the file input field as button
+                span.btn.btn-success.fileinput-button
+                  span Add files...
+                button.btn.btn-primary.start(type='submit')
+                  span Start upload
+                button.btn.btn-warning.cancel(type='reset')
+                  span Cancel upload
+              .col-lg-5
+                // The global file processing state
+                span.fileupload-process
+                  #total-progress.progress.progress-striped.active(role='progressbar', aria-valuemin='0', aria-valuemax='100', aria-valuenow='0')
+                    .progress-bar.progress-bar-success(style='width:0%;', data-dz-uploadprogress='')
+
+              #previews.table.table-striped.files
+                #template.file-row
+                  // This is used as the file preview template
+                  div
+                    span.preview
+                      img(data-dz-thumbnail='')
+                  div
+                    p.name(data-dz-name='')
+                    strong.error.text-danger(data-dz-errormessage='')
+                  div
+                    p.size(data-dz-size='')
+                    .progress.progress-striped.active(role='progressbar', aria-valuemin='0', aria-valuemax='100', aria-valuenow='0')
+                      .progress-bar.progress-bar-success(style='width:0%;', data-dz-uploadprogress='')
+                  div
+                    button.btn.btn-primary.start
+                      span Start
+                    button.btn.btn-warning.cancel(data-dz-remove='')
+                      span Cancel
+                    button.btn.btn-danger.delete(data-dz-remove='')
+                      span Delete

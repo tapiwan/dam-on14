@@ -237,22 +237,51 @@ footer {
 }
 
 .upload-area {
-  height: 220px;
+  min-height: 220px;
   border: 1px solid $grey;
-  display: flex;
-  align-content: flex-end;
-  align-items: flex-end;
-  justify-content: center;
   background: url("../img/upload.png") no-repeat top center;
 }
-.dropzone {
-  .dz-message {
-    text-align: center;
-    margin: 0em 0;
-  }
-  .dz-preview.dz-image-preview {
-    background: none;
-  }
+
+#actions {
+  margin: 2em 0;
+}
+
+div.table {
+  display: table;
+}
+div.table .file-row {
+  display: table-row;
+}
+div.table .file-row > div {
+  display: table-cell;
+  vertical-align: top;
+  border-top: 1px solid #ddd;
+  padding: 8px;
+}
+div.table .file-row:nth-child(odd) {
+  background: #f9f9f9;
+}
+
+#total-progress {
+  opacity: 0;
+  transition: opacity 0.3s linear;
+}
+
+#previews .file-row.dz-success .progress {
+  opacity: 0;
+  transition: opacity 0.3s linear;
+}
+
+#previews .file-row .delete {
+  display: none;
+}
+/* Hide the start and cancel buttons and show the delete button */
+#previews .file-row.dz-success .start,
+#previews .file-row.dz-success .cancel {
+  display: none;
+}
+#previews .file-row.dz-success .delete {
+  display: block;
 }
 
 //COLLECTION
