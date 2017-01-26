@@ -34,8 +34,14 @@ h1.bold {
 .mt50 {
   margin-top: 50px;
 }
+.mr5 {
+  margin-right: 5px;
+}
 .mr30 {
   margin-right: 30px;
+}
+.ml30 {
+  margin-left: 30px;
 }
 .p0 {
   padding: 0;
@@ -240,7 +246,15 @@ footer {
   min-height: 220px;
   border: 1px solid $grey;
   background: url("../img/upload.png") no-repeat top center;
+  .btn {
+    margin: 5px;
+  }
+  .start, .cancel {
+    display: none;
+  }
+
 }
+
 
 #actions {
   margin: 2em 0;
@@ -254,12 +268,9 @@ div.table .file-row {
 }
 div.table .file-row > div {
   display: table-cell;
-  vertical-align: top;
+  vertical-align: middle;
   border-top: 1px solid #ddd;
   padding: 8px;
-}
-div.table .file-row:nth-child(odd) {
-  background: #f9f9f9;
 }
 
 #total-progress {

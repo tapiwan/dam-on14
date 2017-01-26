@@ -47,41 +47,49 @@ block content
 
   .row.mt30.box
 
+
+      span.btn.btn-primary.fileinput-button.pull-right
+        span Add files
+
       h3 Upload Area
 
-          #actions.row.upload-area
 
-              .col-lg-7
-                // The fileinput-button span is used to style the file input field as button
-                span.btn.btn-success.fileinput-button
-                  span Add files...
-                button.btn.btn-primary.start(type='submit')
-                  span Start upload
-                button.btn.btn-warning.cancel(type='reset')
-                  span Cancel upload
-              .col-lg-5
-                // The global file processing state
-                span.fileupload-process
-                  #total-progress.progress.progress-striped.active(role='progressbar', aria-valuemin='0', aria-valuemax='100', aria-valuenow='0')
+
+      #actions.row.upload-area
+        .col-lg-12.p0(style="background-color: white")
+          button.btn.btn-sm.btn-empty.cancel.pull-right(type='reset')
+            span Remove all
+
+          button.btn.btn-sm.btn-info.start.pull-right.mr5.ml30(type='submit')
+            span Upload all
+
+
+
+
+
+
+        .row.upload-assets
+          .col-lg-12
+            #previews.table.table-striped.files
+              #template.file-row
+                // This is used as the file preview template
+                div
+                  span.preview
+                    img(data-dz-thumbnail='')
+                div
+                  p.name(data-dz-name='')
+                  strong.error.text-danger(data-dz-errormessage='')
+                div
+                  p.size(data-dz-size='')
+                  .progress.progress-striped.active(role='progressbar', aria-valuemin='0', aria-valuemax='100', aria-valuenow='0')
                     .progress-bar.progress-bar-success(style='width:0%;', data-dz-uploadprogress='')
+                div(style="text-align:right")
+                  button.btn.btn-primary.start
+                    span Start upload
+                  button.btn.btn-empty.cancel(data-dz-remove='')
+                    span Remove
+                  button.btn.btn-danger.delete(data-dz-remove='')
+                    span Delete
 
-              #previews.table.table-striped.files
-                #template.file-row
-                  // This is used as the file preview template
-                  div
-                    span.preview
-                      img(data-dz-thumbnail='')
-                  div
-                    p.name(data-dz-name='')
-                    strong.error.text-danger(data-dz-errormessage='')
-                  div
-                    p.size(data-dz-size='')
-                    .progress.progress-striped.active(role='progressbar', aria-valuemin='0', aria-valuemax='100', aria-valuenow='0')
-                      .progress-bar.progress-bar-success(style='width:0%;', data-dz-uploadprogress='')
-                  div
-                    button.btn.btn-primary.start
-                      span Start
-                    button.btn.btn-warning.cancel(data-dz-remove='')
-                      span Cancel
-                    button.btn.btn-danger.delete(data-dz-remove='')
-                      span Delete
+
+
