@@ -55,7 +55,7 @@ block content
 
 
 
-      #actions.row.upload-area
+      #actions.row.upload-area.uploadImage
         .col-lg-12.p0(style="background-color: white")
           button.btn.btn-sm.btn-empty.cancel.pull-right(type='reset')
             span Remove all
@@ -73,22 +73,25 @@ block content
             #previews.table.table-striped.files
               #template.file-row
                 // This is used as the file preview template
-                div
+                div.img
                   span.preview
                     img(data-dz-thumbnail='')
-                div
+                div.name
                   p.name(data-dz-name='')
                   strong.error.text-danger(data-dz-errormessage='')
-                div
-                  p.size(data-dz-size='')
+                div.size
+                  p.size(data-dz-size)
                   .progress.progress-striped.active(role='progressbar', aria-valuemin='0', aria-valuemax='100', aria-valuenow='0')
                     .progress-bar.progress-bar-success(style='width:0%;', data-dz-uploadprogress='')
+                div.icon(style="text-align:right")
+                  p.type.fa(data-dz-type)
+                  strong.error.text-danger(data-dz-errormessage='')
                 div(style="text-align:right")
                   button.btn.btn-primary.start
                     span Start upload
-                  button.btn.btn-empty.cancel(data-dz-remove='')
+                  button.btn.btn-empty.cancel.single(data-dz-remove='')
                     span Remove
-                  button.btn.btn-danger.delete(data-dz-remove='')
+                  button.btn.btn-danger.delete.pull-right(data-dz-remove='')
                     span Delete
 
 
