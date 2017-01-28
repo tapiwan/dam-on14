@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 
 const assetSchema = new mongoose.Schema({
-  name: String,
-  suffix: String,
-  type: String,
-  _collectionId: mongoose.Schema.Types.ObjectId
+    name: String,
+    path: String,
+    suffix: String,
+    type: String,
+    _collectionId: mongoose.Schema.Types.ObjectId
 }, { timestamps: true });
 
 

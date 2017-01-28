@@ -1,17 +1,17 @@
+
+
 $(document).ready(function() {
 
 
-
-
-
     if(document.querySelector("#template")) {
+
 
         var previewNode = document.querySelector("#template");
         previewNode.id = "";
         var previewTemplate = previewNode.parentNode.innerHTML;
         previewNode.parentNode.removeChild(previewNode);
 
-        var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+        var myDropzone = new Dropzone(document.body, {
             url: "/upload/assets",
             paramName: 'assets',
             maxFilesize: 200, // MB
@@ -34,40 +34,38 @@ $(document).ready(function() {
             var type = file.type.split('/');
             type = type;
 
-
             if(type[0] != "image") {
                 if(fileClasses[type[1]] == undefined) {
                     file.previewElement.querySelector("[data-dz-thumbnail]").parentNode.innerHTML= "<i class='fa fa-4x "+fileClasses.default+"'></i>";
-                    file.previewElement.querySelector("[data-dz-type]").className= "label label-primary fa "+fileClasses.default;
 
                 }
                 else {
                     file.previewElement.querySelector("[data-dz-thumbnail]").parentNode.innerHTML= "<i class='fa fa-4x "+fileClasses[type[1]]+"'></i>";
-                    file.previewElement.querySelector("[data-dz-type]").className= "label label-primary fa "+fileClasses[type[1]];
                 }
-
-
 
             }
             else {
                 if(fileClasses[type[1]] == undefined) {
                     file.previewElement.querySelector("[data-dz-thumbnail]").parentNode.innerHTML= "<i class='fa fa-4x "+fileClasses.default+"'></i>";
-                    file.previewElement.querySelector("[data-dz-type]").className= "label label-primary fa "+fileClasses.default;
 
                 }
-                else {
-                    file.previewElement.querySelector("[data-dz-type]").className= "label label-primary fa "+fileClasses[type[1]];
-
-                }
-
             }
 
-
-
-
+            if($(".file-row").length == $(".start").length-1){
+                $(".buttonArea .start").fadeOut();
+            }
 
             $(".upload-area").removeClass('uploadImage');
-            $(".start, .cancel").fadeIn();
+            $(".cancel").fadeIn();
+
+            file.previewElement.querySelector("select").onchange = function () {
+                $(this).closest("div").parent().find(".buttons").find(".start").fadeIn()
+
+
+                if($(".file-row").length == $(".start").length-1){
+                    $(".buttonArea .start").show();
+                }
+            };
 
             file.previewElement.querySelector(".start").onclick = function () {
                 myDropzone.enqueueFile(file);
@@ -84,12 +82,25 @@ $(document).ready(function() {
         });
 
         // DISBALE BUTTONS AFTER UPLOAD
-        myDropzone.on("sending", function (file) {
+        myDropzone.on("sending", function (file, xhr, formData) {
+
+            var e = file.previewElement.querySelector("#sel1");
+            var collection = e.options[e.selectedIndex].dataset.id
+
+            // ADD DATA TO POST
+            formData.append("collection", collection);
+
             file.previewElement.querySelector(".start").setAttribute("disabled", "disabled");
+            file.previewElement.querySelector(".start").textContent="Uploaded";
         });
 
         // UPLOAD SUCESS
-        myDropzone.on("queuecomplete", function (progress) {
+        myDropzone.on("complete", function (file) {
+            file.previewElement.querySelector(".start").textContent="File has been uploaded";
+            file.previewElement.querySelector(".cancel").remove();
+            setTimeout(function () {
+                file.previewElement.querySelector(".progress").remove();
+            },2000)
 
 
         });
@@ -104,7 +115,6 @@ $(document).ready(function() {
             myDropzone.removeAllFiles(true);
             $(".upload-area").addClass('uploadImage');
             $(".start, .cancel").fadeOut();
-            console.log("remove")
 
 
 

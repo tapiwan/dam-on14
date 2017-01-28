@@ -19,7 +19,7 @@ exports.getAssets = (req, res) => {
 
 exports.upload = (req, res) => {
 
-    var upload = multer({ dest: './uploads/tmp'}).array('assets', 5);
+    var upload = multer({ dest: './public/uploads'}).array('assets', 5);
 
     upload(req, res, function(err) {
 
@@ -27,18 +27,33 @@ exports.upload = (req, res) => {
             console.log('Error Occured' + err);
             return;
         }
-        console.log(req.files);
-        res.end('Files Uploaded');
+        for(var i = 0; i < req.files.length; i++) {
+            console.log(req.files[i]);
+
+            new Asset({
+                name: req.files[i].originalname,
+                path: "uploads/"+req.files[i].filename,
+                suffix: req.files[i].mimetype,
+                type: req.files[i].mimetype,
+                _collectionId: req.body.collection
+            }).save(function (err, product, numAffected) {
+                if(err) {
+                    console.log(err);
+                }
+                if(product && i == req.files.length) {
+                    res.end('Files Uploaded');
+                }
+            });
+
+        }
+
+
+
+
     })
 
-    /*new Asset({
-        name: req.body.name,
-        suffix: req.body.suffix,
-        type: req.body.type,
-        _collectionId: req.body.collectionId
-    }).save();
-    */
 
-    //TODO: Flash success/error, move this into save() as callback.
+
+
   //res.redirect('/collections');
 }

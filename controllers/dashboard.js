@@ -6,7 +6,7 @@ const Collection = require('../models/Collection');
  */
 exports.showDashboard = (req, res) => {
 
-  Collection.find().sort({'_id': -1}).limit(3).exec(function (err, results) {
+  Collection.find().sort({'_id': -1}).exec(function (err, results) {
 
     if (!err) {
 

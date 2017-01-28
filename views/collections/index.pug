@@ -42,10 +42,10 @@ block content
               .row
                 ul.assetlist.col-md-12.text-center
                   li.col-md-2(v-if="collectionSize > 0", v-for="asset in assets")
-                    img(src="/assets/example/platzhalter.jpg")
+                    img(v-bind:src="asset.path")
                     h5
                       i.fa.fa-file-image-o
-                      | {{asset.name}}{{asset.suffix}}
+                      | {{asset.name}}
                     .editbar
                       a.fa.fa-edit
                         span Edit

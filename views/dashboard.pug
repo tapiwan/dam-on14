@@ -10,9 +10,9 @@ block content
 
       ul.folderlist
         each collection, index in collections
-
-          li
-            a(href="/collections#"+collection.name.replace(/\s+/g, '')+"") #{collection.name}
+          if index < 3
+            li
+              a(href="/collections#"+collection.name.replace(/\s+/g, '')+"") #{collection.name}
 
 
     .col-md-2
@@ -56,7 +56,7 @@ block content
 
 
       #actions.row.upload-area.uploadImage
-        .col-lg-12.p0(style="background-color: white")
+        .col-lg-12.p0.buttonArea(style="background-color: white")
           button.btn.btn-sm.btn-empty.cancel.pull-right(type='reset')
             span Remove all
 
@@ -83,10 +83,15 @@ block content
                   p.size(data-dz-size)
                   .progress.progress-striped.active(role='progressbar', aria-valuemin='0', aria-valuemax='100', aria-valuenow='0')
                     .progress-bar.progress-bar-success(style='width:0%;', data-dz-uploadprogress='')
-                div.icon(style="text-align:right")
-                  p.type.fa(data-dz-type)
-                  strong.error.text-danger(data-dz-errormessage='')
-                div(style="text-align:right")
+                div
+                  select#sel1.form-control
+                    option(selected='selected', disabled='disabled') Choose collection
+                    each collection, index in collections
+                      option(data-id=collection._id) #{collection.name}
+
+                    //option Add new collection
+
+                div.buttons(style="text-align:right")
                   button.btn.btn-primary.start
                     span Start upload
                   button.btn.btn-empty.cancel.single(data-dz-remove='')
