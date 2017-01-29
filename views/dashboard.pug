@@ -47,7 +47,6 @@ block content
 
   .row.mt30.box
 
-
       span.btn.btn-primary.fileinput-button.pull-right
         span Add files
 
@@ -83,6 +82,11 @@ block content
                   p.size(data-dz-size)
                   .progress.progress-striped.active(role='progressbar', aria-valuemin='0', aria-valuemax='100', aria-valuenow='0')
                     .progress-bar.progress-bar-success(style='width:0%;', data-dz-uploadprogress='')
+
+                div.tags
+                  span.btn.btn-primary.btn-sm.fa.fa-tags.showTags
+                  .tagsArea
+
                 div
                   select#sel1.form-control
                     option(selected='selected', disabled='disabled') Choose collection
@@ -98,6 +102,7 @@ block content
                     span Remove
                   button.btn.btn-danger.delete.pull-right(data-dz-remove='')
                     span Delete
+
 
 
 

@@ -3,7 +3,11 @@
 $(document).ready(function() {
 
 
+
+
     if(document.querySelector("#template")) {
+
+
 
 
         var previewNode = document.querySelector("#template");
@@ -33,7 +37,10 @@ $(document).ready(function() {
         myDropzone.on("addedfile", function (file) {
             var type = file.type.split('/');
             type = type;
+            file.filetype = fileTypes[type[1]];
 
+
+            // HANDLE THUMBNAIL
             if(type[0] != "image") {
                 if(fileClasses[type[1]] == undefined) {
                     file.previewElement.querySelector("[data-dz-thumbnail]").parentNode.innerHTML= "<i class='fa fa-4x "+fileClasses.default+"'></i>";
@@ -51,6 +58,7 @@ $(document).ready(function() {
                 }
             }
 
+            // HANDLE UPLOAD BUTTONS
             if($(".file-row").length == $(".start").length-1){
                 $(".buttonArea .start").fadeOut();
             }
@@ -58,6 +66,36 @@ $(document).ready(function() {
             $(".upload-area").removeClass('uploadImage');
             $(".cancel").fadeIn();
 
+
+
+            // TAGS
+            file.previewElement.querySelector(".showTags").onclick = function () {
+                $(this).next(".tagsArea").tagsinput({
+                    confirmKeys: [13, 32, 44],
+
+
+                });
+                $(".bootstrap-tagsinput input").attr("placeholder", "Add a tag");
+
+
+                if( $(this).next().css("display") == "block") {
+                    $(this).next().fadeOut();
+                    $(this).removeClass("fa-times");
+                    $(this).addClass("fa-tags");
+                }
+                else {
+                    $(this).next().fadeIn();
+                    $(this).addClass("fa-times");
+                    $(this).removeClass("fa-tags");
+                }
+
+
+
+
+
+            };
+
+            // GET COLLECTION
             file.previewElement.querySelector("select").onchange = function () {
                 $(this).closest("div").parent().find(".buttons").find(".start").fadeIn()
 
@@ -67,6 +105,7 @@ $(document).ready(function() {
                 }
             };
 
+            // START UPLOAD
             file.previewElement.querySelector(".start").onclick = function () {
                 myDropzone.enqueueFile(file);
             };
@@ -84,11 +123,24 @@ $(document).ready(function() {
         // DISBALE BUTTONS AFTER UPLOAD
         myDropzone.on("sending", function (file, xhr, formData) {
 
+            // GET COLLECTIONS
             var e = file.previewElement.querySelector("#sel1");
-            var collection = e.options[e.selectedIndex].dataset.id
+            var collection = e.options[e.selectedIndex].dataset.id;
+
+            // GET TAGS
+            var tags = file.previewElement.querySelector('.tagsArea').value;
+
+            // SEND TYPE
+
 
             // ADD DATA TO POST
             formData.append("collection", collection);
+            if(tags){
+                formData.append("tags", tags);
+
+            }
+            formData.append("filetype", file.filetype);
+
 
             file.previewElement.querySelector(".start").setAttribute("disabled", "disabled");
             file.previewElement.querySelector(".start").textContent="Uploaded";

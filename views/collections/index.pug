@@ -42,7 +42,12 @@ block content
               .row
                 ul.assetlist.col-md-12.text-center
                   li.col-md-2(v-if="collectionSize > 0", v-for="asset in assets")
-                    img(v-bind:src="asset.path")
+
+                    // TODO: Eine Idee, wie man das dynamisch gestaleten könnte? Dass die FontAwesome Klasse aus der config.js geladen wird. Also in der Art: fileClasses.asset.type
+
+                    img.thumb(v-if="asset.type == 'image'",v-bind:src="asset.path")
+                    i.thumb.fa.fa-4x(v-if="asset.type == 'pdf'",v-bind:class="fileClasses.pdf")
+                    i.thumb.fa.fa-4x(v-if="asset.type == 'psd'",v-bind:class="fileClasses.default")
                     h5
                       i.fa.fa-file-image-o
                       | {{asset.name}}
@@ -51,6 +56,11 @@ block content
                         span Edit
                       a.fa.fa-trash-o
                         span Delete
+
+                    .taglist(v-if="asset.tags")
+                      div(v-for="tag in asset.tags.split(',')")
+                        span.label.label-primary {{tag}}
+
                   li.col-md-12(v-if="collectionSize == 0")
                       h5
                         | This collection has no assets yet.

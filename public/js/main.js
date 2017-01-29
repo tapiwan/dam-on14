@@ -59,6 +59,7 @@ $(document).ready(function() {
             data: {
                 open: false,
                 assets: null,
+                fileClasses: fileClasses,
                 collectionSize:  null,
             },
 
@@ -76,6 +77,7 @@ $(document).ready(function() {
                     $("form #collectionID").val(collectionID);
 
                 },
+
                 loadAssets: function() {
                     var that = this;
 

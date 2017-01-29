@@ -175,7 +175,6 @@ footer {
 
 
 
-// DASHBOARD
 
 // DASHBOARD
 
@@ -270,7 +269,18 @@ footer {
 
 }
 
+// TAG INPUT
+.bootstrap-tagsinput {
+  display: none;
+  position: absolute;
+  margin-top: 4px;
 
+  input {
+    min-width: 100px;
+  }
+}
+
+// DROPZONE UPLOADRE
 #actions {
   margin: 2em 0;
 }
@@ -394,19 +404,23 @@ div.table .file-row > div {
 
 }
 .assetlist {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 
 
   li {
     padding: 12px;
+    margin: 10px;
     list-style: none;
     border: 1px solid $grey;
-    height: 170px;
     position: relative;
     cursor: pointer;
 
     h5{
       margin-top: 10px;
       margin-bottom: 0;
+      overflow: hidden;
     }
 
     .fileicon {
@@ -415,11 +429,19 @@ div.table .file-row > div {
       justify-content: center;
       align-items: center;
     }
-    img {
+
+    img.thumb {
       object-fit: cover;
       width: 100%;
       height: 105px;
 
+    }
+    i.thumb {
+      width: 100%;
+      height: 105px;
+      padding:20px 0;
+      background-color: $brand-primary;
+      color: $white;
     }
 
     .filetype {
@@ -457,7 +479,13 @@ div.table .file-row > div {
         text-decoration: none;
         color: $grey
       }
+    }
 
+    .taglist {
+      span {
+        float: left;
+        margin: 4px 3px;
+      }
     }
 
   }
@@ -468,6 +496,7 @@ div.table .file-row > div {
   }
 
 }
+
 // Input Fields
 // -------------------------
 

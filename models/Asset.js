@@ -5,6 +5,7 @@ const assetSchema = new mongoose.Schema({
     path: String,
     suffix: String,
     type: String,
+    tags: String,
     _collectionId: mongoose.Schema.Types.ObjectId
 }, { timestamps: true });
 
