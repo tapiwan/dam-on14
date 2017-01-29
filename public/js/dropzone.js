@@ -60,6 +60,7 @@ $(document).ready(function() {
 
             // HANDLE UPLOAD BUTTONS
             if($(".file-row").length == $(".start").length-1){
+                console.log("Ads")
                 $(".buttonArea .start").fadeOut();
             }
 
@@ -100,8 +101,25 @@ $(document).ready(function() {
                 $(this).closest("div").parent().find(".buttons").find(".start").fadeIn()
 
 
+                // HIDE TAGS IF OPEN
+                if( $(this).closest("div").prev().find(".bootstrap-tagsinput").css("display") == "block") {
+                    $(this).closest("div").prev().find(".showTags").click();
+
+                }
+
+
                 if($(".file-row").length == $(".start").length-1){
-                    $(".buttonArea .start").show();
+
+
+                    if($(".selectCollection option:selected:disabled").length != 0 )
+                    {
+                        $(".buttonArea .start").hide();
+                    }
+                    else {
+                        $(".buttonArea .start").show();
+
+                    }
+
                 }
             };
 
@@ -126,12 +144,19 @@ $(document).ready(function() {
             // GET COLLECTIONS
             var e = file.previewElement.querySelector("#sel1");
             var collection = e.options[e.selectedIndex].dataset.id;
+            file.previewElement.querySelector(".selectCollection").innerHTML = "<strong>Collection:</strong><br><a href='collections#"+e.options[e.selectedIndex].value+"'>"+e.options[e.selectedIndex].value+"</a>";;
 
             // GET TAGS
             var tags = file.previewElement.querySelector('.tagsArea').value;
+            if(tags) {
+                file.previewElement.querySelector('.tags').innerHTML = "<strong>Tags:</strong><br>"+tags;
+            }
+            else {
+                file.previewElement.querySelector('.tags').innerHTML = "<strong>Tags:</strong><br>No Tags";
+
+            }
 
             // SEND TYPE
-
 
             // ADD DATA TO POST
             formData.append("collection", collection);

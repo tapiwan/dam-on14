@@ -33,9 +33,6 @@ block content
                 span= moment(collection.updatedAt).format("DD.MM.YY - HH:mm") + ' Uhr'
 
 
-
-
-
             div(id = collection.name.replace(/\s+/g, '')+'-'+index, data-collection-hash = '#'+collection.name ).collapse.collectionresults
               span.pull-right(v-if="collectionSize > 1" ) {{collectionSize}} Assets
               span.pull-right(v-if="collectionSize == 1" ) {{collectionSize}} Asset
@@ -43,7 +40,7 @@ block content
                 ul.assetlist.col-md-12.text-center
                   li.col-md-2(v-if="collectionSize > 0", v-for="asset in assets")
 
-                    // TODO: Eine Idee, wie man das dynamisch gestaleten könnte? Dass die FontAwesome Klasse aus der config.js geladen wird. Also in der Art: fileClasses.asset.type
+                    // TODO: Eine Idee, wie man das dynamisch gestalten könnte? Dass die FontAwesome Klasse aus der config.js geladen wird. Also in der Art: fileClasses.asset.type
 
                     img.thumb(v-if="asset.type == 'image'",v-bind:src="asset.path")
                     i.thumb.fa.fa-4x(v-if="asset.type == 'pdf'",v-bind:class="fileClasses.pdf")
@@ -64,8 +61,6 @@ block content
                   li.col-md-12(v-if="collectionSize == 0")
                       h5
                         | This collection has no assets yet.
-
-
 
       else
         .col-md-12.box
