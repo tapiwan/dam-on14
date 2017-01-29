@@ -388,7 +388,7 @@ div.table .file-row > div {
 
 }
 
-.collectionlist:hover, .collectionlist [aria-expanded='true']  {
+.collectionlist:hover  {
     .trash, .edit, .date {
       opacity: 1;
 
@@ -420,7 +420,9 @@ div.table .file-row > div {
     h5{
       margin-top: 10px;
       margin-bottom: 0;
+      line-height: 1.5;
       overflow: hidden;
+      overflow-wrap: break-word;
     }
 
     .fileicon {

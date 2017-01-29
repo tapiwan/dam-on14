@@ -60,7 +60,6 @@ $(document).ready(function() {
 
             // HANDLE UPLOAD BUTTONS
             if($(".file-row").length == $(".start").length-1){
-                console.log("Ads")
                 $(".buttonArea .start").fadeOut();
             }
 
@@ -108,8 +107,8 @@ $(document).ready(function() {
                 }
 
 
+                // SHOW / HIDE UPLOAD ALL BUTTON
                 if($(".file-row").length == $(".start").length-1){
-
 
                     if($(".selectCollection option:selected:disabled").length != 0 )
                     {
