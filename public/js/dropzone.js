@@ -66,6 +66,47 @@ $(document).ready(function() {
             $(".upload-area").removeClass('uploadImage');
             $(".cancel").fadeIn();
 
+            // EDIT NAME
+            file.previewElement.querySelector(".editName").onclick = function () {
+                var currentElement = $(this).parent().prev();
+                var currentName = $(this).parent().prev().text();
+                var newName;
+
+
+                if($(this).hasClass("fa-pencil")){
+                    $(this).parent().find(".fa-close").show();
+                    currentElement.html("<input class='form-control' type='text' value='"+currentName+"'>")
+                    $(this).removeClass("fa-pencil");
+                    $(this).addClass("fa-check");
+                }
+                else {
+                    // SAVE NEW NAME
+                    newName = currentElement.find("input").val();
+                    currentElement.html("<p>"+newName+"</p>")
+                    $(this).removeClass("fa-check");
+                    $(this).parent().find(".fa-close").hide();
+                    $(this).addClass("fa-pencil");
+
+                    file.newName = newName;
+
+                }
+
+            };
+            file.previewElement.querySelector(".fa-close").onclick = function () {
+                var currentElement = $(this).parent().prev();
+
+                $(this).parent().find(".editName").removeClass("fa-check");
+                $(this).parent().find(".editName").addClass("fa-pencil");
+
+
+                currentElement.html("<p class='name' data-dz-name >"+file.name+"</p>")
+                $(this).hide();
+
+
+            };
+
+
+
 
 
             // TAGS
@@ -88,10 +129,6 @@ $(document).ready(function() {
                     $(this).addClass("fa-times");
                     $(this).removeClass("fa-tags");
                 }
-
-
-
-
 
             };
 
@@ -164,6 +201,11 @@ $(document).ready(function() {
 
             }
             formData.append("filetype", file.filetype);
+
+            //SEND NEW FILENAME IF EDITED
+            if(file.newName){
+                formData.append("newName", file.newName);
+            }
 
 
             file.previewElement.querySelector(".start").setAttribute("disabled", "disabled");

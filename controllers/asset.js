@@ -29,9 +29,16 @@ exports.upload = (req, res) => {
         }
         for(var i = 0; i < req.files.length; i++) {
 
+            var filename = req.files[i].originalname;
+
+            if(req.body.newName){
+                console.log(req.body.newName);
+                filename = req.body.newName
+            }
+
 
             new Asset({
-                name: req.files[i].originalname,
+                name: filename,
                 path: "uploads/"+req.files[i].filename,
                 suffix: req.files[i].mimetype,
                 type: req.body.filetype,
