@@ -86,12 +86,15 @@ $(document).ready(function() {
                 else {
                     // SAVE NEW NAME
                     newName = currentElement.find("input").val();
-                    currentElement.html("<p>"+newName+""+suffix+"</p>")
-                    $(this).removeClass("fa-check");
-                    $(this).parent().find(".fa-close").hide();
-                    $(this).addClass("fa-pencil");
+                    if(newName){
+                        currentElement.html("<p>"+newName+""+suffix+"</p>")
+                        $(this).removeClass("fa-check");
+                        $(this).parent().find(".fa-close").hide();
+                        $(this).addClass("fa-pencil");
 
-                    file.newName = newName;
+                        file.newName = newName+""+suffix;
+                    }
+
 
                 }
 
