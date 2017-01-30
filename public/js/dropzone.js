@@ -7,9 +7,6 @@ $(document).ready(function() {
 
     if(document.querySelector("#template")) {
 
-
-
-
         var previewNode = document.querySelector("#template");
         previewNode.id = "";
         var previewTemplate = previewNode.parentNode.innerHTML;
@@ -70,19 +67,26 @@ $(document).ready(function() {
             file.previewElement.querySelector(".editName").onclick = function () {
                 var currentElement = $(this).parent().prev();
                 var currentName = $(this).parent().prev().text();
+                var suffix = file.name.substring(file.name.length-4,file.name.length);
                 var newName;
+
+
+                // REMOVE SUFFIX
+                currentName = currentName.substring(0,currentName.length-4);
+
 
 
                 if($(this).hasClass("fa-pencil")){
                     $(this).parent().find(".fa-close").show();
                     currentElement.html("<input class='form-control' type='text' value='"+currentName+"'>")
+                    currentElement.find("input").focus();
                     $(this).removeClass("fa-pencil");
                     $(this).addClass("fa-check");
                 }
                 else {
                     // SAVE NEW NAME
                     newName = currentElement.find("input").val();
-                    currentElement.html("<p>"+newName+"</p>")
+                    currentElement.html("<p>"+newName+""+suffix+"</p>")
                     $(this).removeClass("fa-check");
                     $(this).parent().find(".fa-close").hide();
                     $(this).addClass("fa-pencil");
@@ -94,12 +98,17 @@ $(document).ready(function() {
             };
             file.previewElement.querySelector(".fa-close").onclick = function () {
                 var currentElement = $(this).parent().prev();
+                var filename = file.name;
+
+                if(file.newName) {
+                    filename = file.newName;
+                }
 
                 $(this).parent().find(".editName").removeClass("fa-check");
                 $(this).parent().find(".editName").addClass("fa-pencil");
 
 
-                currentElement.html("<p class='name' data-dz-name >"+file.name+"</p>")
+                currentElement.html("<p class='name' data-dz-name >"+filename+"</p>")
                 $(this).hide();
 
 
