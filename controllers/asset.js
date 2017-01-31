@@ -17,6 +17,16 @@ exports.getAssets = (req, res) => {
     });
 }
 
+exports.deleteAsset = (req,res) => {
+    console.log(req);
+
+    Asset.remove({ _id: req.body.assetID }, (err) => {
+        if (err) { return next(err); }
+        req.flash('info', { msg: 'Asset has been deleted.' });
+        res.redirect('/collections');
+    });
+}
+
 exports.upload = (req, res) => {
 
     var upload = multer({ dest: './public/uploads'}).array('assets', 5);

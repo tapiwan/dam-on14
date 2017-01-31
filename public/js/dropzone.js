@@ -288,6 +288,10 @@ $(document).ready(function() {
         // ON FILE ADD
         myDropzone.on("addedfile", function (file) {
 
+            // SHOW AFTER DROP
+            // $('#uploadAssets').modal('show');
+
+
             var type = file.type.split('/');
             type = type;
             file.filetype = fileTypes[type[1]];

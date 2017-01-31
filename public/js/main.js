@@ -53,12 +53,30 @@ $(document).ready(function() {
                 },
                 deleteCollection: function () {
                     $("form #collectionID").val(collectionID);
+                },
+                deleteAsset: function (assetId, assetPath) {
+                    $("form .imgpreview").attr("src",assetPath);
+                    $("form #assetID").val(assetId);
+                    var that = this;
+
+                   // SPÄTER VLLT DYNAMISCH
+                    /*$.ajax({
+                        method: "POST",
+                        url: "/asset/delete",
+                        data: {
+                            _csrf : $(".csrf").val(),
+                            assetID : assetId
+                        }
+                    })
+                        .done(function(json) {
+                            that.loadAssets()
+                        });
+                        */
 
                 },
 
                 loadAssets: function() {
                     var that = this;
-
 
                     if (!that.open) {
                         $.ajax({

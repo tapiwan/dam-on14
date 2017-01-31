@@ -504,9 +504,9 @@ div.table .file-row > div {
 
 // DROPZONE COLLECTIONS
 
-#collections {
+.collectionDropzone {
   .modal-dialog.big-dialog {
-    width: 980px;
+    width: 980px!important;
     margin: 30px auto;
   }
 

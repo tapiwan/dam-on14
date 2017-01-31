@@ -154,6 +154,7 @@ app.get('/dashboard', passportConfig.isAuthenticated, dashboardController.showDa
  */
 app.get('/assets/:id', passportConfig.isAuthenticated, assetController.getAssets);
 app.post('/upload/assets', passportConfig.isAuthenticated, assetController.upload);
+app.post('/asset/delete', passportConfig.isAuthenticated, assetController.deleteAsset);
 
 /**
  * API examples routes.

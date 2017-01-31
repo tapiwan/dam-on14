@@ -53,7 +53,7 @@ block content
                     .editbar
                       a.fa.fa-edit
                         span Edit
-                      a.fa.fa-trash-o
+                      a.fa.fa-trash-o(data-toggle='modal', data-target='#deleteAsset', @click='deleteAsset(asset._id, asset.path)')
                         span Delete
 
                     .taglist(v-if="asset.tags")
@@ -129,61 +129,80 @@ block content
                 button.btn.btn-danger(type='submit')
                   | Delete Collection
 
-    #uploadAssets.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
-        .modal-dialog.big-dialog(role='document')
-            .modal-content
-                .modal-header
-                    button.close(type='button', data-dismiss='modal', aria-label='Close')
-                        span(aria-hidden='true') ×
-                    h4.modal-title Upload Area for
-                        strong.uploadToCollection
-                    p All uploaded assets are added to the collection
-                        strong.uploadToCollection
+    // ASSETS
+  #deleteAsset.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+      .modal-dialog(role='document')
+          .modal-content
+              .modal-header
+                  button.close(type='button', data-dismiss='modal', aria-label='Close')
+                      span(aria-hidden='true') ×
+                  h4.modal-title Delete Asset
+              .modal-body
+                  form(method='POST' action='/asset/delete')
+                      input.csrf(type='hidden', name='_csrf', value=_csrf)
+                      .form-group
+                          img.imgpreview(src="")
+                          p Do you really want to delete this asset?
+                          input.form-control(type='hidden', name='assetID', id='assetID')
+                      .form-group
+                          button.btn.btn-danger(type='submit')
+                              | Delete Asset
 
-                .modal-body.pt0
-                    .row.box
+  #uploadAssets.modal.fade.collectionDropzone(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+    .modal-dialog.big-dialog(role='document')
+        .modal-content
+            .modal-header
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') ×
+                h4.modal-title Upload Area for
+                    strong.uploadToCollection
+                p All uploaded assets are added to the collection
+                    strong.uploadToCollection
 
-                        span.btn.btn-primary.fileinput-button
-                            span Add files
+            .modal-body.pt0
+                .row.box
 
-
-                        #actions.row.upload-area.uploadImage
-                            .col-lg-12.p0.buttonArea(style="background-color: white")
-                                button.btn.btn-sm.btn-empty.cancel.pull-right(type='reset')
-                                    span Remove all
-
-                                button.btn.btn-sm.btn-info.start.pull-right.mr5.ml30(type='submit')
-                                    span Upload all
-
-                            .row.upload-assets
-                                .col-lg-12
-                                    #previews.table.table-striped.files
-                                        #templateCollections.file-row
-                                            // This is used as the file preview template
-                                            div.img
-                                                span.preview
-                                                    img(data-dz-thumbnail='')
-                                            div.name
-                                                p.name(data-dz-name='')
-                                                strong.error.text-danger(data-dz-errormessage='')
-                                            div.editname
-                                                span.btn.btn-primary.btn-sm.fa.fa-pencil.editName
-                                                span.btn.btn-empty.btn-sm.fa.fa-close(style="display:none")
-                                            div.size
-                                                p.size(data-dz-size)
-                                                .progress.progress-striped.active(role='progressbar', aria-valuemin='0', aria-valuemax='100', aria-valuenow='0')
-                                                    .progress-bar.progress-bar-success(style='width:0%;', data-dz-uploadprogress='')
-
-                                            div.tags
-                                                span.btn.btn-primary.btn-sm.fa.fa-tags.showTags
-                                                .tagsArea
+                    span.btn.btn-primary.fileinput-button
+                        span Add files
 
 
-                                            div.buttons(style="text-align:right")
-                                                button.btn.btn-primary.start
-                                                    span Start upload
-                                                button.btn.btn-empty.cancel.single(data-dz-remove='')
-                                                    span Remove
-                                                button.btn.btn-danger.delete.pull-right(data-dz-remove='')
-                                                    span Delete
+                    #actions.row.upload-area.uploadImage
+                        .col-lg-12.p0.buttonArea(style="background-color: white")
+                            button.btn.btn-sm.btn-empty.cancel.pull-right(type='reset')
+                                span Remove all
+
+                            button.btn.btn-sm.btn-info.start.pull-right.mr5.ml30(type='submit')
+                                span Upload all
+
+                        .row.upload-assets
+                            .col-lg-12
+                                #previews.table.table-striped.files
+                                    #templateCollections.file-row
+                                        // This is used as the file preview template
+                                        div.img
+                                            span.preview
+                                                img(data-dz-thumbnail='')
+                                        div.name
+                                            p.name(data-dz-name='')
+                                            strong.error.text-danger(data-dz-errormessage='')
+                                        div.editname
+                                            span.btn.btn-primary.btn-sm.fa.fa-pencil.editName
+                                            span.btn.btn-empty.btn-sm.fa.fa-close(style="display:none")
+                                        div.size
+                                            p.size(data-dz-size)
+                                            .progress.progress-striped.active(role='progressbar', aria-valuemin='0', aria-valuemax='100', aria-valuenow='0')
+                                                .progress-bar.progress-bar-success(style='width:0%;', data-dz-uploadprogress='')
+
+                                        div.tags
+                                            span.btn.btn-primary.btn-sm.fa.fa-tags.showTags
+                                            .tagsArea
+
+
+                                        div.buttons(style="text-align:right")
+                                            button.btn.btn-primary.start
+                                                span Start upload
+                                            button.btn.btn-empty.cancel.single(data-dz-remove='')
+                                                span Remove
+                                            button.btn.btn-danger.delete.pull-right(data-dz-remove='')
+                                                span Delete
 
