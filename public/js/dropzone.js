@@ -3,7 +3,6 @@
 $(document).ready(function() {
 
 
-
     // DROPZONE ON DASHBOARD
     if(document.querySelector("#template")) {
 
@@ -254,9 +253,6 @@ $(document).ready(function() {
     // DROPZONE ON COLLECTIONS
     if(document.querySelector("#templateCollections")) {
 
-        $('#uploadAssets').on('hidden.bs.modal', function () {
-            location.reload();
-        });
 
         var selectedCollection ;
 
@@ -456,6 +452,10 @@ $(document).ready(function() {
             setTimeout(function () {
                 file.previewElement.querySelector(".progress").remove();
             },2000)
+
+            $('#uploadAssets').on('hidden.bs.modal', function () {
+                location.reload();
+            });
 
 
         });
