@@ -31,6 +31,7 @@ h1.bold {
 .mt30 {
   margin-top: 30px;
 }
+
 .mt50 {
   margin-top: 50px;
 }
@@ -45,6 +46,9 @@ h1.bold {
 }
 .p0 {
   padding: 0;
+}
+pt0 {
+  padding-top: 0;
 }
 
 .box {
@@ -280,7 +284,7 @@ footer {
   }
 }
 
-// DROPZONE UPLOADRE
+// DROPZONE UPLOADER
 #actions {
   margin: 2em 0;
 }
@@ -496,8 +500,31 @@ div.table .file-row > div {
       opacity:1;
     }
   }
-
 }
+
+// DROPZONE COLLECTIONS
+
+#collections {
+  .modal-dialog.big-dialog {
+    width: 980px;
+    margin: 30px auto;
+  }
+
+  div.table .file-row {
+    display: table-row;
+
+
+    div.name {
+      min-width: 300px;
+    }
+
+  }
+
+  .start, .cancel {
+    display: none;
+  }
+}
+
 
 // Input Fields
 // -------------------------

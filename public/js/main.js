@@ -24,28 +24,6 @@ $(document).ready(function() {
         $('#collections .in').collapse('hide');
     });
 
-    // DRAG AND DROP UPLOAD
-    Dropzone.options.uploadWidget = {
-        paramName: 'assets',
-        maxFilesize: 200, // MB
-        maxFiles: 10,
-        dictDefaultMessage: 'Drag a file here to upload, or click to select one',
-        headers: {
-            'x-csrf-token': document.querySelectorAll('meta[name=csrf-token]')[0].getAttributeNode('content').value,
-        },
-
-        init: function() {
-            this.on('success', function( file, resp ){
-                console.log( resp );
-            });
-
-            this.on("addedfile", function(file) {
-                $(".upload-area").css('background', 'none');
-            });
-
-
-        }
-    };
 
     
 
