@@ -353,7 +353,7 @@ div.table .file-row > div {
   }
   .date {
     position: absolute;
-    left: 620px;
+    left: 800px;
     top: 33px;
     font-size: 15px;
     color: $grey;
@@ -371,9 +371,8 @@ div.table .file-row > div {
 
   .collectioneditbar {
     position: absolute;
-    top: 50%;
-    right: 260px;
-    margin-top: -19px;
+    top: 23px;
+    right: 80px;
 
     .trash, .edit {
       cursor: pointer;
