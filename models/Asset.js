@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const ExifImage = require('exif').ExifImage;
+const sizeOf = require('image-size');
 
 const assetSchema = new mongoose.Schema({
     name: String,
@@ -9,6 +10,8 @@ const assetSchema = new mongoose.Schema({
     type: String,
     tags: String,
     size: String,
+    width: String,
+    height: String,
     encoding: String,
     user: {
         name: String,
@@ -21,6 +24,7 @@ const assetSchema = new mongoose.Schema({
 
 assetSchema.pre('save', function(next) {
     const data = this;
+    // READ EXIF
 
     if(data.suffix == "image/jpeg" || data.suffix == "image/tiff" )  {
         console.log("Try to find EXIF")
@@ -37,6 +41,24 @@ assetSchema.pre('save', function(next) {
         next();
     }
 });
+
+assetSchema.pre('save', function(next) {
+    const data = this;
+
+    // GET WIDTH AND HEIGHT
+    if(data.type == "image" || data.type == "psd")  {
+
+        sizeOf(data.fullpath, function (err, dimensions) {
+            data.width = dimensions.width;
+            data.height = dimensions.height
+            next();
+        });
+    }
+    else {
+        next();
+    }
+});
+
 
 
 const Asset = mongoose.model('Asset', assetSchema);

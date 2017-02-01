@@ -193,6 +193,9 @@ $(document).ready(function() {
             var collection = e.options[e.selectedIndex].dataset.id;
             file.previewElement.querySelector(".selectCollection").innerHTML = "<strong>Collection:</strong><br><a href='collections#"+e.options[e.selectedIndex].value+"'>"+e.options[e.selectedIndex].value+"</a>";;
 
+            // HIDE EDIT
+            file.previewElement.querySelector('.editname').innerHTML ="";
+
             // GET TAGS
             var tags = file.previewElement.querySelector('.tagsArea').value;
             if(tags) {
@@ -420,6 +423,8 @@ $(document).ready(function() {
 
         // DISBALE BUTTONS AFTER UPLOAD
         myDropzone.on("sending", function (file, xhr, formData) {
+
+            file.previewElement.querySelector('.editname').innerHTML ="";
 
             // GET TAGS
             var tags = file.previewElement.querySelector('.tagsArea').value;

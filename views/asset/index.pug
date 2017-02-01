@@ -9,7 +9,7 @@ block content
         h1.bold #{title}
       .col-md-2.p0
 
-    .row.mt30.box
+    .row.mt30.box.df
         .col-md-6.imageArea
 
             if asset.type == "image"
@@ -59,11 +59,69 @@ block content
             hr
             h3 Specific Informations
 
-            if asset.type == "image"
-                ul.assetdetails
+
+            ul.assetdetails
+                li
+                    strong Dimensions:
+                    |  #{asset.width}px x #{asset.height}px
+                if asset.suffix == "image/jpeg" && asset.metadata || asset.suffix == "image/tiff"
                     li
-                        strong Auflösung:
-                        //TODO muss noch in DB integriert werden
+                        strong Camera:
+                        |  #{asset.metadata.image.Model}
+                    li
+                        strong Aperture:
+                        |  #{asset.metadata.exif.ApertureValue}
+                    li
+                        strong Shutter speed:
+                        |  #{asset.metadata.exif.ShutterSpeedValue}
+                    li
+                        strong ISO:
+                        |  #{asset.metadata.exif.ISO}
+                if asset.metadata
+                    ul.assetdetails
+                        li
+                            button.btn.btn-primary.btn-sm(type='button', data-toggle='modal', data-target='#exifDataModal') Show more
+
+
+
+
+            #exifDataModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+              .modal-dialog.big-dialog(role='document')
+                  .modal-content
+                      .modal-header
+                          button.close(type='button', data-dismiss='modal', aria-label='Close')
+                              span(aria-hidden='true') ×
+                          h4.modal-title Image informations
+                      .modal-body
+                        if asset.metadata
+
+                          .row
+                              .col-md-6
+                                  if asset.type == "image"
+                                      img(src='/' + asset.path)
+                                  h4.mt30 IMAGE
+                                  ul.assetdetails
+                                      each val, key in asset.metadata.image
+                                          li
+                                            strong #{key}
+                                            |  #{val}
+                                  h4.mt30 THUMBNAIL
+                                  ul.assetdetails
+                                      each val, key in asset.metadata.thumbnail
+                                          li
+                                              strong #{key}
+                                              |  #{val}
+                              .col-md-6
+                                  h4 EXIF
+                                  ul.assetdetails
+                                      each val, key in asset.metadata.exif
+                                          li
+                                              strong #{key}
+                                              |  #{val}
+
+
+
+
 
 
 
