@@ -24,6 +24,11 @@ block content
         .col-md-5
             h3 Informations
             ul.assetdetails
+                if asset.tags
+                    li.tags
+                        - var tags = asset.tags.replace(/ /g,'').split(',')
+                        each tag in tags
+                            span.mr5.label.label-primary=tag
                 li
                     strong Name:
                     |  #{asset.name}
@@ -31,17 +36,26 @@ block content
                     strong Type:
                     |  #{asset.suffix}
                 li
+                    strong Size:
+                    if asset.size < 1000000
+                        - var num = asset.size/1000
+                        - num = num.toFixed(0)
+                        span=" "+num+" KB"
+                    else
+                        - var num = asset.size/1000000
+                        - num = num.toFixed(2)
+                        span=" " + num + " MB"
+                li
                     strong Uploaded at:
                     span= ' '+moment(asset.createdAt).format("DD.MM.YY - HH:mm") + ' Uhr'
+                li
+                    strong Uploaded by:
+                    |  #{asset.user.name}
                 li
                     strong Collection:
                     a(v-bind:href="'../../collections#'+collection.url")  {{collection.name}}
 
-                if asset.tags
-                    li
-                        - var tags = asset.tags.replace(/ /g,'').split(',')
-                        each tag in tags
-                            span.mr5.label.label-primary=tag
+
             hr
             h3 Specific Informations
 

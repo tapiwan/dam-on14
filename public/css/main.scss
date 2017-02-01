@@ -587,15 +587,15 @@ textarea {
 // ASSETS DETAIL
 #asset {
   .imageArea {
-    background-color: $brand-primary;
     display: flex;
     justify-content: center;
     align-content: center;
     align-items: center;
+    border-right: 1px solid $brand-primary;
 
     i {
       padding: 50px;
-      color: $white;
+      color: $brand-primary;
     }
     img {
       padding: 20px;
@@ -607,6 +607,11 @@ textarea {
     padding: 0;
     margin: 0;
     list-style: none;
+
+    .tags {
+
+      margin-bottom: 20px;
+    }
 
     li {
       margin-bottom: 7px;

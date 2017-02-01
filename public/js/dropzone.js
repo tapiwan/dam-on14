@@ -255,10 +255,12 @@ $(document).ready(function() {
 
 
         var selectedCollection ;
+        var selectedCollectionName;
 
         $(".addFiles").click(function () {
             selectedCollection = $(this).parent().parent().parent().data('collection-id')
-            $(".uploadToCollection").text(" "+$(this).parent().parent().parent().find('h3 .cname').text());
+            selectedCollectionName = " "+$(this).parent().parent().parent().find('h3 .cname').text();
+            $(".uploadToCollection").text(selectedCollectionName);
 
         });
 
@@ -458,7 +460,10 @@ $(document).ready(function() {
             },2000)
 
             $('#uploadAssets').on('hidden.bs.modal', function () {
-                location.reload();
+                var openAccordion = selectedCollectionName.replace(/\s+/g, "");
+
+                window.location.href = "/collections#"+openAccordion;
+                window.location.reload(true);
             });
 
 

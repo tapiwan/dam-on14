@@ -114,29 +114,32 @@ $(document).ready(function() {
 
 
     // ASSETS DETAILS
-    var asset = new Vue({
-        el: '#asset',
-        data: {
-            collection: "",
-            fileClasses: fileClasses,
-        },
+    if($("#asset").length>0){
+        var asset = new Vue({
+            el: '#asset',
+            data: {
+                collection: "",
+                fileClasses: fileClasses,
+            },
 
-        mounted: function () {
-            var that = this;
-            var collectionID = $("#asset").data('collection-id');
+            mounted: function () {
+                var that = this;
+                var collectionID = $("#asset").data('collection-id');
 
-            $.ajax({
-                method: "GET",
-                url: "/collections/getName/" + collectionID
-            })
-                .done(function(json) {
-                    that.collection = json;
-                    that.collection.url = json.name.replace(/\s+/g, '')
+                $.ajax({
+                    method: "GET",
+                    url: "/collections/getName/" + collectionID
+                })
+                    .done(function(json) {
+                        that.collection = json;
+                        that.collection.url = json.name.replace(/\s+/g, '')
 
-                });
+                    });
 
-        },
-    });
+            },
+        });
+    }
+
 
 
 
