@@ -43,8 +43,8 @@ block content
 
 
             div(id = collection.name.replace(/\s+/g, '')+'-'+index, data-collection-hash = '#'+collection.name ).collapse.collectionresults
-              span.pull-right(v-if="collectionSize > 1" ) {{collectionSize}} Assets
-              span.pull-right(v-if="collectionSize == 1" ) {{collectionSize}} Asset
+              span.assets-amount.pull-right(v-if="collectionSize > 1" ) {{collectionSize}} Assets
+              span.assets-amount.pull-right(v-if="collectionSize == 1" ) {{collectionSize}} Asset
               .row
                 ul.assetlist.col-md-12.text-center
                   li.col-md-2(v-if="collectionSize > 0", v-for="asset in assets")
@@ -73,7 +73,7 @@ block content
                   li.col-md-12(v-if="collectionSize == 0")
                       h5
                         | This collection has no assets yet.
-                button.btn.btn-primary.pull-right.addFiles(style="margin-bottom:30px",type='button', data-toggle='modal', data-target='#uploadAssets')
+                button.btn.btn-primary.pull-right.addFiles(type='button', data-toggle='modal', data-target='#uploadAssets')
                     | Add files
 
       else

@@ -32,12 +32,30 @@ $(document).ready(function() {
             activeView: 'collectionlist'
         },
 
+        mounted: function() {
+            var activeViewState = localStorage.getItem('activeView');
+
+            if(activeViewState.length) {
+                this.switchView(activeViewState);
+            }
+        },
+
         methods: {
            switchView: function(newView) {
                 //Check if given view parameter is allowed
                 if(this.views.indexOf(newView) > -1) {
+                    var collections =  $('[data-collection]');
                     this.activeView = newView;
-                    $('[data-collection]').toggleClass('collectionlist collectionbox col-md-12 col-md-3');
+                    localStorage.setItem('activeView', newView);
+
+                    if(newView == 'collectionlist') {
+                        collections.removeClass('collectionbox col-md-3');
+                        collections.addClass('collectionlist col-md-12');
+                    }
+                    else if(newView == 'collectionbox') {
+                        collections.addClass('collectionbox col-md-3');
+                        collections.removeClass('collectionlist col-md-12');
+                    }
                 }
            }
         }

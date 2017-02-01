@@ -401,6 +401,14 @@ div.table .file-row > div {
 
   }
 
+  .collectionresults {
+    padding:0 30px;
+
+    .addFiles {
+      margin-bottom: 30px;
+    }
+  }
+
 }
 
 .collectionlist:hover {
@@ -416,6 +424,12 @@ div.table .file-row > div {
 
 .collectionbox {
   height: 170px;
+  border-left: 1px solid $grey;
+  border-right: 1px solid $grey;
+
+  h3 {
+    cursor: pointer;
+  }
 
   .date {
     font-size: 15px;
@@ -463,6 +477,31 @@ div.table .file-row > div {
     }
 
   }
+
+  .collectionresults {
+    padding:0 30px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow-y: scroll;
+    background-color: $white;
+    min-height: 100%;
+    max-height: 100%;
+
+    .addFiles {
+      margin-bottom: 30px;
+    }
+
+    .assets-amount {
+      display: none;
+    }
+
+    .assetlist {
+      li {
+        width: 100%;
+      }
+    }
+  }
 }
 
 .collectionbox:hover {
@@ -472,11 +511,6 @@ div.table .file-row > div {
 
 }
 
-.collectionresults {
-  padding:0 30px;
-
-
-}
 .assetlist {
   display: flex;
   justify-content: center;
@@ -492,7 +526,7 @@ div.table .file-row > div {
     cursor: pointer;
 
     h5{
-      margin-top: 10px;
+      margin-top: 0;
       margin-bottom: 0;
       line-height: 1.5;
       overflow: hidden;
