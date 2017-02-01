@@ -30,6 +30,8 @@ exports.getAsset = (req, res) => {
 
 exports.deleteAsset = (req,res) => {
 
+    //TODO Löschen vom Filesystem
+
     Asset.remove({ _id: req.body.assetID }, (err) => {
         if (err) { return next(err); }
         req.flash('info', { msg: 'Asset has been deleted.' });
@@ -63,6 +65,12 @@ exports.upload = (req, res) => {
                 suffix: req.files[i].mimetype,
                 type: req.body.filetype,
                 tags: req.body.tags,
+                size: req.files[i].size,
+                encoding: req.files[i].encoding,
+                user: {
+                    name: req.user.profile.name,
+                    _id: req.user._id
+                },
                 _collectionId: req.body.collection
             }).save(function (err, product, numAffected) {
                 if(err) {

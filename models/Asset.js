@@ -6,6 +6,13 @@ const assetSchema = new mongoose.Schema({
     suffix: String,
     type: String,
     tags: String,
+    size: String,
+    encoding: String,
+    user: {
+        name: String,
+        _id: mongoose.Schema.Types.ObjectId
+    },
+
     _collectionId: mongoose.Schema.Types.ObjectId
 }, { timestamps: true });
 
