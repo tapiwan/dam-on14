@@ -1,0 +1,45 @@
+extends ../layout
+
+block content
+
+  #asset
+
+    .row.mt30
+      .col-md-10.p0
+        h1.bold #{title}
+      .col-md-2.p0
+
+    .row.mt30.box
+        .col-md-6.imageArea
+
+            if asset.type == "image"
+                img(src='/' + asset.path)
+            if asset.type == "pdf"
+                i.thumb.fa.fa-5x.text-center(v-bind:class="fileClasses.pdf")
+            if asset.type == "default"
+                i.thumb.fa.fa-5x(v-bind:class="fileClasses.default")
+        .col-md-1
+        .col-md-5
+            h3 Informations
+            ul.assetdetails
+                li
+                    strong Name:
+                    |  #{asset.name}
+                li
+                    strong Type:
+                    |  #{asset.suffix}
+                li
+                    strong Uploaded at:
+                    span= ' '+moment(asset.createdAt).format("DD.MM.YY - HH:mm") + ' Uhr'
+
+                li
+                    strong Tags:
+                    span=asset.tags
+
+
+
+
+
+    .row.mt30.box
+        .col-md-12
+            h1 Download

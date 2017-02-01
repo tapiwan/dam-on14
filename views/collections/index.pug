@@ -44,14 +44,15 @@ block content
 
                     // TODO: Eine Idee, wie man das dynamisch gestalten könnte? Dass die FontAwesome Klasse aus der config.js geladen wird. Also in der Art: fileClasses.asset.type
 
-                    img.thumb(v-if="asset.type == 'image'",v-bind:src="asset.path")
+                    a(v-bind:href="'details/'+collectionAlias+'/' + asset._id")
+                      img.thumb(v-if="asset.type == 'image'",v-bind:src="asset.path")
                     i.thumb.fa.fa-4x(v-if="asset.type == 'pdf'",v-bind:class="fileClasses.pdf")
                     i.thumb.fa.fa-4x(v-if="asset.type == 'psd'",v-bind:class="fileClasses.default")
                     h5
                       i.fa.fa-file-image-o
                       | {{asset.name}}
                     .editbar
-                      a.fa.fa-edit
+                      a.fa.fa-edit(v-bind:href="'details/'+collectionAlias+'/' + asset._id")
                         span Edit
                       a.fa.fa-trash-o(@click='deleteAsset(asset._id)')
                         span Delete

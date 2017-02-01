@@ -153,6 +153,8 @@ app.get('/dashboard', passportConfig.isAuthenticated, dashboardController.showDa
  * Assets
  */
 app.get('/assets/:id', passportConfig.isAuthenticated, assetController.getAssets);
+app.get('/details/:collection/:id', passportConfig.isAuthenticated, assetController.getAsset);
+
 app.post('/upload/assets', passportConfig.isAuthenticated, assetController.upload);
 app.post('/asset/delete', passportConfig.isAuthenticated, assetController.deleteAsset);
 

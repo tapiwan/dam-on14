@@ -31,12 +31,15 @@ $(document).ready(function() {
     $('[data-collection]').each(function() {
         var collectionID = $(this).data('collection-id');
         var collectionName = $(this).find('h3 .cname').text();
+        var collectionAlias = collectionName.replace(/\s+/g, "");
+
 
         var collection = new Vue({
             el: '[data-collection-id="'+collectionID+'"]',
             data: {
                 open: false,
                 assets: null,
+                collectionAlias: collectionAlias,
                 fileClasses: fileClasses,
                 collectionSize:  null,
             },
@@ -107,6 +110,20 @@ $(document).ready(function() {
                 }
             }
         });
+    });
+
+
+    // ASSETS DETAILS
+    var asset = new Vue({
+        el: '#asset',
+        data: {
+            fileClasses: fileClasses,
+        },
+
+        mounted: function () {
+
+
+        },
     });
 
 

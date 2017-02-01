@@ -4,15 +4,27 @@ const multer = require('multer');
 
 
 
-
-
-
 exports.getAssets = (req, res) => {
     var collectionId = req.params.id;
 
     Asset.find({_collectionId: collectionId}).sort({'_id': -1}).exec(function (err, results) {
         if (!err) {
             res.json(results);
+        }
+    });
+}
+
+
+exports.getAsset = (req, res) => {
+    var assetId = req.params.id;
+
+
+    Asset.find({_id: assetId}).exec(function (err, result) {
+        if (!err) {
+            res.render('asset/index', {
+                title: result[0].name,
+                asset : result[0]
+            });
         }
     });
 }
