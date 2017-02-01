@@ -2,7 +2,7 @@ extends ../layout
 
 block content
 
-  #asset
+  #asset(data-collection-id=asset._collectionId)
 
     .row.mt30
       .col-md-10.p0
@@ -16,6 +16,8 @@ block content
                 img(src='/' + asset.path)
             if asset.type == "pdf"
                 i.thumb.fa.fa-5x.text-center(v-bind:class="fileClasses.pdf")
+            if asset.type == "psd"
+                i.thumb.fa.fa-5x(v-bind:class="fileClasses.default")
             if asset.type == "default"
                 i.thumb.fa.fa-5x(v-bind:class="fileClasses.default")
         .col-md-1
@@ -31,10 +33,23 @@ block content
                 li
                     strong Uploaded at:
                     span= ' '+moment(asset.createdAt).format("DD.MM.YY - HH:mm") + ' Uhr'
-
                 li
-                    strong Tags:
-                    span=asset.tags
+                    strong Collection:
+                    a(v-bind:href="'../../collections#'+collection.url")  {{collection.name}}
+
+                if asset.tags
+                    li
+                        - var tags = asset.tags.replace(/ /g,'').split(',')
+                        each tag in tags
+                            span.mr5.label.label-primary=tag
+            hr
+            h3 Specific Informations
+
+            if asset.type == "image"
+                ul.assetdetails
+                    li
+                        strong Auflösung:
+                        //TODO muss noch in DB integriert werden
 
 
 

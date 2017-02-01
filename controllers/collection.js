@@ -8,7 +8,6 @@ const Collection = require('../models/Collection');
 
 exports.getCollections = (req, res) => {
 
-
   Collection.find().sort({'_id': -1}).exec(function (err, results) {
 
       if (!err) {
@@ -22,7 +21,16 @@ exports.getCollections = (req, res) => {
 
   });
 
+};
 
+exports.getCollectionName = (req, res) => {
+    var collectionId = req.params.id;
+
+    Collection.find({_id: collectionId}).exec(function (err, result) {
+        if (!err) {
+            res.json(result[0]);
+        }
+    });
 }
 
 exports.addCollection = (req, res) => {
@@ -83,3 +91,4 @@ exports.editCollection = (req, res) => {
 
     });
 }
+

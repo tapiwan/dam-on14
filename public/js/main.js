@@ -117,11 +117,23 @@ $(document).ready(function() {
     var asset = new Vue({
         el: '#asset',
         data: {
+            collection: "",
             fileClasses: fileClasses,
         },
 
         mounted: function () {
+            var that = this;
+            var collectionID = $("#asset").data('collection-id');
 
+            $.ajax({
+                method: "GET",
+                url: "/collections/getName/" + collectionID
+            })
+                .done(function(json) {
+                    that.collection = json;
+                    that.collection.url = json.name.replace(/\s+/g, '')
+
+                });
 
         },
     });
