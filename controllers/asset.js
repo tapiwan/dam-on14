@@ -4,6 +4,7 @@ const multer = require('multer');
 
 
 
+
 exports.getAssets = (req, res) => {
     var collectionId = req.params.id;
 
@@ -52,6 +53,7 @@ exports.upload = (req, res) => {
         for(var i = 0; i < req.files.length; i++) {
 
             var filename = req.files[i].originalname;
+            var metadata;
 
             if(req.body.newName){
                 console.log(req.body.newName);
@@ -61,6 +63,7 @@ exports.upload = (req, res) => {
 
             new Asset({
                 name: filename,
+                fullpath: req.files[i].path,
                 path: "uploads/"+req.files[i].filename,
                 suffix: req.files[i].mimetype,
                 type: req.body.filetype,
@@ -71,6 +74,7 @@ exports.upload = (req, res) => {
                     name: req.user.profile.name,
                     _id: req.user._id
                 },
+                metadata: metadata,
                 _collectionId: req.body.collection
             }).save(function (err, product, numAffected) {
                 if(err) {

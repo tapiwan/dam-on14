@@ -3,14 +3,10 @@ $(document).ready(function() {
     // SCROLL TO COLLECTION IF HASH IS AVAILABLE
     var hash = window.location.hash;
     if(hash) {
-        $('html, body').animate({
-            scrollTop: $(hash).offset().top+300
-        }, 1000);
-
 
         setTimeout(function () {
             $(hash + ' h3').click();
-        }, 1100)
+        }, 0)
 
     }
 
