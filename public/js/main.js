@@ -37,7 +37,7 @@ $(document).ready(function() {
                 //Check if given view parameter is allowed
                 if(this.views.indexOf(newView) > -1) {
                     this.activeView = newView;
-                    $('[data-collection]').toggleClass('collectionlist collectionbox');
+                    $('[data-collection]').toggleClass('collectionlist collectionbox col-md-12 col-md-3');
                 }
            }
         }

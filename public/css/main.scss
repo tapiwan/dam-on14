@@ -403,7 +403,7 @@ div.table .file-row > div {
 
 }
 
-.collectionlist:hover  {
+.collectionlist:hover {
     .trash, .edit, .date {
       opacity: 1;
     }
@@ -413,6 +413,65 @@ div.table .file-row > div {
     }
 
 }
+
+.collectionbox {
+  height: 170px;
+
+  .date {
+    font-size: 15px;
+    color: $grey;
+    transition: all .5s;
+
+    span {
+      margin-left: 10px;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+
+    }
+  }
+
+  .collectioneditbar {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+
+    .trash, .edit {
+      cursor: pointer;
+      font-size: 17px;
+      opacity: 0;
+      transition: all .5s;
+      color: white;
+      width: 40%;
+      text-align: center;
+      float: left;
+
+      .fa {
+        margin-right: 0;
+
+        &.fa-edit {
+          margin-right: -1px;
+        }
+      }
+    }
+
+    .edit {
+      margin-left: 30px;
+    }
+
+    .trash {
+      margin-left: 5px;
+    }
+
+  }
+}
+
+.collectionbox:hover {
+  .trash, .edit, .date {
+    opacity: 1;
+  }
+
+}
+
 .collectionresults {
   padding:0 30px;
 
