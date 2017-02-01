@@ -5,9 +5,14 @@ block content
   #collections
 
     .row.mt30
-      .col-md-10.p0
+      .col-md-9.p0
         h1.bold Collections
-      .col-md-2.p0
+      .col-md-3.p0
+        div.pull-left(data-view-switch)
+          button#list-view.btn.btn-default.mr5(v-bind:class='{active:activeView == "collectionlist"}', @click='switchView("collectionlist")')
+            i.fa.fa-list.mr0
+          button#box-view.btn.btn-default(v-bind:class='{active:activeView == "collectionbox"}',@click='switchView("collectionbox")')
+            i.fa.fa-th.mr0
         button.btn.btn-primary.pull-right(type='button', data-toggle='modal', data-target='#addCollection')
           | Add collection
 

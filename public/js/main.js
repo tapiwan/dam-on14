@@ -24,7 +24,24 @@ $(document).ready(function() {
         $('#collections .in').collapse('hide');
     });
 
+    // SWITCH FOR LIST- AND BOX-VIEW
+    var viewSwitch = new Vue({
+        el: '[data-view-switch]',
+        data: {
+            views: ['collectionlist', 'collectionbox'],
+            activeView: 'collectionlist'
+        },
 
+        methods: {
+           switchView: function(newView) {
+                //Check if given view parameter is allowed
+                if(this.views.indexOf(newView) > -1) {
+                    this.activeView = newView;
+                    $('[data-collection]').toggleClass('collectionlist collectionbox');
+                }
+           }
+        }
+    });
     
 
     // INSERT ASSETS IN COLLECTIONS
