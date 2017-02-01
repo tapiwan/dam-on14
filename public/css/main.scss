@@ -353,12 +353,12 @@ div.table .file-row > div {
   }
   .date {
     position: absolute;
-    right: 20px;
-    top: 6px;
+    left: 620px;
+    top: 33px;
     font-size: 15px;
     color: $grey;
     opacity: 0;
-    transition: opacity 1s;
+    transition: all .5s;
 
 
     span {
@@ -371,17 +371,26 @@ div.table .file-row > div {
 
   .collectioneditbar {
     position: absolute;
-    top:0px;
-    left: 30px;
+    top: 50%;
+    right: 260px;
+    margin-top: -19px;
 
     .trash, .edit {
       cursor: pointer;
       font-size: 17px;
       opacity: 0;
-      color: $grey;
+      transition: all .5s;
+      color: white;
+      width: 50px;
+      text-align: center;
 
-      transition: opacity 1s;
+      .fa {
+        margin-right: 0;
 
+        &.fa-edit {
+          margin-right: -1px;
+        }
+      }
     }
 
     .trash {
@@ -395,9 +404,9 @@ div.table .file-row > div {
 .collectionlist:hover  {
     .trash, .edit, .date {
       opacity: 1;
-
     }
-    .trash:hover, .edit:hover, .date:hover {
+
+    .date:hover {
       color: $brand-primary
     }
 
