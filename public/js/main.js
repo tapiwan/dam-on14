@@ -54,13 +54,14 @@ $(document).ready(function() {
                 deleteCollection: function () {
                     $("form #collectionID").val(collectionID);
                 },
-                deleteAsset: function (assetId, assetPath) {
-                    $("form .imgpreview").attr("src",assetPath);
-                    $("form #assetID").val(assetId);
+                deleteAsset: function (assetId) {
+
                     var that = this;
 
                    // SPÄTER VLLT DYNAMISCH
-                    /*$.ajax({
+                    if (confirm('Are you sure you want to delete this?')) {
+
+                        $.ajax({
                         method: "POST",
                         url: "/asset/delete",
                         data: {
@@ -69,9 +70,20 @@ $(document).ready(function() {
                         }
                     })
                         .done(function(json) {
-                            that.loadAssets()
+                            $.ajax({
+                                method: "GET",
+                                url: "/assets/" + collectionID
+                            })
+                                .done(function(json) {
+                                    that.assets = json;
+                                    that.collectionSize =  Object.keys(json).length;
+                                    that.open = true;
+                                });
                         });
-                        */
+
+                    }
+
+
 
                 },
 

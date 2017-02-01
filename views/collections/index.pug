@@ -53,7 +53,7 @@ block content
                     .editbar
                       a.fa.fa-edit
                         span Edit
-                      a.fa.fa-trash-o(data-toggle='modal', data-target='#deleteAsset', @click='deleteAsset(asset._id, asset.path)')
+                      a.fa.fa-trash-o(@click='deleteAsset(asset._id)')
                         span Delete
 
                     .taglist(v-if="asset.tags")
@@ -130,23 +130,6 @@ block content
                   | Delete Collection
 
     // ASSETS
-  #deleteAsset.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
-      .modal-dialog(role='document')
-          .modal-content
-              .modal-header
-                  button.close(type='button', data-dismiss='modal', aria-label='Close')
-                      span(aria-hidden='true') ×
-                  h4.modal-title Delete Asset
-              .modal-body
-                  form(method='POST' action='/asset/delete')
-                      input.csrf(type='hidden', name='_csrf', value=_csrf)
-                      .form-group
-                          img.imgpreview(src="")
-                          p Do you really want to delete this asset?
-                          input.form-control(type='hidden', name='assetID', id='assetID')
-                      .form-group
-                          button.btn.btn-danger(type='submit')
-                              | Delete Asset
 
   #uploadAssets.modal.fade.collectionDropzone(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
     .modal-dialog.big-dialog(role='document')
