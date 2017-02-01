@@ -18,7 +18,6 @@ exports.getAssets = (req, res) => {
 exports.getAsset = (req, res) => {
     var assetId = req.params.id;
 
-
     Asset.find({_id: assetId}).exec(function (err, result) {
         if (!err) {
             res.render('asset/index', {
@@ -30,7 +29,6 @@ exports.getAsset = (req, res) => {
 }
 
 exports.deleteAsset = (req,res) => {
-    console.log(req);
 
     Asset.remove({ _id: req.body.assetID }, (err) => {
         if (err) { return next(err); }

@@ -143,6 +143,7 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
 
 // COLLECTIONS
 app.get('/collections', passportConfig.isAuthenticated, collectionController.getCollections);
+app.get('/collections/getName/:id', passportConfig.isAuthenticated, collectionController.getCollectionName);
 app.post('/collections/add', passportConfig.isAuthenticated, collectionController.addCollection);
 app.post('/collections/delete', passportConfig.isAuthenticated, collectionController.deleteCollection);
 app.post('/collections/edit', passportConfig.isAuthenticated, collectionController.editCollection);
