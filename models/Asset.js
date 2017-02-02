@@ -4,7 +4,12 @@ const iptc = require('node-iptc');
 const sizeOf = require('image-size');
 const watson = require('watson-developer-cloud');
 const fs = require('fs');
-
+const visual_recognition = watson.visual_recognition({
+    url: 'https://gateway-a.watsonplatform.net/visual-recognition/api',
+    api_key: "53d3b7b1e8ee93d0be2709da5fc53dac416429f6",
+    version: 'v3',
+    version_date: '2016-05-19'
+});
 
 
 const assetSchema = new mongoose.Schema({
@@ -24,14 +29,16 @@ const assetSchema = new mongoose.Schema({
     },
     metadata: Object,
     iptc: Object,
+    watson: Object,
 
     _collectionId: mongoose.Schema.Types.ObjectId
 }, { timestamps: true });
 
 assetSchema.pre('save', function(next) {
     const data = this;
-    // READ EXIF
 
+
+    // READ EXIF
     if(data.suffix == "image/jpeg" || data.suffix == "image/tiff" )  {
 
         new ExifImage({ image : data.fullpath }, function (error, exifData) {
@@ -66,31 +73,28 @@ assetSchema.pre('save', function(next) {
 assetSchema.pre('save', function (next) {
     const asset = this;
 
+    if(asset.type == "image") {
 
-    var visual_recognition = watson.visual_recognition({
-        username: 'mail@domi-speh.de',
-        password: 'rat2wUsh0Fu5aD3teD8!',
-        api_key: '53d3b7b1e8ee93d0be2709da5fc53dac416429f6',
-        version: 'v3',
-        version_date: '2016-05-20'
-    });
+        params = {
+            images_file: fs.createReadStream(asset.fullpath)
+        };
 
-    var params = {
-        images_file: fs.createReadStream(asset.fullpath)
-    };
+        visual_recognition.classify(params, function (err, res) {
+            if (err) {
+                console.log(err);
+                next();
+            }
+            else {
+                asset.watson = res;
+                next();
+            }
+        });
+    }
+    else {
+        next();
+    }
 
-    visual_recognition.classify(params, function(err, results) {
 
-        if (err){
-            console.log(err);
-            next();
-        }
-        else{
-            console.log(JSON.stringify(results));
-            next();
-
-        }
-    });
 })
 assetSchema.pre('save', function(next) {
     const data = this;

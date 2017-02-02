@@ -1,5 +1,6 @@
 const Asset = require('../models/Asset');
 const multer = require('multer');
+const path = require('path')
 
 
 
@@ -42,7 +43,17 @@ exports.deleteAsset = (req,res) => {
 
 exports.upload = (req, res) => {
 
-    var upload = multer({ dest: './public/uploads'}).array('assets', 5);
+    var storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+            cb(null, './public/uploads')
+        },
+        filename: function (req, file, cb) {
+            cb(null, Date.now() + path.extname(file.originalname)) //Appending extension
+        }
+
+    })
+
+    var upload = multer({ storage: storage }).array('assets', 5);
 
     upload(req, res, function(err) {
 
