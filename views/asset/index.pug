@@ -5,9 +5,11 @@ block content
   #asset(data-collection-id=asset._collectionId)
 
     .row.mt30
-      .col-md-10.p0
+      .col-md-8.p0
         h1.bold #{title}
-      .col-md-2.p0
+      .col-md-4.p0
+          a.btn.btn-empty.pull-right(v-bind:href="'../../collections#'+collection.url")  Back to collections
+          a.mr30.btn.btn-primary.pull-right(v-bind:href="'../../collections#'+collection.url") Edit
 
     .row.mt30.box.df
         .col-md-6.imageArea
@@ -68,15 +70,19 @@ block content
                     li
                         strong Camera:
                         |  #{asset.metadata.image.Model}
-                    li
-                        strong Aperture:
-                        |  #{asset.metadata.exif.ApertureValue}
-                    li
-                        strong Shutter speed:
-                        |  #{asset.metadata.exif.ShutterSpeedValue}
-                    li
-                        strong ISO:
-                        |  #{asset.metadata.exif.ISO}
+                    if asset.metadata.exif.ApertureValue
+                        li
+                            strong Aperture:
+                            |  #{asset.metadata.exif.ApertureValue}
+
+                    if asset.metadata.exif.ShutterSpeedValue
+                        li
+                            strong Shutter speed:
+                            |  #{asset.metadata.exif.ShutterSpeedValue}
+                    if asset.metadata.exif.ISO
+                        li
+                            strong ISO:
+                            |  #{asset.metadata.exif.ISO}
                 if asset.metadata
                     ul.assetdetails
                         li

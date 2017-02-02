@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 const ExifImage = require('exif').ExifImage;
 const iptc = require('node-iptc');
 const sizeOf = require('image-size');
+const watson = require('watson-developer-cloud');
 const fs = require('fs');
+
+
 
 const assetSchema = new mongoose.Schema({
     name: String,
@@ -60,6 +63,35 @@ assetSchema.pre('save', function(next) {
         next();
     }
 });
+assetSchema.pre('save', function (next) {
+    const asset = this;
+
+
+    var visual_recognition = watson.visual_recognition({
+        username: 'mail@domi-speh.de',
+        password: 'rat2wUsh0Fu5aD3teD8!',
+        api_key: '53d3b7b1e8ee93d0be2709da5fc53dac416429f6',
+        version: 'v3',
+        version_date: '2016-05-20'
+    });
+
+    var params = {
+        images_file: fs.createReadStream(asset.fullpath)
+    };
+
+    visual_recognition.classify(params, function(err, results) {
+
+        if (err){
+            console.log(err);
+            next();
+        }
+        else{
+            console.log(JSON.stringify(results));
+            next();
+
+        }
+    });
+})
 assetSchema.pre('save', function(next) {
     const data = this;
 
