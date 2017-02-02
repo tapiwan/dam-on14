@@ -29,7 +29,8 @@ const assetSchema = new mongoose.Schema({
     },
     metadata: Object,
     iptc: Object,
-    watson: Object,
+    watsonImage: Object,
+    watsonFace: Object,
 
     _collectionId: mongoose.Schema.Types.ObjectId
 }, { timestamps: true });
@@ -70,12 +71,13 @@ assetSchema.pre('save', function(next) {
         next();
     }
 });
+// IMAGE RECOGNITATION
 assetSchema.pre('save', function (next) {
     const asset = this;
 
     if(asset.type == "image") {
 
-        params = {
+        var params = {
             images_file: fs.createReadStream(asset.fullpath)
         };
 
@@ -85,7 +87,36 @@ assetSchema.pre('save', function (next) {
                 next();
             }
             else {
-                asset.watson = res;
+                asset.watsonImage = res;
+                next();
+            }
+        });
+    }
+    else {
+        next();
+    }
+
+
+});
+// FACE DETECTION
+assetSchema.pre('save', function (next) {
+    const asset = this;
+
+    if(asset.type == "image") {
+
+        var params = {
+            images_file: fs.createReadStream(asset.fullpath)
+        };
+
+
+
+        visual_recognition.detectFaces(params, function (err, res) {
+            if (err) {
+                console.log(err);
+                next();
+            }
+            else {
+                asset.watsonFace = res;
                 next();
             }
         });
