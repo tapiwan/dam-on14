@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const ExifImage = require('exif').ExifImage;
+const iptc = require('node-iptc');
 const sizeOf = require('image-size');
+const fs = require('fs');
 
 const assetSchema = new mongoose.Schema({
     name: String,
@@ -18,6 +20,7 @@ const assetSchema = new mongoose.Schema({
         _id: mongoose.Schema.Types.ObjectId
     },
     metadata: Object,
+    iptc: Object,
 
     _collectionId: mongoose.Schema.Types.ObjectId
 }, { timestamps: true });
@@ -27,12 +30,13 @@ assetSchema.pre('save', function(next) {
     // READ EXIF
 
     if(data.suffix == "image/jpeg" || data.suffix == "image/tiff" )  {
-        console.log("Try to find EXIF")
+
         new ExifImage({ image : data.fullpath }, function (error, exifData) {
             if (error)
                 console.log('Error: '+error.message);
             else
                 data.metadata = exifData;
+
                 next();
 
         });
@@ -41,7 +45,21 @@ assetSchema.pre('save', function(next) {
         next();
     }
 });
+assetSchema.pre('save', function(next) {
+    const asset = this;
 
+    if(asset.suffix == "image/jpeg" || asset.suffix == "image/tiff" )  {
+        fs.readFile(asset.fullpath, function(err, data) {
+            if (err) { throw err }
+            asset.iptc = iptc(data);
+            next();
+        });
+
+    }
+    else {
+        next();
+    }
+});
 assetSchema.pre('save', function(next) {
     const data = this;
 
