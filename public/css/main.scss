@@ -437,6 +437,8 @@ div.table .file-row > div {
     font-size: 15px;
     color: $grey;
     transition: all .5s;
+    display: block;
+    margin-top: 5px;
 
     span {
       margin-left: 10px;
