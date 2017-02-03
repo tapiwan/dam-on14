@@ -38,6 +38,7 @@ const contactController = require('./controllers/contact');
 const collectionController = require('./controllers/collection');
 const assetController = require('./controllers/asset');
 const dashboardController = require('./controllers/dashboard');
+const searchController = require('./controllers/search');
 
 /**
  * API keys and Passport configuration.
@@ -159,6 +160,11 @@ app.get('/details/:collection/:id', passportConfig.isAuthenticated, assetControl
 
 app.post('/upload/assets', passportConfig.isAuthenticated, assetController.upload);
 app.post('/asset/delete', passportConfig.isAuthenticated, assetController.deleteAsset);
+
+/**
+ * Search
+ */
+app.get('/search/:query', passportConfig.isAuthenticated, searchController.searchDAM);
 
 /**
  * API examples routes.

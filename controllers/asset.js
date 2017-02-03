@@ -1,6 +1,6 @@
 const Asset = require('../models/Asset');
 const multer = require('multer');
-const path = require('path')
+const path = require('path');
 
 
 
@@ -51,7 +51,7 @@ exports.upload = (req, res) => {
             cb(null, Date.now() + path.extname(file.originalname)) //Appending extension
         }
 
-    })
+    });
 
     var upload = multer({ storage: storage }).array('assets', 5);
 
@@ -101,7 +101,7 @@ exports.upload = (req, res) => {
 
 
 
-    })
+    });
 
 
 
