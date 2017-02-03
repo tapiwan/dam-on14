@@ -126,7 +126,7 @@ assetSchema.pre('save', function (next) {
     }
 
 
-})
+});
 assetSchema.pre('save', function(next) {
     const data = this;
 
@@ -135,7 +135,7 @@ assetSchema.pre('save', function(next) {
 
         sizeOf(data.fullpath, function (err, dimensions) {
             data.width = dimensions.width;
-            data.height = dimensions.height
+            data.height = dimensions.height;
             next();
         });
     }
