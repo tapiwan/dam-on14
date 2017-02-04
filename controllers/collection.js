@@ -22,6 +22,20 @@ exports.getCollections = (req, res) => {
   });
 
 };
+exports.getCollectionsJson = (req, res) => {
+
+    Collection.find().sort({'_id': -1}).exec(function (err, results) {
+
+        if (!err) {
+
+            res.json(results);
+
+
+        }
+
+    });
+
+};
 
 exports.getCollectionName = (req, res) => {
     var collectionId = req.params.id;

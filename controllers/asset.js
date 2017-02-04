@@ -1,4 +1,6 @@
 const Asset = require('../models/Asset');
+const Collection = require('../models/Collection');
+
 const multer = require('multer');
 const path = require('path');
 
@@ -14,7 +16,7 @@ exports.getAssets = (req, res) => {
             res.json(results);
         }
     });
-}
+};
 
 
 exports.getAsset = (req, res) => {
@@ -48,6 +50,8 @@ exports.editAsset = (req, res) => {
                 console.log(err);
             }
             asset.name = req.body.assetName+"."+req.body.assetSuffix;
+            asset._collectionId = req.body.collectionID;
+            console.log(req.body.collectionID)
 
             asset.save((err) => {
                 req.flash('success', { msg: 'Asset has been updated.' });
