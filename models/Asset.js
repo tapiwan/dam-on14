@@ -6,11 +6,10 @@ const watson = require('watson-developer-cloud');
 const fs = require('fs');
 const visual_recognition = watson.visual_recognition({
     url: 'https://gateway-a.watsonplatform.net/visual-recognition/api',
-    api_key: "53d3b7b1e8ee93d0be2709da5fc53dac416429f6",
+    api_key: process.env.WatsonAPI,
     version: 'v3',
     version_date: '2016-05-19'
 });
-
 
 const assetSchema = new mongoose.Schema({
     name: String,
@@ -36,25 +35,29 @@ const assetSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 assetSchema.pre('save', function(next) {
-    const data = this;
+    if (this.isNew) {
+        const data = this;
+        // READ EXIF
+        if(data.suffix == "image/jpeg" || data.suffix == "image/tiff" )  {
 
-
-    // READ EXIF
-    if(data.suffix == "image/jpeg" || data.suffix == "image/tiff" )  {
-
-        new ExifImage({ image : data.fullpath }, function (error, exifData) {
-            if (error)
-                console.log('Error: '+error.message);
-            else
-                data.metadata = exifData;
+            new ExifImage({ image : data.fullpath }, function (error, exifData) {
+                if (error)
+                    console.log('Error: '+error.message);
+                else
+                    data.metadata = exifData;
 
                 next();
 
-        });
+            });
+        }
+        else {
+            next();
+        }
     }
     else {
         next();
     }
+
 });
 assetSchema.pre('save', function(next) {
     const asset = this;
@@ -73,75 +76,93 @@ assetSchema.pre('save', function(next) {
 });
 // IMAGE RECOGNITATION
 assetSchema.pre('save', function (next) {
-    const asset = this;
+    if (this.isNew) {
+        const asset = this;
+        if(asset.type == "image") {
 
-    if(asset.type == "image") {
+            var params = {
+                images_file: fs.createReadStream(asset.fullpath)
+            };
 
-        var params = {
-            images_file: fs.createReadStream(asset.fullpath)
-        };
-
-        visual_recognition.classify(params, function (err, res) {
-            if (err) {
-                console.log(err);
-                next();
-            }
-            else {
-                asset.watsonImage = res;
-                next();
-            }
-        });
+            visual_recognition.classify(params, function (err, res) {
+                if (err) {
+                    console.log(err);
+                    next();
+                }
+                else {
+                    asset.watsonImage = res;
+                    next();
+                }
+            });
+        }
+        else {
+            next();
+        }
     }
     else {
         next();
     }
+
 
 
 });
 // FACE DETECTION
 assetSchema.pre('save', function (next) {
-    const asset = this;
+    if (this.isNew) {
+        const asset = this;
+        if(asset.type == "image") {
 
-    if(asset.type == "image") {
-
-        var params = {
-            images_file: fs.createReadStream(asset.fullpath)
-        };
+            var params = {
+                images_file: fs.createReadStream(asset.fullpath)
+            };
 
 
 
-        visual_recognition.detectFaces(params, function (err, res) {
-            if (err) {
-                console.log(err);
-                next();
-            }
-            else {
-                asset.watsonFace = res;
-                next();
-            }
-        });
+            visual_recognition.detectFaces(params, function (err, res) {
+                if (err) {
+                    console.log(err);
+                    next();
+                }
+                else {
+                    asset.watsonFace = res;
+                    next();
+                }
+            });
+        }
+        else {
+            next();
+        }
     }
     else {
         next();
     }
+
+
 
 
 });
 assetSchema.pre('save', function(next) {
-    const data = this;
+    if (this.isNew) {
+        const data = this;
 
-    // GET WIDTH AND HEIGHT
-    if(data.type == "image" || data.type == "psd")  {
+        // GET WIDTH AND HEIGHT
+        if(data.type == "image" || data.type == "psd")  {
 
-        sizeOf(data.fullpath, function (err, dimensions) {
-            data.width = dimensions.width;
-            data.height = dimensions.height;
+            sizeOf(data.fullpath, function (err, dimensions) {
+                data.width = dimensions.width;
+                data.height = dimensions.height;
+                next();
+            });
+        }
+        else {
             next();
-        });
+        }
     }
     else {
         next();
     }
+
+
 });
 
 

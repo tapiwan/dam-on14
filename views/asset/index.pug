@@ -8,11 +8,15 @@ block content
       .col-md-8.p0
         h1.bold #{title}
       .col-md-4.p0
-          a.btn.btn-empty.pull-right(v-bind:href="'../../collections#'+collection.url")  Back to collections
-          a.mr30.btn.btn-primary.pull-right(v-bind:href="'../../collections#'+collection.url") Edit
+          a.trash.btn.btn-empty.pull-right(data-toggle='modal', data-target='#deleteAsset') Delete
+          a.mr5.btn.btn-primary.pull-right(type='button', data-toggle='modal', data-target='#editAsset', @click='loadCollections') Edit
+    .row
+        a.btn.btn-empty(v-bind:href="'../../collections#'+curCollection.url")  Back to collections
 
     .row.mt30.box.df
+
         .col-md-6.imageArea
+
 
             if asset.type == "image"
                 img(src='/' + asset.path)
@@ -55,12 +59,11 @@ block content
                     |  #{asset.user.name}
                 li
                     strong Collection:
-                    a(v-bind:href="'../../collections#'+collection.url")  {{collection.name}}
+                    a(v-bind:href="'../../collections#'+curCollection.url")  {{curCollection.name}}
 
             if asset.watsonImage
                 hr
                 h3 Image Recognition
-                    .badge.pull-right Beta
                 ul.assetdetails
                     li
                         each val in asset.watsonImage.images[0].classifiers[0].classes
@@ -73,10 +76,9 @@ block content
                                         .progress(style="height:10px")
                                             .progress-bar(role='progressbar', aria-valuenow='70', aria-valuemin='0', aria-valuemax='100', style="width:"+val.score*100+"%")
 
-            if asset.watsonFace
+            if asset.watsonFace.images[0].faces[0]
                 hr
                 h3 Face Detection
-                    .badge.pull-right Beta
                 ul.assetdetails
                     li
                         each val in asset.watsonFace.images[0].faces
@@ -147,35 +149,40 @@ block content
                               h4.modal-title Image informations
                           .modal-body
                             if asset.metadata && asset.metadata.exif
+                                  .row
+                                      .col-md-6
+                                          if asset.type == "image"
+                                              img(src='/' + asset.path)
+                                          h4.mt30 IMAGE
+                                          ul.assetdetails
+                                              each val, key in asset.metadata.image
+                                                  li
+                                                      strong #{key}
+                                                      |  #{val}
+                                          h4.mt30 THUMBNAIL
+                                          ul.assetdetails
+                                              each val, key in asset.metadata.thumbnail
 
-                              .row
+                                                  li
+                                                      strong #{key}
+                                                      |  #{val}
+                                      .col-md-6
+                                          h4 EXIF
+                                          ul.assetdetails
+                                              each val, key in asset.metadata.exif
+                                                  if(key != "MakerNote")
+                                                      li
+                                                          strong #{key}
+                                                          |  #{val}
+                            if asset.iptc
+                              .row.mt30
                                   .col-md-6
-                                      if asset.type == "image"
-                                          img(src='/' + asset.path)
-                                      h4.mt30 IMAGE
+                                      h4 IPTC
                                       ul.assetdetails
-                                          each val, key in asset.metadata.image
-                                              li
-                                                strong #{key}
-                                                |  #{val}
-                                      h4.mt30 THUMBNAIL
-                                      ul.assetdetails
-                                          each val, key in asset.metadata.thumbnail
-                                              li
-                                                  strong #{key}
-                                                  |  #{val}
-                                  .col-md-6
-                                      h4 EXIF
-                                      ul.assetdetails
-                                          each val, key in asset.metadata.exif
-                                              li
-                                                  strong #{key}
-                                                  |  #{val}
-
-
-
-
-
+                                          each val, key in asset.iptc
+                                                  li
+                                                      strong #{key}
+                                                      |  #{val}
 
 
 
@@ -183,3 +190,57 @@ block content
     .row.mt30.box
         .col-md-12
             h1 Download
+
+            .assetlist
+                .col-md-4.whitebox(v-for="dimension in settings")
+                    h4 {{dimension.name}}
+
+
+
+        #editAsset.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+          .modal-dialog(role='document')
+              .modal-content
+                  .modal-header
+                      button.close(type='button', data-dismiss='modal', aria-label='Close')
+                          span(aria-hidden='true') ×
+                      h4#editLabel.modal-title Edit #{asset.name}
+                  .modal-body
+                      form(method='POST' action='/asset/edit')
+                          input.csrf(type='hidden', name='_csrf', value=_csrf)
+                          .form-group
+                              - var name = asset.name.split('.')[0]
+                              - var suffix = asset.name.split('.').pop()
+                              input.form-control(type='hidden', name='assetID', id='assetID' value=asset._id)
+                              input.form-control(type='text', name='assetName', id='assetName' value=name)
+                              input.form-control(type='hidden', name='assetSuffix', id='assetSuffix' value=suffix)
+                          .form-group
+                              select#collectionID(name="collectionID").form-control
+                                  option(selected='selected',v-bind:value="curCollection._id") {{curCollection.name}}
+                                  option(v-bind:value="collection._id",v-for="collection in collections", v-if="collection.name != curCollection.name ")
+                                    | {{collection.name}}
+
+
+                          .form-group
+                              button.btn.btn-primary(type='submit')
+                                  | Edit asset
+
+        #deleteAsset.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+            .modal-dialog(role='document')
+                .modal-content
+                    .modal-header
+                        button.close(type='button', data-dismiss='modal', aria-label='Close')
+                            span(aria-hidden='true') ×
+                        h4#deleteLabel.modal-title Delete #{asset.name}
+                    .modal-body.text-center
+                        if asset.type == "image"
+                            img(src='/' + asset.path, style="max-width:250px")
+
+
+                        form(method='POST' action='/asset/delete')
+                            input.csrf(type='hidden', name='_csrf', value=_csrf)
+                            .form-group.mt30
+                                p Do you really want to delete this asset?
+                                input.form-control(type='hidden', name='assetID', value=asset._id)
+                            .form-group
+                                button.btn.btn-danger(type='submit')
+                                    | Delete Asset

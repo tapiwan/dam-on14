@@ -23,6 +23,9 @@
         if user
           li(class=(title == 'Collections') ? 'active' : undefined)
             a(href='/collections') Collections
+        if user
+          li(class=(title == 'Settings') ? 'active' : undefined)
+            a(href='/settings') Settings
         //li(class=(title == 'Contact') ? 'active' : undefined)
           a(href='/contact') Contact
         //li

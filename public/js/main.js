@@ -194,7 +194,9 @@ $(document).ready(function () {
         var asset = new Vue({
             el: '#asset',
             data: {
-                collection: "",
+                curCollection: "",
+                collections: "",
+                settings: "",
                 fileClasses: fileClasses,
             },
 
@@ -205,14 +207,34 @@ $(document).ready(function () {
                 $.ajax({
                     method: "GET",
                     url: "/collections/getName/" + collectionID
-                })
-                    .done(function (json) {
-                        that.collection = json;
-                        that.collection.url = json.name.replace(/\s+/g, '')
+                }).done(function(json) {
+                        that.curCollection = json;
+                        that.curCollection.url = json.name.replace(/\s+/g, '')
 
-                    });
+                });
 
+                $.ajax({
+                    method: "GET",
+                    url: "/json/settings/"
+                }).done(function(json) {
+                    that.settings = json[0].dimensions;
+
+                });
             },
+
+            methods: {
+                loadCollections: function () {
+                    var that = this;
+
+                    $.ajax({
+                        method: "GET",
+                        url: "/get/collections/"
+                    })
+                        .done(function(json) {
+                            that.collections = json;
+                        });
+                }
+            }
         });
     }
 

@@ -1,0 +1,59 @@
+extends ../layout
+
+block content
+
+
+    #settings
+
+    .row.mt30
+        .col-md-12
+            h1 #{title}
+
+
+    .row.mt30.box
+        .col-md-12
+            h2 Image dimensions for download
+            button.btn.btn-primary.btn-sm(type='button', data-toggle='modal', data-target='#addDimension') Add dimension
+
+
+            // TODO Bearbeiten, Hinzufügen, Löschen
+
+            .assetlist
+                    each dimension in settings[0].dimensions
+                        .col-md-4.whitebox
+                            h4 #{dimension.name}
+                            p
+                                strong width:
+                                | &nbsp; #{dimension.width}
+                            p
+                                strong height:
+                                | &nbsp; #{dimension.height}
+
+
+    #addDimension.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+      .modal-dialog(role='document')
+          .modal-content
+              .modal-header
+                  button.close(type='button', data-dismiss='modal', aria-label='Close')
+                      span(aria-hidden='true') ×
+                  h4#editLabel.modal-title Add dimension
+              .modal-body
+                  form(method='POST' action='/settings/add')
+                      input.csrf(type='hidden', name='_csrf', value=_csrf)
+                      .form-group
+                          input.form-control(type='text', name='name', id='name' value="" placeholder="Name" required)
+
+                      .form-group
+                          input.form-control(type='hidden', name='settingsID', id='settingsID' value=settings[0]._id )
+                          .input-group
+                              input#msg.form-control(type='number', name='width', placeholder='Width' required)
+                              span.input-group-addon px
+
+                      .form-group
+                          .input-group
+                              input.form-control(type='number', name='height', placeholder='Height' required)
+                              span.input-group-addon px
+
+                      .form-group
+                          button.btn.btn-primary(type='submit')
+                              | Add dimension

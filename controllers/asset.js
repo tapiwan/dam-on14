@@ -1,4 +1,7 @@
 const Asset = require('../models/Asset');
+const Collection = require('../models/Collection');
+const Settings = require('../models/Settings');
+
 const multer = require('multer');
 const path = require('path');
 
@@ -14,7 +17,7 @@ exports.getAssets = (req, res) => {
             res.json(results);
         }
     });
-}
+};
 
 
 exports.getAsset = (req, res) => {
@@ -28,7 +31,7 @@ exports.getAsset = (req, res) => {
             });
         }
     });
-}
+};
 
 exports.deleteAsset = (req,res) => {
 
@@ -39,9 +42,27 @@ exports.deleteAsset = (req,res) => {
         req.flash('info', { msg: 'Asset has been deleted.' });
         res.redirect('/collections');
     });
-}
+};
+
+exports.editAsset = (req, res) => {
+
+        Asset.findOne({ _id: req.body.assetID }, (err, asset) => {
+            if(err){
+                console.log(err);
+            }
+            asset.name = req.body.assetName+"."+req.body.assetSuffix;
+            asset._collectionId = req.body.collectionID;
+
+            asset.save((err) => {
+                req.flash('success', { msg: 'Asset has been updated.' });
+                res.redirect(req.headers.referer);
+            });
+        });
+
+};
 
 exports.upload = (req, res) => {
+
 
     var storage = multer.diskStorage({
         destination: function (req, file, cb) {
@@ -92,7 +113,8 @@ exports.upload = (req, res) => {
                     console.log(err);
                 }
                 if(product && i == req.files.length) {
-                    res.end('Files Uploaded');
+                    res.send(product._id)
+                    res.end("Success");
                 }
             });
 
@@ -103,8 +125,8 @@ exports.upload = (req, res) => {
 
     });
 
+};
 
+exports.downloadImage = (req,res) => {
 
-
-  //res.redirect('/collections');
-}
+};

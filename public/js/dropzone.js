@@ -118,8 +118,6 @@ $(document).ready(function() {
 
 
 
-
-
             // TAGS
             file.previewElement.querySelector(".showTags").onclick = function () {
                 $(this).next(".tagsArea").tagsinput({
@@ -188,13 +186,18 @@ $(document).ready(function() {
         // DISBALE BUTTONS AFTER UPLOAD
         myDropzone.on("sending", function (file, xhr, formData) {
 
-            // GET COLLECTIONS
-            var e = file.previewElement.querySelector("#sel1");
-            var collection = e.options[e.selectedIndex].dataset.id;
-            file.previewElement.querySelector(".selectCollection").innerHTML = "<strong>Collection:</strong><br><a href='collections#"+e.options[e.selectedIndex].value+"'>"+e.options[e.selectedIndex].value+"</a>";;
+
 
             // HIDE EDIT
             file.previewElement.querySelector('.editname').innerHTML ="";
+
+
+            // GET COLLECTIONS
+            var e = file.previewElement.querySelector("#sel1");
+            var collection = e.options[e.selectedIndex].dataset.id;
+            file.previewElement.querySelector(".selectCollection").innerHTML = "<strong>Collection:</strong><br><a href='collections#"+e.options[e.selectedIndex].value.replace(/ /g,'')
+                +"'>"+e.options[e.selectedIndex].value+"</a>";;
+
 
             // GET TAGS
             var tags = file.previewElement.querySelector('.tagsArea').value;
@@ -228,11 +231,21 @@ $(document).ready(function() {
 
         // UPLOAD SUCESS
         myDropzone.on("complete", function (file) {
+            file.previewElement.querySelector(".progress").remove();
+
+            if(file.newName){
+                file.previewElement.querySelector(".name").innerHTML="<a href='./details/asset/"+file.xhr.response.replace(/['"]+/g, '')+"'>"+file.newName+"</a>";
+            }
+            else {
+                file.previewElement.querySelector(".name").innerHTML="<a href='./details/asset/"+file.xhr.response.replace(/['"]+/g, '')+"'>"+file.name+"</a>";
+
+            }
+
+
+
             file.previewElement.querySelector(".start").textContent="File has been uploaded";
             file.previewElement.querySelector(".cancel").remove();
-            setTimeout(function () {
-                file.previewElement.querySelector(".progress").remove();
-            },2000)
+
 
 
         });
@@ -460,9 +473,15 @@ $(document).ready(function() {
         myDropzone.on("complete", function (file) {
             file.previewElement.querySelector(".start").textContent="File has been uploaded";
             file.previewElement.querySelector(".cancel").remove();
-            setTimeout(function () {
-                file.previewElement.querySelector(".progress").remove();
-            },2000)
+            file.previewElement.querySelector(".progress").remove();
+
+            if(file.newName){
+                file.previewElement.querySelector(".name").innerHTML="<a href='./details/asset/"+file.xhr.response.replace(/['"]+/g, '')+"'>"+file.newName+"</a>";
+            }
+            else {
+                file.previewElement.querySelector(".name").innerHTML="<a href='./details/asset/"+file.xhr.response.replace(/['"]+/g, '')+"'>"+file.name+"</a>";
+
+            }
 
             $('#uploadAssets').on('hidden.bs.modal', function () {
                 var openAccordion = selectedCollectionName.replace(/\s+/g, "");

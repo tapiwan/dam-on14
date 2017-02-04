@@ -39,6 +39,7 @@ const collectionController = require('./controllers/collection');
 const assetController = require('./controllers/asset');
 const dashboardController = require('./controllers/dashboard');
 const searchController = require('./controllers/search');
+const settingsController = require('./controllers/settings');
 
 /**
  * API keys and Passport configuration.
@@ -145,6 +146,8 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
 
 // COLLECTIONS
 app.get('/collections', passportConfig.isAuthenticated, collectionController.getCollections);
+app.get('/get/collections', passportConfig.isAuthenticated, collectionController.getCollectionsJson);
+
 app.get('/collections/getName/:id', passportConfig.isAuthenticated, collectionController.getCollectionName);
 app.post('/collections/add', passportConfig.isAuthenticated, collectionController.addCollection);
 app.post('/collections/delete', passportConfig.isAuthenticated, collectionController.deleteCollection);
@@ -156,10 +159,19 @@ app.get('/dashboard', passportConfig.isAuthenticated, dashboardController.showDa
  * Assets
  */
 app.get('/assets/:id', passportConfig.isAuthenticated, assetController.getAssets);
-app.get('/details/:collection/:id', passportConfig.isAuthenticated, assetController.getAsset);
+app.get('/details/asset/:id', passportConfig.isAuthenticated, assetController.getAsset);
 
 app.post('/upload/assets', passportConfig.isAuthenticated, assetController.upload);
+app.post('/asset/edit', passportConfig.isAuthenticated, assetController.editAsset);
 app.post('/asset/delete', passportConfig.isAuthenticated, assetController.deleteAsset);
+
+/**
+ * Settings
+ */
+app.get('/settings', passportConfig.isAuthenticated, settingsController.getSettings);
+app.get('/json/settings', passportConfig.isAuthenticated, settingsController.getSettingsJson);
+app.post('/settings/add', passportConfig.isAuthenticated, settingsController.editDimension);
+
 
 /**
  * Search
