@@ -271,6 +271,7 @@ $(document).ready(function () {
         var asset = new Vue({
             el: '#asset',
             data: {
+                assetID:"",
                 curCollection: "",
                 collections: "",
                 settings: "",
@@ -280,6 +281,8 @@ $(document).ready(function () {
             mounted: function () {
                 var that = this;
                 var collectionID = $("#asset").data('collection-id');
+
+                that.assetID = $("#asset").data('asset-id');
 
                 $.ajax({
                     method: "GET",
@@ -310,11 +313,11 @@ $(document).ready(function () {
                         .done(function(json) {
                             that.collections = json;
                         });
-                }
+                },
+
             }
         });
     }
-
 
 });
 

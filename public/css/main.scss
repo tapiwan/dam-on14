@@ -622,6 +622,22 @@ div.table .file-row > div {
   }
 }
 
+// DOWNLOADBOX
+.downloadbox {
+  h4 {
+    margin-bottom: 5px;
+  }
+  span {
+    display: block;
+    font-weight: 300;
+
+    span {
+      display: inline;
+
+    }
+  }
+}
+
 // DROPZONE COLLECTIONS
 // TODO RESPONSIVE
 .modal-dialog.big-dialog {

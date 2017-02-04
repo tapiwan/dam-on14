@@ -4,6 +4,10 @@ const Settings = require('../models/Settings');
 
 const multer = require('multer');
 const path = require('path');
+const sharp = require('sharp');
+const http = require('http');
+const fs = require('fs');
+
 
 
 
@@ -120,13 +124,57 @@ exports.upload = (req, res) => {
 
         }
 
-
-
-
     });
 
 };
 
 exports.downloadImage = (req,res) => {
+
+    Asset.find({_id: req.params.id}).exec(function (err, result) {
+        if (!err) {
+            if(req.params.width == "original"){
+                sharp(result[0].fullpath)
+                    .toFile('public/downloads/'+result[0].name, function (err, sucess) {
+                        if(!err){
+                            sucess.path = 'public/downloads/'+result[0].name;
+
+                            res.set("Content-Disposition", "attachment;filename="+result[0].name);
+
+                            var readStream = fs.createReadStream( sucess.path);
+                            readStream.on('data', function(data) {
+                                res.write(data);
+                            });
+
+                            readStream.on('end', function() {
+                                res.end();
+                            });
+                        }
+                    });
+            }
+            else {
+                sharp(result[0].fullpath)
+                    .resize(parseInt(req.params.width))
+                    .toFile('public/downloads/'+req.params.width+"_"+result[0].name, function (err, sucess) {
+                        if(!err){
+                            sucess.path = 'public/downloads/'+req.params.width+"_"+result[0].name;
+
+                            res.set("Content-Disposition", "attachment;filename="+req.params.width+"_"+result[0].name);
+
+                            var readStream = fs.createReadStream( sucess.path);
+                            readStream.on('data', function(data) {
+                                res.write(data);
+                            });
+
+                            readStream.on('end', function() {
+                                res.end();
+                            });
+                        }
+                    });
+            }
+
+        }
+    });
+
+
 
 };
