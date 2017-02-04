@@ -21,19 +21,27 @@ $(document).ready(function () {
                 assets: [],
                 fileIcons: fileIcons
             },
-
+            watch: {
+                query: function() {
+                    if(this.query.length > 0) {
+                        this.search();
+                    }
+                    else if(this.query.length == 0) {
+                        this.reset();
+                    }
+                }
+            },
             methods: {
                 search: function () {
-                    if(this.query.length > 0) {
-                        this.searchCollections();
-                        this.searchAssets();
-                        $('.panel-search').slideDown();
-                    }
-                    else {
-                        this.collections = [];
-                        this.assets = [];
-                        $('.panel-search').slideUp();
-                    }
+                    this.searchCollections();
+                    this.searchAssets();
+                    $('.panel-search').slideDown(10);
+                },
+
+                reset: function() {
+                    this.collections = [];
+                    this.assets = [];
+                    $('.panel-search').slideUp(10);
                 },
 
                 searchCollections: function() {
