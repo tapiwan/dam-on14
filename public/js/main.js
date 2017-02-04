@@ -24,9 +24,16 @@ $(document).ready(function () {
 
             methods: {
                 search: function () {
-                    this.searchCollections();
-                    this.searchAssets();
-                    $('.panel-search').slideDown();
+                    if(this.query.length > 0) {
+                        this.searchCollections();
+                        this.searchAssets();
+                        $('.panel-search').slideDown();
+                    }
+                    else {
+                        this.collections = [];
+                        this.assets = [];
+                        $('.panel-search').slideUp();
+                    }
                 },
 
                 searchCollections: function() {
