@@ -1,8 +1,8 @@
-$(document).ready(function() {
+$(document).ready(function () {
 
     // SCROLL TO COLLECTION IF HASH IS AVAILABLE
     var hash = window.location.hash;
-    if(hash) {
+    if (hash) {
 
         setTimeout(function () {
             $(hash + ' h3').click();
@@ -10,10 +10,55 @@ $(document).ready(function() {
 
     }
 
+    // SEARCH
+    if ($('[data-search]').length) {
+        var searchInput = new Vue({
+            el: '[data-search]',
+            data: {
+                query: '',
+                placeholder: 'Search',
+                collections: null,
+                assets: null
+            },
+
+            methods: {
+                search: function () {
+                    this.searchCollections();
+                    this.searchAssets();
+                    $('.panel-search').slideDown();
+                },
+
+                searchCollections: function() {
+                    var that = this;
+
+                    $.ajax({
+                        method: "GET",
+                        url: "/searchCollections/" + encodeURIComponent(that.query)
+                    })
+                    .done(function(json) {
+                        that.collections = json;
+                    });
+                },
+
+                searchAssets: function() {
+                    var that = this;
+
+                    $.ajax({
+                        method: "GET",
+                        url: "/searchAssets/" + encodeURIComponent(that.query)
+                    })
+                    .done(function(json) {
+                        that.assets = json;
+                    });
+                }
+            }
+        });
+    }
+
     // MODAL INPUT FOCUS
     $('#editCollection, #addCollection').on('shown.bs.modal', function () {
         $(this).find('input').focus();
-    })
+    });
 
     // COLLAPSE
     $('#collections').on('show.bs.collapse', function () {
@@ -21,58 +66,59 @@ $(document).ready(function() {
     });
 
     // SWITCH FOR LIST- AND BOX-VIEW
-    var viewSwitch = new Vue({
-        el: '[data-view-switch]',
-        data: {
-            views: ['collectionlist', 'collectionbox'],
-            activeView: 'collectionlist'
-        },
+    if ($('[data-view-switch]').length) {
+        var viewSwitch = new Vue({
+            el: '[data-view-switch]',
+            data: {
+                views: ['collectionlist', 'collectionbox'],
+                activeView: 'collectionlist'
+            },
 
-        mounted: function() {
-            var activeViewState = localStorage.getItem('activeView');
+            mounted: function () {
+                var activeViewState = localStorage.getItem('activeView');
 
-            if(activeViewState.length) {
-                this.switchView(activeViewState);
-            }
-        },
+                if (activeViewState.length) {
+                    this.switchView(activeViewState);
+                }
+            },
 
-        methods: {
-           switchView: function(newView) {
-                //Check if given view parameter is allowed
-                if(this.views.indexOf(newView) > -1) {
-                    var collections =  $('[data-collection]');
-                    this.activeView = newView;
-                    localStorage.setItem('activeView', newView);
+            methods: {
+                switchView: function (newView) {
+                    //Check if given view parameter is allowed
+                    if (this.views.indexOf(newView) > -1) {
+                        var collections = $('[data-collection]');
+                        this.activeView = newView;
+                        localStorage.setItem('activeView', newView);
 
-                    if(newView == 'collectionlist') {
-                        collections.removeClass('collectionbox col-md-3');
-                        collections.addClass('collectionlist col-md-12');
-                    }
-                    else if(newView == 'collectionbox') {
-                        collections.addClass('collectionbox col-md-3');
-                        collections.removeClass('collectionlist col-md-12');
+                        if (newView == 'collectionlist') {
+                            collections.removeClass('collectionbox col-md-3');
+                            collections.addClass('collectionlist col-md-12');
+                        }
+                        else if (newView == 'collectionbox') {
+                            collections.addClass('collectionbox col-md-3');
+                            collections.removeClass('collectionlist col-md-12');
+                        }
                     }
                 }
-           }
-        }
-    });
-    
+            }
+        });
+    }
 
     // INSERT ASSETS IN COLLECTIONS
-    $('[data-collection]').each(function() {
+    $('[data-collection]').each(function () {
         var collectionID = $(this).data('collection-id');
         var collectionName = $(this).find('h3 .cname').text();
         var collectionAlias = collectionName.replace(/\s+/g, "");
 
 
         var collection = new Vue({
-            el: '[data-collection-id="'+collectionID+'"]',
+            el: '[data-collection-id="' + collectionID + '"]',
             data: {
                 open: false,
                 assets: null,
                 collectionAlias: collectionAlias,
                 fileClasses: fileClasses,
-                collectionSize:  null,
+                collectionSize: null,
             },
 
             mounted: function () {
@@ -92,46 +138,45 @@ $(document).ready(function() {
 
                     var that = this;
 
-                   // SPÄTER VLLT DYNAMISCH
+                    // SPÄTER VLLT DYNAMISCH
                     if (confirm('Are you sure you want to delete this?')) {
 
                         $.ajax({
-                        method: "POST",
-                        url: "/asset/delete",
-                        data: {
-                            _csrf : $(".csrf").val(),
-                            assetID : assetId
-                        }
-                    })
-                        .done(function(json) {
-                            $.ajax({
-                                method: "GET",
-                                url: "/assets/" + collectionID
-                            })
-                                .done(function(json) {
-                                    that.assets = json;
-                                    that.collectionSize =  Object.keys(json).length;
-                                    that.open = true;
-                                });
-                        });
+                            method: "POST",
+                            url: "/asset/delete",
+                            data: {
+                                _csrf: $(".csrf").val(),
+                                assetID: assetId
+                            }
+                        })
+                            .done(function (json) {
+                                $.ajax({
+                                    method: "GET",
+                                    url: "/assets/" + collectionID
+                                })
+                                    .done(function (json) {
+                                        that.assets = json;
+                                        that.collectionSize = Object.keys(json).length;
+                                        that.open = true;
+                                    });
+                            });
 
                     }
 
 
-
                 },
 
-                loadAssets: function() {
+                loadAssets: function () {
                     var that = this;
 
                     if (!that.open) {
                         $.ajax({
-                                method: "GET",
-                                url: "/assets/" + collectionID
-                            })
-                            .done(function(json) {
+                            method: "GET",
+                            url: "/assets/" + collectionID
+                        })
+                            .done(function (json) {
                                 that.assets = json;
-                                that.collectionSize =  Object.keys(json).length;
+                                that.collectionSize = Object.keys(json).length;
                                 that.open = true;
                             });
                     } else {
@@ -145,7 +190,7 @@ $(document).ready(function() {
 
 
     // ASSETS DETAILS
-    if($("#asset").length>0){
+    if ($("#asset").length > 0) {
         var asset = new Vue({
             el: '#asset',
             data: {
@@ -161,7 +206,7 @@ $(document).ready(function() {
                     method: "GET",
                     url: "/collections/getName/" + collectionID
                 })
-                    .done(function(json) {
+                    .done(function (json) {
                         that.collection = json;
                         that.collection.url = json.name.replace(/\s+/g, '')
 
@@ -170,9 +215,6 @@ $(document).ready(function() {
             },
         });
     }
-
-
-
 
 
 });

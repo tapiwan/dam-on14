@@ -164,7 +164,8 @@ app.post('/asset/delete', passportConfig.isAuthenticated, assetController.delete
 /**
  * Search
  */
-app.get('/search/:query', passportConfig.isAuthenticated, searchController.searchDAM);
+app.get('/searchCollections/:query', passportConfig.isAuthenticated, searchController.searchCollections);
+app.get('/searchAssets/:query', passportConfig.isAuthenticated, searchController.searchAssets);
 
 /**
  * API examples routes.

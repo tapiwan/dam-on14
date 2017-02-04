@@ -49,8 +49,17 @@
       ul.nav.navbar-nav.navbar-right
         if user
           form.navbar-form(role='search')
-            .input-group
-              input.form-control(type='text', placeholder='Search', name='q')
+            .input-group(data-search)
+              input.form-control(type='text', v-bind:placeholder='placeholder', name='q', v-model='query', @keyup="search")
+              .panel.panel-default.panel-search
+                .panel-body
+                  ul.list-group
+                    li.list-group-item(v-for="collection in collections")
+                      a(v-bind:href="'/collections#'+collection.name")
+                        | {{collection.name}}
+                    li.list-group-item(v-for="asset in assets")
+                      a(v-bind:href="'/asset/#'+asset.name")
+                        | {{asset.name}}
               .input-group-btn
                 button.btn.btn-default(type='submit')
                   i.fa.fa-search

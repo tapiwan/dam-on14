@@ -183,7 +183,18 @@ footer {
 }
 
 
+//SEARCH
+.panel-search {
+  position: absolute;
+  z-index: 999;
+  top: 105%;
+  width: 100%;
+  display: none;
 
+  &.active {
+    display: block;
+  }
+}
 
 // DASHBOARD
 

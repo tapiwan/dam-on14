@@ -1,12 +1,35 @@
 const Collection = require('../models/Collection');
+const Asset = require('../models/Asset');
 
 /**
- * GET /
- * Dashboard
+ * GET /searchCollections/:query
+ * Search Collections
  */
-exports.searchDAM = (req, res) => {
-    var query = req.param.query;
+exports.searchCollections = (req, res) => {
+    var query = req.params.query;
 
-    //TODO: Iterate over collections and return results via json
+    //Find collections
+    Collection.find({name: {$regex: query, $options: 'i'}}).exec(function (err, results) {
+        if (!err) {
+            res.json(results);
+        }
+    });
 };
+
+/**
+ * GET /searchAssets/:query
+ * Search Assets
+ */
+exports.searchAssets = (req, res) => {
+    var query = req.params.query;
+
+    //Find collections
+    Asset.find({name: {$regex: query, $options: 'i'}}).exec(function (err, results) {
+        if (!err) {
+            res.json(results);
+        }
+    });
+};
+
+
 
