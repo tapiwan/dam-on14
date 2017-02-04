@@ -1,4 +1,5 @@
 const Collection = require('../models/Collection');
+const Activity = require('../models/Activity');
 
 /**
  * GET /collections
@@ -65,6 +66,13 @@ exports.addCollection = (req, res) => {
             }
             else {
                 req.flash('success', { msg: 'Collection added' });
+
+                //Activity
+                new Activity({
+                    user: req.user.profile.name,
+                    action: 'created '+collection.name
+                }).save();
+
                 res.redirect('/collections');
 
 
@@ -80,6 +88,14 @@ exports.deleteCollection = (req,res) => {
     Collection.remove({ _id: req.body.collectionID }, (err) => {
         if (err) { return next(err); }
         req.flash('info', { msg: 'The collection has been deleted.' });
+
+        //Activity
+        //TODO: use Collection Name, not ID
+        new Activity({
+            user: req.user.profile.name,
+            action: 'deleted '+req.body.collectionID
+        }).save();
+
         res.redirect('/collections');
     });
 }
@@ -99,6 +115,13 @@ exports.editCollection = (req, res) => {
 
             collection.save((err) => {
                 req.flash('success', { msg: 'Collection title has been updated.' });
+
+                //Activity
+                new Activity({
+                    user: req.user.profile.name,
+                    action: 'edited '+collection.name
+                }).save();
+
                 res.redirect('/collections');
             });
         })
