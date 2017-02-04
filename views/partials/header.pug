@@ -61,7 +61,7 @@
                       a(v-bind:href="'/collections#'+collection.name")
                         | {{collection.name}}
                     li.list-group-item(v-for="asset in assets")
-                      a(v-bind:href="'/asset/#'+asset.name")
+                      a(v-bind:href="'/details/asset/'+asset._id")
                         | {{asset.name}}
               .input-group-btn
                 button.btn.btn-default(type='submit')
