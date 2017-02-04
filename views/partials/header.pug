@@ -58,7 +58,7 @@
                 .panel-body
                   ul.list-group
                     li.list-group-item(v-for="collection in collections")
-                      a(v-bind:href="'/collections#'+collection.name")
+                      a(v-bind:href="'/collections#'+noSpaces(collection.name)")
                         i.fa.fa-folder-o.mr5
                         | {{collection.name}}
                     li.list-group-item(v-for="asset in assets")

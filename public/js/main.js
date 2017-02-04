@@ -58,6 +58,10 @@ $(document).ready(function () {
                     .done(function(json) {
                         that.assets = json;
                     });
+                },
+
+                noSpaces: function(string) {
+                    return string.replace(/\s+/g, '')+"";
                 }
             }
         });
@@ -89,6 +93,9 @@ $(document).ready(function () {
                     var d = new Date(date);
 
                     return d.getDay()+'.'+d.getMonth()+'.'+d.getFullYear();
+                },
+                noSpaces: function(string) {
+                    return string.replace(/\s+/g, '')+"";
                 }
             }
         });

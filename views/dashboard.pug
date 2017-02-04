@@ -10,7 +10,7 @@ block content
 
       ul.folderlist
         li(v-for="collection in collections")
-          a(v-bind:href="'collection#'+collection.name")
+          a(v-bind:href="'collections#'+noSpaces(collection.name)")
             | {{collection.name}}
 
     .col-md-2
