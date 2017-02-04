@@ -39,6 +39,7 @@ const collectionController = require('./controllers/collection');
 const assetController = require('./controllers/asset');
 const dashboardController = require('./controllers/dashboard');
 const searchController = require('./controllers/search');
+const settingsController = require('./controllers/settings');
 
 /**
  * API keys and Passport configuration.
@@ -163,6 +164,11 @@ app.get('/details/asset/:id', passportConfig.isAuthenticated, assetController.ge
 app.post('/upload/assets', passportConfig.isAuthenticated, assetController.upload);
 app.post('/asset/edit', passportConfig.isAuthenticated, assetController.editAsset);
 app.post('/asset/delete', passportConfig.isAuthenticated, assetController.deleteAsset);
+
+/**
+ * Settings
+ */
+app.get('/settings', passportConfig.isAuthenticated, settingsController.getSettings);
 
 /**
  * Search

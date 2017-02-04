@@ -1,0 +1,28 @@
+extends ../layout
+
+block content
+
+  #settings
+
+    .row.mt30
+        .col-md-12
+            h1 #{title}
+
+    .row.mt30.box
+        .col-md-12
+            h2 Image Dimensions
+
+            // TODO Bearbeiten, Hinzufügen, Löschen
+
+            .assetlist
+                each dimension in settings[0].dimensions
+                    .col-md-4.whitebox
+                        h4 #{dimension.name}
+                        p
+                            strong width:
+                            | &nbsp; #{dimension.width}
+                        p
+                            strong height:
+                            | &nbsp; #{dimension.height}
+
+
