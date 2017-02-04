@@ -151,6 +151,7 @@ $(document).ready(function() {
             data: {
                 curCollection: "",
                 collections: "",
+                settings: "",
                 fileClasses: fileClasses,
             },
 
@@ -161,12 +162,19 @@ $(document).ready(function() {
                 $.ajax({
                     method: "GET",
                     url: "/collections/getName/" + collectionID
-                })
-                    .done(function(json) {
+                }).done(function(json) {
                         that.curCollection = json;
                         that.curCollection.url = json.name.replace(/\s+/g, '')
 
-                    });
+                });
+
+                $.ajax({
+                    method: "GET",
+                    url: "/json/settings/"
+                }).done(function(json) {
+                    that.settings = json[0].dimensions;
+
+                });
             },
 
             methods: {

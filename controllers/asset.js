@@ -1,5 +1,6 @@
 const Asset = require('../models/Asset');
 const Collection = require('../models/Collection');
+const Settings = require('../models/Settings');
 
 const multer = require('multer');
 const path = require('path');
@@ -51,7 +52,6 @@ exports.editAsset = (req, res) => {
             }
             asset.name = req.body.assetName+"."+req.body.assetSuffix;
             asset._collectionId = req.body.collectionID;
-            console.log(req.body.collectionID)
 
             asset.save((err) => {
                 req.flash('success', { msg: 'Asset has been updated.' });
@@ -125,8 +125,8 @@ exports.upload = (req, res) => {
 
     });
 
+};
 
+exports.downloadImage = (req,res) => {
 
-
-  //res.redirect('/collections');
-}
+};

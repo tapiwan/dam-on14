@@ -1,7 +1,14 @@
 const mongoose = require('mongoose');
 
 const settingsSchema = new mongoose.Schema({
-  dimensions: Object
+    dimensions: [
+        {
+            name: String,
+            width: String,
+            height: String
+
+        }
+    ]
 
 
 }, { timestamps: true });
@@ -16,29 +23,23 @@ Settings.find(function (err, settings) {
         console.log("Settings bereits vorhanden");
         return;
     }
+
     new Settings({
-        dimensions: {
-            0: {
-                name: "Web Content",
-                width: "500px",
+        dimensions: [
+            {
+                name: "Web content",
+                width: "500",
                 height: "auto"
-
             },
-            1: {
-                name: "Web Header",
-                width: "1500px",
+            {
+                name: "Web header",
+                width: "1500",
                 height: "auto"
-
-            },
-            2: {
-                name: "Print",
-                width: "1500px",
-                height: "auto"
-
-            }
-        }
+            }]
 
     }).save();
+
+
 
     console.log("Settings hinzugefügt");
 });

@@ -169,6 +169,9 @@ app.post('/asset/delete', passportConfig.isAuthenticated, assetController.delete
  * Settings
  */
 app.get('/settings', passportConfig.isAuthenticated, settingsController.getSettings);
+app.get('/json/settings', passportConfig.isAuthenticated, settingsController.getSettingsJson);
+app.post('/settings/add', passportConfig.isAuthenticated, settingsController.editDimension);
+
 
 /**
  * Search

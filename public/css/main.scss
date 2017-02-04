@@ -518,7 +518,7 @@ div.table .file-row > div {
 
 .assetlist {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
 
 
@@ -726,11 +726,7 @@ textarea {
   background-color: white;
   padding: 10px;
   margin: 10px;
-}
-#settings {
-  .whitebox {
-    padding: 20px;
-    margin: 10px;
-    max-width: 340px;
-  }
+  max-width: 340px;
+
+
 }

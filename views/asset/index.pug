@@ -191,6 +191,12 @@ block content
         .col-md-12
             h1 Download
 
+            .assetlist
+                .col-md-4.whitebox(v-for="dimension in settings")
+                    h4 {{dimension.name}}
+
+
+
         #editAsset.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
           .modal-dialog(role='document')
               .modal-content
