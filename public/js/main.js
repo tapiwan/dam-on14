@@ -17,8 +17,9 @@ $(document).ready(function () {
             data: {
                 query: '',
                 placeholder: 'Search',
-                collections: null,
-                assets: null
+                collections: [],
+                assets: [],
+                fileIcons: fileIcons
             },
 
             methods: {

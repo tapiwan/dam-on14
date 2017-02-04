@@ -59,9 +59,11 @@
                   ul.list-group
                     li.list-group-item(v-for="collection in collections")
                       a(v-bind:href="'/collections#'+collection.name")
+                        i.fa.fa-folder-o.mr5
                         | {{collection.name}}
                     li.list-group-item(v-for="asset in assets")
                       a(v-bind:href="'/details/asset/'+asset._id")
+                        i.fa.mr5(v-bind:class="fileIcons[asset.type]")
                         | {{asset.name}}
               .input-group-btn
                 button.btn.btn-default(type='submit')

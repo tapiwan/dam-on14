@@ -13,6 +13,15 @@ var fileClasses = {
     "mov" : " fa-file-video-o",
 };
 
+var fileIcons = {
+    "default": "fa-file-o",
+    "image": "fa-file-image-o",
+    "audio": "fa-file-audio-",
+    "video": "fa-file-video-o",
+    "pdf": "fa-file-pdf-o",
+    "word": "fa-file-word-o"
+};
+
 var fileTypes = {
     "png" : "image",
     "jpg" : "image",
