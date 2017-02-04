@@ -63,6 +63,7 @@ exports.editAsset = (req, res) => {
 
 exports.upload = (req, res) => {
 
+
     var storage = multer.diskStorage({
         destination: function (req, file, cb) {
             cb(null, './public/uploads')
@@ -112,7 +113,8 @@ exports.upload = (req, res) => {
                     console.log(err);
                 }
                 if(product && i == req.files.length) {
-                    res.end('Files Uploaded');
+                    res.send(product._id)
+                    res.end("Success");
                 }
             });
 
