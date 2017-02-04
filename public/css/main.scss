@@ -55,6 +55,7 @@ h1.bold {
 }
 .df {
   display: flex;
+  flex-wrap: wrap;
 }
 .box {
   border-top: 3px solid $brand-primary;

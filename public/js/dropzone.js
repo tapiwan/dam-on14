@@ -118,8 +118,6 @@ $(document).ready(function() {
 
 
 
-
-
             // TAGS
             file.previewElement.querySelector(".showTags").onclick = function () {
                 $(this).next(".tagsArea").tagsinput({
@@ -191,7 +189,8 @@ $(document).ready(function() {
             // GET COLLECTIONS
             var e = file.previewElement.querySelector("#sel1");
             var collection = e.options[e.selectedIndex].dataset.id;
-            file.previewElement.querySelector(".selectCollection").innerHTML = "<strong>Collection:</strong><br><a href='collections#"+e.options[e.selectedIndex].value+"'>"+e.options[e.selectedIndex].value+"</a>";;
+            file.previewElement.querySelector(".selectCollection").innerHTML = "<strong>Collection:</strong><br><a href='collections#"+e.options[e.selectedIndex].value.replace(/ /g,'')
+                +"'>"+e.options[e.selectedIndex].value+"</a>";;
 
             // HIDE EDIT
             file.previewElement.querySelector('.editname').innerHTML ="";
@@ -230,9 +229,7 @@ $(document).ready(function() {
         myDropzone.on("complete", function (file) {
             file.previewElement.querySelector(".start").textContent="File has been uploaded";
             file.previewElement.querySelector(".cancel").remove();
-            setTimeout(function () {
-                file.previewElement.querySelector(".progress").remove();
-            },2000)
+
 
 
         });

@@ -159,6 +159,7 @@ app.get('/assets/:id', passportConfig.isAuthenticated, assetController.getAssets
 app.get('/details/:collection/:id', passportConfig.isAuthenticated, assetController.getAsset);
 
 app.post('/upload/assets', passportConfig.isAuthenticated, assetController.upload);
+app.post('/asset/edit', passportConfig.isAuthenticated, assetController.editAsset);
 app.post('/asset/delete', passportConfig.isAuthenticated, assetController.deleteAsset);
 
 /**

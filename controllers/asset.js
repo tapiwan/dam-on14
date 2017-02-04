@@ -28,7 +28,7 @@ exports.getAsset = (req, res) => {
             });
         }
     });
-}
+};
 
 exports.deleteAsset = (req,res) => {
 
@@ -39,7 +39,23 @@ exports.deleteAsset = (req,res) => {
         req.flash('info', { msg: 'Asset has been deleted.' });
         res.redirect('/collections');
     });
-}
+};
+
+exports.editAsset = (req, res) => {
+
+        Asset.findOne({ _id: req.body.assetID }, (err, asset) => {
+            if(err){
+                console.log(err);
+            }
+            asset.name = req.body.assetName+"."+req.body.assetSuffix;
+
+            asset.save((err) => {
+                req.flash('success', { msg: 'Asset has been updated.' });
+                res.redirect(req.headers.referer);
+            });
+        });
+
+};
 
 exports.upload = (req, res) => {
 
