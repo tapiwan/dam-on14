@@ -153,7 +153,10 @@ app.post('/collections/add', passportConfig.isAuthenticated, collectionControlle
 app.post('/collections/delete', passportConfig.isAuthenticated, collectionController.deleteCollection);
 app.post('/collections/edit', passportConfig.isAuthenticated, collectionController.editCollection);
 
+// DASHBOARD
 app.get('/dashboard', passportConfig.isAuthenticated, dashboardController.showDashboard);
+app.get('/getActivities', passportConfig.isAuthenticated, dashboardController.getActivities);
+app.get('/getCollections', passportConfig.isAuthenticated, dashboardController.getCollections);
 
 /**
  * Assets

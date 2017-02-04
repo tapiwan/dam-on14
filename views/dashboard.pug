@@ -5,44 +5,28 @@ block content
   h1.bold.mt30 Dashboard
 
   .row.mt30
-    .col-md-5.box
+    .col-md-5.box.collections(data-dashboard-collections)
       h3 Collections
 
       ul.folderlist
-        each collection, index in collections
-          if index < 3
-            li
-              a(href="/collections#"+collection.name.replace(/\s+/g, '')+"") #{collection.name}
-
+        li(v-for="collection in collections")
+          a(v-bind:href="'collection#'+collection.name")
+            | {{collection.name}}
 
     .col-md-2
 
-    .col-md-5.box.activity
+    .col-md-5.box.activity(data-dashboard-activity)
       h3 Your Activity
 
       table.table.table-striped
         tbody
-          tr
+          tr(v-for="activity in activities")
             td
-              i.fa.fa-cloud-download
-            td 19.01.17
-            td IMG_12332.jpg
+              | {{activity.user}}
             td
-              i.fa.fa-file-image-o
-          tr
+              | {{activity.action}}
             td
-              i.fa.fa-cloud-download
-            td 18.01.17
-            td MOV_112.mp4
-            td
-              i.fa.fa-file-video-o
-          tr
-            td
-              i.fa.fa-cloud-upload
-            td 15.01.17
-            td Calculation.pdf
-            td
-              i.fa.fa-file-pdf-o
+              | {{getDateFormatted(activity.createdAt)}}
 
 
   .row.mt30.box

@@ -63,6 +63,68 @@ $(document).ready(function () {
         });
     }
 
+    //DASHBOARD COLLECTIONS
+    if($('[data-dashboard-collections]').length) {
+        var dashboardCollections = new Vue({
+            el: '[data-dashboard-collections]',
+            data: {
+                collections: []
+            },
+            mounted: function() {
+                this.getCollections();
+            },
+            methods: {
+                getCollections: function() {
+                    var that = this;
+
+                    $.ajax({
+                        method: "GET",
+                        url: "/getCollections"
+                    })
+                        .done(function(json) {
+                            that.collections = json;
+                        });
+                },
+                getDateFormatted: function(date) {
+                    var d = new Date(date);
+
+                    return d.getDay()+'.'+d.getMonth()+'.'+d.getFullYear();
+                }
+            }
+        });
+    }
+
+    //DASHBOARD ACTIVITY
+    if($('[data-dashboard-activity]').length) {
+        var dashboardActivity = new Vue({
+            el: '[data-dashboard-activity]',
+            data: {
+                activities: []
+            },
+            mounted: function() {
+                this.getActivities();
+            },
+            methods: {
+                getActivities: function() {
+                    var that = this;
+
+                    $.ajax({
+                        method: "GET",
+                        url: "/getActivities"
+                    })
+                        .done(function(json) {
+                            that.activities = json;
+                        });
+                },
+                getDateFormatted: function(date) {
+                    var d = new Date(date);
+
+                    return d.getDay()+'.'+d.getMonth()+'.'+d.getFullYear();
+                }
+            }
+        });
+    }
+
     // MODAL INPUT FOCUS
     $('#editCollection, #addCollection').on('shown.bs.modal', function () {
         $(this).find('input').focus();
