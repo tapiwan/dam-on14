@@ -137,6 +137,13 @@ block content
                             li
                                 button.btn.btn-primary.btn-sm(type='button', data-toggle='modal', data-target='#exifDataModal') Show more
 
+            if asset.type != "image"
+                hr
+                h3 Specific Informations
+                ul.assetdetails
+                    if asset.metadataFile
+                        button.btn.btn-primary.btn-sm(type='button', data-toggle='modal', data-target='#exifDataModal') Show meta informations
+
 
 
 
@@ -183,6 +190,15 @@ block content
                                                   li
                                                       strong #{key}
                                                       |  #{val}
+                            if asset.metadataFile
+                              .row.mt30
+                                  .col-md-6
+                                      h4 File Informations
+                                      ul.assetdetails
+                                          each val, key in asset.metadataFile
+                                              li
+                                                  strong #{key}
+                                                  |  #{val}
 
 
 

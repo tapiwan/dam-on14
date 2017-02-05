@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const ExifImage = require('exif').ExifImage;
+const exif = require('exiftool');
 const iptc = require('node-iptc');
 const sizeOf = require('image-size');
 const watson = require('watson-developer-cloud');
@@ -27,6 +28,7 @@ const assetSchema = new mongoose.Schema({
         _id: mongoose.Schema.Types.ObjectId
     },
     metadata: Object,
+    metadataFile: Object,
     iptc: Object,
     watsonImage: Object,
     watsonFace: Object,
@@ -57,6 +59,83 @@ assetSchema.pre('save', function(next) {
     else {
         next();
     }
+
+});
+// EXIFTOOL FILES
+assetSchema.pre('save', function(next) {
+    const asset = this;
+
+    if(asset.type != "image") {
+        fs.readFile(asset.fullpath, function(err, data) {
+            if (err) { throw err }
+            exif.metadata(data, function (err, file) {
+                const meta = {
+                    exiftoolVersionNumber: file.exiftoolVersionNumber,
+                    fileType: file.fileType,
+                    fileTypeExtension: file.fileTypeExtension,
+                    mimeType:file.mimeType,
+                    pdfVersion:file.pdfVersion,
+                    linearized: file.linearized,
+                    createDate: file.createDate,
+                    creator: file.creator,
+                    modifyDate:file.modifyDate,
+                    hasXFA: file.hasXFA,
+                    xmpToolkit: file.xmpToolkit,
+                    creatorTool: file.creatorTool,
+                    metadataDate: file.metadataDate,
+                    keywords: file.keywords,
+                    producer: file.producer,
+                    format: file.format,
+                    title: file.title,
+                    documentID: file.documentID,
+                    instanceID: file.instanceID,
+                    pageCount: file.pageCount,
+                    historyAction: file.historyAction,
+                    historyWhen:file.historyWhen,
+                    historySoftwareAgent: file.historySoftwareAgent,
+                    colorMode: file.colorMode,
+                    iccProfileName: file.iccProfileName,
+                    xResolution: file.xResolution,
+                    displayedUnitsX:file.displayedUnitsX,
+                    yResolution: file.yResolution,
+                    displayedUnitsY:file.displayedUnitsY,
+                    printStyle: file.printStyle,
+                    printPosition:file.printPosition,
+                    printScale:file.printScale,
+                    globalAngle: file.globalAngle,
+                    globalAltitude:file.globalAltitude,
+                    urlList: file.urlList,
+                    slicesGroupName: file.slicesGroupName,
+                    colorSpaceData:file.colorSpaceData,
+                    deviceModel: file.deviceModel,
+                    profileCopyright: file.profileCopyright,
+                    profileDescription:file.profileDescription,
+                    writerName: file.writerName,
+                    readerName: file.readerName,
+                    orientation: file.orientation,
+                    resolutionUnit: file.resolutionUnit,
+                    software: file.software,
+                    colorSpace:file.colorSpace,
+                    exifImageWidth:file.exifImageWidth,
+                    exifImageHeight:file.exifImageHeight,
+                    imageSize:file.imageSize,
+                    megapixels: file.megapixels
+                }
+
+                asset.metadataFile = meta;
+                next();
+
+            });
+
+        });
+    }
+    else {
+        next();
+
+    }
+
+
+
 
 });
 assetSchema.pre('save', function(next) {
@@ -177,3 +256,4 @@ Asset.find(function (err, assets) {
 
 
 module.exports = Asset;
+
