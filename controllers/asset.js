@@ -8,7 +8,8 @@ const path = require('path');
 const sharp = require('sharp');
 const http = require('http');
 const fs = require('fs');
-const icc = require('icc')
+const icc = require('icc');
+const filepreview = require('filepreview');
 
 
 
@@ -63,6 +64,7 @@ exports.editAsset = (req, res) => {
             if(err){
                 console.log(err);
             }
+            console.log("here")
             asset.name = req.body.assetName+"."+req.body.assetSuffix;
             asset._collectionId = req.body.collectionID;
 
