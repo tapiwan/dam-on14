@@ -134,6 +134,7 @@ exports.requestDownloadImage = (req,res) => {
         if (!err) {
             if(req.params.width == "original"){
                 sharp(result[0].fullpath)
+                    .withMetadata()
                     .toFile('public/downloads/'+result[0].name, function (err, sucess) {
                         if(!err){
                             sucess.filename = result[0].name;
@@ -146,6 +147,7 @@ exports.requestDownloadImage = (req,res) => {
             else {
                 sharp(result[0].fullpath)
                     .resize(parseInt(req.params.width))
+                    .withMetadata()
                     .toFile('public/downloads/'+req.params.width+"_"+result[0].name, function (err, sucess) {
                         if(!err){
                             sucess.filename = req.params.width+"_"+result[0].name;
