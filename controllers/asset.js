@@ -178,13 +178,35 @@ exports.requestDownloadImage = (req,res) => {
 };
 
 exports.downloadFile = (req,res) => {
+
     var filename = req.params.file;
+
     var path = 'public/downloads/'+filename;
-    res.set("Content-Disposition", "attachment;filename="+filename);
+    var altPath = 'public/uploads/'+filename;
+
+    if(req.query.name){
+        res.set("Content-Disposition", "attachment;filename="+req.query.name);
+    }
+    else {
+        res.set("Content-Disposition", "attachment;filename="+filename);
+    }
+
 
     var readStream = fs.createReadStream(path);
+
     readStream.on('data', function(data) {
         res.write(data);
+    });
+
+    readStream.on('error', function(err) {
+        var newStream = fs.createReadStream(altPath);
+        newStream.on('data', function(data) {
+            res.write(data);
+        });
+        newStream.on('end', function() {
+            res.end();
+        });
+
     });
 
     readStream.on('end', function() {
