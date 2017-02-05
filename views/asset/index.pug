@@ -28,7 +28,7 @@ block content
                 i.thumb.fa.fa-5x(v-bind:class="fileClasses.default")
         .col-md-1
         .col-md-5
-            h3 Informations
+            h3 Information
             ul.assetdetails
                 if asset.tags
                     li.tags
@@ -63,8 +63,9 @@ block content
 
             if asset.watsonImage
                 hr
-                h3 Image Recognition
-                ul.assetdetails
+                h3.cursor.collapsed(data-toggle="collapse", data-target="#asset-information") Image Recognition
+                  i.caret-icon
+                ul.assetdetails#asset-information.collapsed.collapse
                     li
                         each val in asset.watsonImage.images[0].classifiers[0].classes
                             li
@@ -78,8 +79,9 @@ block content
 
                 if asset.watsonFace.images[0].faces[0] && asset.watsonFace
                 hr
-                h3 Face Detection
-                ul.assetdetails
+                h3.cursor.collapsed(data-toggle="collapse", data-target="#asset-face-detection") Face Detection
+                  i.caret-icon
+                ul.assetdetails#asset-face-detection.collapsed.collapse
                     li
                         each val in asset.watsonFace.images[0].faces
                                 li
@@ -110,8 +112,9 @@ block content
 
             if asset.type == "image"
                 hr
-                h3 Specific Informations
-                ul.assetdetails
+                h3.cursor.collapsed(data-toggle="collapse", data-target="#asset-specific-information") Specific Information
+                  i.caret-icon
+                ul.assetdetails#asset-specific-information.collapsed.collapse
                     li
                         strong Dimensions:
                         |  #{asset.width}px x #{asset.height}px
@@ -139,10 +142,11 @@ block content
 
             if asset.type != "image"
                 hr
-                h3 Specific Informations
-                ul.assetdetails
+                h3.cursor.collapsed(data-toggle="collapse", data-target="#asset-specific-information") Specific Information
+                  i.caret-icon
+                ul.assetdetails#asset-specific-information.collapsed.collapse
                     if asset.metadataFile
-                        button.btn.btn-primary.btn-sm(type='button', data-toggle='modal', data-target='#exifDataModal') Show meta informations
+                        button.btn.btn-primary.btn-sm(type='button', data-toggle='modal', data-target='#exifDataModal') Show meta information
 
 
 
@@ -218,7 +222,7 @@ block content
                     .modal-header
                         button.close(type='button', data-dismiss='modal', aria-label='Close')
                             span(aria-hidden='true') ×
-                        h4.modal-title F informations
+                        h4.modal-title File information
                     .modal-body
                         if asset.metadata && asset.metadata.exif
                             .row
@@ -258,7 +262,7 @@ block content
                         if asset.metadataFile
                             .row.mt30
                                 .col-md-6
-                                    h4 File Informations
+                                    h4 File Information
                                     ul.assetdetails
                                         each val, key in asset.metadataFile
                                             li

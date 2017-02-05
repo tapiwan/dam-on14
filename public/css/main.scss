@@ -44,6 +44,9 @@ h1.bold {
 .mr30 {
   margin-right: 30px;
 }
+.ml10 {
+  margin-left: 10px;
+}
 .ml30 {
   margin-left: 30px;
 }
@@ -62,6 +65,28 @@ h1.bold {
   border-bottom: 2px solid $grey;
   background-color: $white;
   padding: 30px;
+}
+.caret-icon {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin-left: 5px;
+
+  &:after {
+    content: "\f0d8";
+  }
+
+}
+.collapsed .caret-icon {
+  &:after {
+    content: "\f0d7";
+  }
+}
+.cursor {
+  cursor: pointer;
 }
 
 
