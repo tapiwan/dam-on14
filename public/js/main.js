@@ -134,7 +134,12 @@ $(document).ready(function () {
                 getDateFormatted: function(date) {
                     var d = new Date(date);
 
-                    return d.getDay()+'.'+d.getMonth()+'.'+d.getFullYear();
+                    var day = d.getDate(),
+                        month = d.getMonth() + 1,
+                        year = d.getFullYear(),
+                        limiter = '.';
+
+                    return day+limiter+month+limiter+year;
                 }
             }
         });
