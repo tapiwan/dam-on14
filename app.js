@@ -163,7 +163,8 @@ app.get('/getCollections', passportConfig.isAuthenticated, dashboardController.g
  */
 app.get('/assets/:id', passportConfig.isAuthenticated, assetController.getAssets);
 app.get('/details/asset/:id', passportConfig.isAuthenticated, assetController.getAsset);
-app.get('/asset/download/image/:id/:width', passportConfig.isAuthenticated, assetController.downloadImage);
+app.get('/asset/prepare/image/:id/:width', passportConfig.isAuthenticated, assetController.requestDownloadImage);
+app.get('/asset/download/:file', passportConfig.isAuthenticated, assetController.downloadFile);
 
 app.post('/upload/assets', passportConfig.isAuthenticated, assetController.upload);
 app.post('/asset/edit', passportConfig.isAuthenticated, assetController.editAsset);

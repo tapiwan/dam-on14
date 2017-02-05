@@ -198,7 +198,9 @@ block content
                         strong Dimensions:
                         |  #{asset.width}px x #{asset.height}px
                     hr
-                    a.btn-primary.btn(v-bind:href="'/asset/download/image/'+assetID+'/original'")
+                    //a.btn-primary.btn(v-bind:href="'/asset/download/image/'+assetID+'/original'")
+
+                    a.btn-primary.btn(@click="requestDownload('image','original')", data-toggle='modal', data-target='#downloadAsset')
                         i.fa.fa-cloud-download
                         | Request download
 
@@ -210,13 +212,48 @@ block content
                         |  {{dimension.width}}px x {{Math.round(dimension.width/#{ratio})}}px
                     hr
                     p
-                    a.btn-primary.btn(v-bind:href="'/asset/download/image/'+assetID+'/'+dimension.width")
+                    a.btn-primary.btn(@click="requestDownload('image',dimension)", data-toggle='modal', data-target='#downloadAsset')
                         i.fa.fa-cloud-download
                         | Request download
 
 
 
 
+        #downloadAsset.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+            .modal-dialog(role='document')
+                .modal-content
+                    .modal-header
+                        button.close(type='button', data-dismiss='modal', aria-label='Close')
+                            span(aria-hidden='true') ×
+                        h4.modal-title Your download
+                    .modal-body
+                        if asset.type == "image"
+                            img(src='/' + asset.path)
+                        if asset.type == "pdf"
+                            i.thumb.fa.fa-5x.text-center(v-bind:class="fileClasses.pdf")
+                        if asset.type == "psd"
+                            i.thumb.fa.fa-5x(v-bind:class="fileClasses.default")
+                        if asset.type == "default"
+                            i.thumb.fa.fa-5x(v-bind:class="fileClasses.default")
+                        hr
+                        h4 #{asset.name}
+                        span
+                            strong Optimized for:
+                            |  {{downloadFile.settings.name}}
+
+                        span
+                            strong Dimensions:
+                            |  {{downloadFile.file.width}}px x {{downloadFile.file.height}}px
+                        span(v-if="downloadFile.file.width < 1000000")
+                            strong Size:
+                            |  {{(downloadFile.file.size/1000).toFixed(0)}} KB
+                        span(v-if="downloadFile.file.width > 1000000")
+                            strong Size:
+                            |  {{(downloadFile.file.size/1000000).toFixed(2)}} MB
+
+                        hr
+                        a.btn.btn-primary(v-bind:href="'/asset/download/'+downloadFile.file.filename", @click="hideDownloadModal")
+                            | Download now
         #editAsset.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
           .modal-dialog(role='document')
               .modal-content

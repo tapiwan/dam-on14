@@ -283,6 +283,10 @@ $(document).ready(function () {
                 curCollection: "",
                 collections: "",
                 settings: "",
+                downloadFile: {
+                    file: "",
+                    settings: ""
+                },
                 fileClasses: fileClasses,
             },
 
@@ -322,6 +326,37 @@ $(document).ready(function () {
                             that.collections = json;
                         });
                 },
+                hideDownloadModal: function () {
+                    $('#downloadAsset').modal('hide');
+                },
+                requestDownload: function (type, settings) {
+                    var that = this;
+
+                    if(type == "image"){
+                        if (settings != "original"){
+                            that.downloadFile.settings = settings;
+                            $.ajax({
+                                method: "GET",
+                                url: "/asset/prepare/image/"+that.assetID+"/"+settings.width
+                            })
+                                .done(function(json) {
+                                    that.downloadFile.file = json;
+                                });
+                        }
+                        else {
+                            $.ajax({
+                                method: "GET",
+                                url: "/asset/prepare/image/"+that.assetID+"/"+settings
+                            })
+                                .done(function(json) {
+                                    that.downloadFile.file = json;
+                                });
+                        }
+
+                    }
+
+
+                }
 
             }
         });

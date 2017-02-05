@@ -128,7 +128,7 @@ exports.upload = (req, res) => {
 
 };
 
-exports.downloadImage = (req,res) => {
+exports.requestDownloadImage = (req,res) => {
 
     Asset.find({_id: req.params.id}).exec(function (err, result) {
         if (!err) {
@@ -136,18 +136,10 @@ exports.downloadImage = (req,res) => {
                 sharp(result[0].fullpath)
                     .toFile('public/downloads/'+result[0].name, function (err, sucess) {
                         if(!err){
-                            sucess.path = 'public/downloads/'+result[0].name;
+                            sucess.filename = result[0].name;
+                            res.json(sucess)
 
-                            res.set("Content-Disposition", "attachment;filename="+result[0].name);
 
-                            var readStream = fs.createReadStream( sucess.path);
-                            readStream.on('data', function(data) {
-                                res.write(data);
-                            });
-
-                            readStream.on('end', function() {
-                                res.end();
-                            });
                         }
                     });
             }
@@ -156,25 +148,29 @@ exports.downloadImage = (req,res) => {
                     .resize(parseInt(req.params.width))
                     .toFile('public/downloads/'+req.params.width+"_"+result[0].name, function (err, sucess) {
                         if(!err){
-                            sucess.path = 'public/downloads/'+req.params.width+"_"+result[0].name;
+                            sucess.filename = req.params.width+"_"+result[0].name;
+                            res.json(sucess)
 
-                            res.set("Content-Disposition", "attachment;filename="+req.params.width+"_"+result[0].name);
-
-                            var readStream = fs.createReadStream( sucess.path);
-                            readStream.on('data', function(data) {
-                                res.write(data);
-                            });
-
-                            readStream.on('end', function() {
-                                res.end();
-                            });
                         }
                     });
             }
 
         }
     });
+};
 
+exports.downloadFile = (req,res) => {
+    var filename = req.params.file;
+    var path = 'public/downloads/'+filename;
+    res.set("Content-Disposition", "attachment;filename="+filename);
 
+    var readStream = fs.createReadStream(path);
+    readStream.on('data', function(data) {
+        res.write(data);
+    });
+
+    readStream.on('end', function() {
+        res.end();
+    });
 
 };
