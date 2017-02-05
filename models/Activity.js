@@ -17,17 +17,17 @@ Activity.find(function (err, activities) {
         return;
     }
     new Activity({
-        user: "Dirk Englert",
+        user: "Dirk",
         action: "updated XYZ.png"
     }).save();
 
     new Activity({
-        user: "Dirk Englert",
+        user: "Dirk",
         action: "updated XYZ.png"
     }).save();
 
     new Activity({
-        user: "Dirk Englert",
+        user: "Dirk",
         action: "updated XYZ.png"
     }).save();
 

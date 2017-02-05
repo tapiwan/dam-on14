@@ -1,6 +1,7 @@
 const Asset = require('../models/Asset');
 const Collection = require('../models/Collection');
 const Settings = require('../models/Settings');
+const Activity = require('../models/Activity');
 
 const multer = require('multer');
 const path = require('path');
@@ -45,6 +46,13 @@ exports.deleteAsset = (req,res) => {
     Asset.remove({ _id: req.body.assetID }, (err) => {
         if (err) { return next(err); }
         req.flash('info', { msg: 'Asset has been deleted.' });
+
+        //Activity
+        new Activity({
+            user: req.user.profile.name,
+            action: 'deleted '+req.body.assetID
+        }).save();
+
         res.redirect('/collections');
     });
 };
@@ -60,6 +68,13 @@ exports.editAsset = (req, res) => {
 
             asset.save((err) => {
                 req.flash('success', { msg: 'Asset has been updated.' });
+
+                //Activity
+                new Activity({
+                    user: req.user.profile.name,
+                    action: 'edited '+asset.name
+                }).save();
+
                 res.redirect(req.headers.referer);
             });
         });
@@ -118,7 +133,14 @@ exports.upload = (req, res) => {
                     console.log(err);
                 }
                 if(product && i == req.files.length) {
-                    res.send(product._id)
+                    res.send(product._id);
+
+                    //Activity
+                    new Activity({
+                        user: req.user.profile.name,
+                        action: 'uploaded '+product.name
+                    }).save();
+
                     res.end("Success");
                 }
             });
