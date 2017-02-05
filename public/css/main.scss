@@ -771,6 +771,24 @@ textarea {
       margin-bottom: 7px;
     }
   }
+  .rating {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    width: 180px;
+
+  }
+  .rating > span {
+    display: inline-block;
+    position: relative;
+    font-size: 24px;
+    width: 1.5em;
+  }
+  .rating > span:hover:before,
+  .rating > span:hover ~ span:before {
+    content: "\2605";
+    position: absolute;
+    color: $brand-primary
+  }
 
   .chat {
     padding: 20px;

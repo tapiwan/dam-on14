@@ -60,6 +60,13 @@ block content
                 li
                     strong Collection:
                     a(v-bind:href="'../../collections#'+curCollection.url")  {{curCollection.name}}
+                .rating
+                    span ☆
+                    span ☆
+                    span ☆
+                    span ☆
+                    span ☆
+
 
             if asset.watsonImage
                 hr
@@ -161,7 +168,7 @@ block content
                               input.csrf(type='hidden', name='_csrf', value=_csrf)
                               input.form-control(type='hidden', name='assetID', id='id' value=asset._id)
                               input.form-control(type='hidden', name='commentID', id='id' value=comment._id)
-                              button.btn.btn-primary(type='submit')
+                              button.btn.btn-primary.btn-sm(type='submit')
                                 i.fa.fa-trash-o
                                 | Delete
                       span= ' '+moment(comment.date).format("DD.MM.YY - HH:mm") + ' Uhr'
