@@ -237,17 +237,18 @@ block content
                             i.thumb.fa.fa-5x(v-bind:class="fileClasses.default")
                         hr
                         h4 #{asset.name}
-                        span
+                        span(v-if="downloadFile.settings.name")
                             strong Optimized for:
                             |  {{downloadFile.settings.name}}
 
-                        span
+                        span(v-if="downloadFile.file.width")
                             strong Dimensions:
                             |  {{downloadFile.file.width}}px x {{downloadFile.file.height}}px
-                        span(v-if="downloadFile.file.width < 1000000")
+                        span(v-if="downloadFile.file.size < 1000000")
                             strong Size:
                             |  {{(downloadFile.file.size/1000).toFixed(0)}} KB
-                        span(v-if="downloadFile.file.width > 1000000")
+
+                        span(v-else)
                             strong Size:
                             |  {{(downloadFile.file.size/1000000).toFixed(2)}} MB
 

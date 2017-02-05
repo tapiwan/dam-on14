@@ -336,6 +336,8 @@ $(document).ready(function () {
                 },
                 requestDownload: function (type, settings) {
                     var that = this;
+                    that.downloadFile.settings = "";
+                    that.downloadFile.file = "";
 
                     if(type == "image"){
                         if (settings != "original"){
@@ -349,6 +351,8 @@ $(document).ready(function () {
                                 });
                         }
                         else {
+                            this.downloadFile.settings.name = "";
+
                             $.ajax({
                                 method: "GET",
                                 url: "/asset/prepare/image/"+that.assetID+"/"+settings
