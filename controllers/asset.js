@@ -7,6 +7,7 @@ const path = require('path');
 const sharp = require('sharp');
 const http = require('http');
 const fs = require('fs');
+const icc = require('icc')
 
 
 
@@ -145,16 +146,31 @@ exports.requestDownloadImage = (req,res) => {
                     });
             }
             else {
-                sharp(result[0].fullpath)
-                    .resize(parseInt(req.params.width))
-                    .withMetadata()
-                    .toFile('public/downloads/'+req.params.width+"_"+result[0].name, function (err, sucess) {
-                        if(!err){
-                            sucess.filename = req.params.width+"_"+result[0].name;
-                            res.json(sucess)
+                const image = sharp(result[0].fullpath);
 
-                        }
-                    });
+
+                image
+                    .metadata()
+                    .then(function(metadata) {
+                        return image
+                            .resize(parseInt(req.params.width))
+                            .withMetadata()
+                            .toFile('public/downloads/'+req.params.width+"_"+result[0].name, function (err, sucess) {
+                                if(!err){
+                                    sucess.filename = req.params.width+"_"+result[0].name;
+
+                                    if(metadata.icc){
+                                        sucess.icc = icc.parse(metadata.icc);
+
+                                    }
+
+                                    res.json(sucess)
+
+                                }
+                            });
+
+                    })
+
             }
 
         }

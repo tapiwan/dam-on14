@@ -240,6 +240,9 @@ block content
                         span(v-if="downloadFile.settings.name")
                             strong Optimized for:
                             |  {{downloadFile.settings.name}}
+                        span(v-if="downloadFile.file.icc")
+                            strong Profile:
+                            |  {{downloadFile.file.icc.deviceModelDescription}}
 
                         span(v-if="downloadFile.file.width")
                             strong Dimensions:
@@ -251,6 +254,9 @@ block content
                         span(v-else)
                             strong Size:
                             |  {{(downloadFile.file.size/1000000).toFixed(2)}} MB
+
+
+
 
                         hr
                         a.btn.btn-primary(v-bind:href="'/asset/download/'+downloadFile.file.filename", @click="hideDownloadModal")
