@@ -170,12 +170,21 @@ block content
                                     - num = num.toFixed(2)
                                     span=" " + num + " MB"
 
+                        if asset.type == "psd"
+                            span
+                                strong ICC:
+                                |  #{asset.metadataFile.profileDescription}
+                            span
+                                strong Dimensions:
+                                |  #{asset.metadataFile.imageSize}px
+
                         hr
                         a.btn-primary.btn(href="/asset/download/"+asset.path.split('/')[1]+"?name="+asset.name)
                             i.fa.fa-cloud-download
                             |  Download
 
             if asset.type == "image"
+
                 .assetlist
                     .col-md-4.whitebox
                         h4 Original file
@@ -209,7 +218,7 @@ block content
                     .modal-header
                         button.close(type='button', data-dismiss='modal', aria-label='Close')
                             span(aria-hidden='true') ×
-                        h4.modal-title Image informations
+                        h4.modal-title F informations
                     .modal-body
                         if asset.metadata && asset.metadata.exif
                             .row
