@@ -48,7 +48,6 @@ exports.editDimension = (req, res) => {
         setting.dimensions.push({
             name: req.body.name,
             width: req.body.width,
-            height: req.body.height
         });
 
 
