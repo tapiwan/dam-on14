@@ -30,6 +30,13 @@ const assetSchema = new mongoose.Schema({
         name: String,
         _id: mongoose.Schema.Types.ObjectId
     },
+    comments: [
+        {
+            name: String,
+            comment: String,
+            date: { type: Date, default: Date.now }
+
+        }],
     metadata: Object,
     metadataFile: Object,
     iptc: Object,

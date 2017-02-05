@@ -148,11 +148,27 @@ block content
                     if asset.metadataFile
                         button.btn.btn-primary.btn-sm(type='button', data-toggle='modal', data-target='#exifDataModal') Show meta information
 
+    .row.mt30.box.downloadbox#chatbox
+      .col-md-12
+          h1 Comments
+              button.btn.btn-empty.btn-sm.pull-right(type='button', data-toggle='modal', data-target='#addComment') Add comment
 
-
-
-
-
+          if asset.comments.length
+              each comment in asset.comments.reverse()
+                  .chat
+                      if user.profile.name == comment.name
+                          form.pull-right(method='POST' action='/asset/remove/comment')
+                              input.csrf(type='hidden', name='_csrf', value=_csrf)
+                              input.form-control(type='hidden', name='assetID', id='id' value=asset._id)
+                              input.form-control(type='hidden', name='commentID', id='id' value=comment._id)
+                              button.btn.btn-primary(type='submit')
+                                i.fa.fa-trash-o
+                                | Delete
+                      span= ' '+moment(comment.date).format("DD.MM.YY - HH:mm") + ' Uhr'
+                      h4 #{comment.name}
+                      p #{comment.comment}
+          else
+              p Currently no comments available
 
 
     .row.mt30.box.downloadbox
@@ -333,11 +349,28 @@ block content
                                   option(v-bind:value="collection._id",v-for="collection in collections", v-if="collection.name != curCollection.name ")
                                     | {{collection.name}}
 
-
                           .form-group
                               button.btn.btn-primary(type='submit')
                                   | Edit asset
 
+        #addComment.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+            .modal-dialog(role='document')
+                .modal-content
+                    .modal-header
+                        button.close(type='button', data-dismiss='modal', aria-label='Close')
+                            span(aria-hidden='true') ×
+                        h4.modal-title Write a comment
+                    .modal-body
+                        form(method='POST' action='/asset/add/comment')
+                            input.csrf(type='hidden', name='_csrf', value=_csrf)
+                            .form-group
+
+                                input.form-control(type='hidden', name='assetID', id='id' value=asset._id)
+                                textarea.form-control(name='comment', rows="8", id='comment' value='', placeholder='Message' required)
+
+                            .form-group
+                                button.btn.btn-primary(type='submit')
+                                    | Add comment
         #deleteAsset.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
             .modal-dialog(role='document')
                 .modal-content

@@ -83,6 +83,39 @@ exports.editAsset = (req, res) => {
 
 };
 
+exports.addComment = (req, res) => {
+
+    Asset.findOne({ _id: req.body.assetID }, (err, asset) => {
+        if(err){
+            console.log(err);
+        }
+
+        asset.comments.push({name: req.user.profile.name, comment: req.body.comment, });
+        asset.save(function () {
+            req.flash('success', { msg: 'Comment has been added.' });
+
+            //Activity
+            new Activity({
+                user: req.user.profile.name,
+                action: 'commented '+asset.name
+            }).save();
+
+            res.redirect(req.headers.referer+"#chatbox");
+        });
+
+
+    });
+
+};
+exports.removeComment = (req, res) => {
+
+    Asset.update( {_id: req.body.assetID}, {$pull: {"comments": {"_id": req.body.commentID }} } , function () {
+        res.redirect(req.headers.referer+"#chatbox");
+
+    })
+
+};
+
 exports.upload = (req, res) => {
 
 

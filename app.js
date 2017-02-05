@@ -169,6 +169,9 @@ app.get('/asset/download/:file', passportConfig.isAuthenticated, assetController
 app.post('/upload/assets', passportConfig.isAuthenticated, assetController.upload);
 app.post('/asset/edit', passportConfig.isAuthenticated, assetController.editAsset);
 app.post('/asset/delete', passportConfig.isAuthenticated, assetController.deleteAsset);
+app.post('/asset/add/comment', passportConfig.isAuthenticated, assetController.addComment);
+app.post('/asset/remove/comment', passportConfig.isAuthenticated, assetController.removeComment);
+
 
 
 /**
