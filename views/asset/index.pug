@@ -147,58 +147,6 @@ block content
 
 
 
-                #exifDataModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
-                  .modal-dialog.big-dialog(role='document')
-                      .modal-content
-                          .modal-header
-                              button.close(type='button', data-dismiss='modal', aria-label='Close')
-                                  span(aria-hidden='true') ×
-                              h4.modal-title Image informations
-                          .modal-body
-                            if asset.metadata && asset.metadata.exif
-                                  .row
-                                      .col-md-6
-                                          if asset.type == "image"
-                                              img(src='/' + asset.path)
-                                          h4.mt30 IMAGE
-                                          ul.assetdetails
-                                              each val, key in asset.metadata.image
-                                                  li
-                                                      strong #{key}
-                                                      |  #{val}
-                                          h4.mt30 THUMBNAIL
-                                          ul.assetdetails
-                                              each val, key in asset.metadata.thumbnail
-
-                                                  li
-                                                      strong #{key}
-                                                      |  #{val}
-                                      .col-md-6
-                                          h4 EXIF
-                                          ul.assetdetails
-                                              each val, key in asset.metadata.exif
-                                                  if(key != "MakerNote")
-                                                      li
-                                                          strong #{key}
-                                                          |  #{val}
-                            if asset.iptc
-                              .row.mt30
-                                  .col-md-6
-                                      h4 IPTC
-                                      ul.assetdetails
-                                          each val, key in asset.iptc
-                                                  li
-                                                      strong #{key}
-                                                      |  #{val}
-                            if asset.metadataFile
-                              .row.mt30
-                                  .col-md-6
-                                      h4 File Informations
-                                      ul.assetdetails
-                                          each val, key in asset.metadataFile
-                                              li
-                                                  strong #{key}
-                                                  |  #{val}
 
 
 
@@ -254,6 +202,59 @@ block content
 
 
 
+
+        #exifDataModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+            .modal-dialog.big-dialog(role='document')
+                .modal-content
+                    .modal-header
+                        button.close(type='button', data-dismiss='modal', aria-label='Close')
+                            span(aria-hidden='true') ×
+                        h4.modal-title Image informations
+                    .modal-body
+                        if asset.metadata && asset.metadata.exif
+                            .row
+                                .col-md-6
+                                    if asset.type == "image"
+                                        img(src='/' + asset.path)
+                                    h4.mt30 IMAGE
+                                    ul.assetdetails
+                                        each val, key in asset.metadata.image
+                                            li
+                                                strong #{key}
+                                                |  #{val}
+                                    h4.mt30 THUMBNAIL
+                                    ul.assetdetails
+                                        each val, key in asset.metadata.thumbnail
+
+                                            li
+                                                strong #{key}
+                                                |  #{val}
+                                .col-md-6
+                                    h4 EXIF
+                                    ul.assetdetails
+                                        each val, key in asset.metadata.exif
+                                            if(key != "MakerNote")
+                                                li
+                                                    strong #{key}
+                                                    |  #{val}
+                        if asset.iptc
+                            .row.mt30
+                                .col-md-6
+                                    h4 IPTC
+                                    ul.assetdetails
+                                        each val, key in asset.iptc
+                                            li
+                                                strong #{key}
+                                                |  #{val}
+                        if asset.metadataFile
+                            .row.mt30
+                                .col-md-6
+                                    h4 File Informations
+                                    ul.assetdetails
+                                        each val, key in asset.metadataFile
+                                            li
+                                                strong #{key}
+                                                |  #{val}
 
         #downloadAsset.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
             .modal-dialog(role='document')
