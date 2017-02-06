@@ -112,6 +112,30 @@ exports.editAsset = (req, res) => {
 
 };
 
+exports.setRating = (req, res) => {
+
+    Asset.findOne({ _id: req.body.assetID }, (err, asset) => {
+        if(err){
+            console.log(err);
+        }
+        asset.rating = req.body.rating;
+
+        asset.save((err) => {
+
+            //Activity
+            new Activity({
+                user: req.user.profile.name,
+                action: 'rated '+asset.name
+            }).save();
+
+            res.send("Rated");
+            res.end();
+        });
+    });
+
+};
+
+
 exports.addComment = (req, res) => {
 
     Asset.findOne({ _id: req.body.assetID }, (err, asset) => {
@@ -185,6 +209,7 @@ exports.upload = (req, res) => {
                 type: req.body.filetype,
                 tags: req.body.tags,
                 size: req.files[i].size,
+                rating: 0,
                 encoding: req.files[i].encoding,
                 user: {
                     name: req.user.profile.name,
@@ -284,6 +309,7 @@ exports.downloadFile = (req,res) => {
         res.write(data);
     });
 
+    // File is not an image
     readStream.on('error', function(err) {
         var newStream = fs.createReadStream(altPath);
         newStream.on('data', function(data) {

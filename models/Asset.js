@@ -26,6 +26,7 @@ const assetSchema = new mongoose.Schema({
     width: String,
     height: String,
     encoding: String,
+    rating: String,
     user: {
         name: String,
         _id: mongoose.Schema.Types.ObjectId

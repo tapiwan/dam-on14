@@ -171,6 +171,7 @@ app.post('/asset/edit', passportConfig.isAuthenticated, assetController.editAsse
 app.post('/asset/delete', passportConfig.isAuthenticated, assetController.deleteAsset);
 app.post('/asset/add/comment', passportConfig.isAuthenticated, assetController.addComment);
 app.post('/asset/remove/comment', passportConfig.isAuthenticated, assetController.removeComment);
+app.post('/asset/set/rating', passportConfig.isAuthenticated, assetController.setRating);
 
 
 

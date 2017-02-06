@@ -801,6 +801,12 @@ textarea {
     position: absolute;
     color: $brand-primary
   }
+  .rating .active {
+    color: $brand-primary;
+    content: "\2605";
+
+
+  }
 
   .chat {
     padding: 20px;

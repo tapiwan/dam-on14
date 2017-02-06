@@ -60,12 +60,13 @@ block content
                 li
                     strong Collection:
                     a(v-bind:href="'../../collections#'+curCollection.url")  {{curCollection.name}}
-                .rating
-                    span ☆
-                    span ☆
-                    span ☆
-                    span ☆
-                    span ☆
+
+                .rating(data-rating=asset.rating)
+                    span(@click="rateAsset('5')") ☆
+                    span(@click="rateAsset('4')") ☆
+                    span(@click="rateAsset('3')") ☆
+                    span(@click="rateAsset('2')") ☆
+                    span(@click="rateAsset('1')") ☆
 
 
             if asset.watsonImage

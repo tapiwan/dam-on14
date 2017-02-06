@@ -289,6 +289,8 @@ $(document).ready(function () {
 
     // ASSETS DETAILS
     if ($("#asset").length > 0) {
+
+
         var asset = new Vue({
             el: '#asset',
             data: {
@@ -296,6 +298,7 @@ $(document).ready(function () {
                 curCollection: "",
                 collections: "",
                 settings: "",
+                rating: "",
                 downloadFile: {
                     file: "",
                     settings: ""
@@ -308,6 +311,8 @@ $(document).ready(function () {
                 var collectionID = $("#asset").data('collection-id');
 
                 that.assetID = $("#asset").data('asset-id');
+                that.rating = $(".rating").data('rating');
+                $(".rating span:nth-last-child(-n+"+that.rating+")").addClass("active");
 
                 $.ajax({
                     method: "GET",
@@ -341,6 +346,26 @@ $(document).ready(function () {
                 },
                 hideDownloadModal: function () {
                     $('#downloadAsset').modal('hide');
+                },
+
+                rateAsset: function (star) {
+                    var that = this;
+
+                    $.ajax({
+                        method: "POST",
+                        url: "/asset/set/rating",
+                        data: {
+                            _csrf: $(".csrf").val(),
+                            assetID: that.assetID,
+                            rating: star
+                        }
+                    })
+                        .done(function (json) {
+                            that.rating = star
+                            $(".rating span").removeClass("active")
+                            $(".rating span:nth-last-child(-n+"+that.rating+")").addClass("active");
+
+                        });
                 },
                 requestDownload: function (type, settings) {
                     var that = this;
