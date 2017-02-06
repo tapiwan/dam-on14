@@ -24,7 +24,10 @@ exports.searchAssets = (req, res) => {
     var query = req.params.query;
 
     //Find collections
-    Asset.find({$or:[{name: {$regex: query, $options: 'i'}}, {tags: {$regex: query, $options: 'i'}}]}).exec(function (err, results) {
+    Asset
+        .find({$or:[{name: {$regex: query, $options: 'i'}}, {tags: {$regex: query, $options: 'i'}}]})
+        .populate('_collectionId')
+        .exec(function (err, results) {
         if (!err) {
             res.json(results);
         }

@@ -44,7 +44,7 @@ const assetSchema = new mongoose.Schema({
     watsonImage: Object,
     watsonFace: Object,
 
-    _collectionId: mongoose.Schema.Types.ObjectId
+    _collectionId: { type: mongoose.Schema.Types.ObjectId, ref: 'Collection' }
 }, { timestamps: true });
 
 assetSchema.pre('save', function(next) {
