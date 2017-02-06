@@ -8,17 +8,22 @@ block content
     .col-md-5.box.collections(data-dashboard-collections)
       h3 Collections
 
-      ul.folderlist
+      ul.folderlist(v-if="collections.length > 0")
         li(v-for="collection in collections")
           a(v-bind:href="'collections#'+noSpaces(collection.name)")
             | {{collection.name}}
+      table.table.table-striped(v-if="collections.length == 0")
+        tbody
+          tr
+            td
+              a(href="/collections") There are no collections. Please add some
 
     .col-md-2
 
     .col-md-5.box.activity(data-dashboard-activity)
       h3 Your Activity
 
-      table.table.table-striped
+      table.table.table-striped(v-if="activities.length > 0")
         tbody
           tr(v-for="activity in activities")
             td
@@ -27,6 +32,10 @@ block content
               | {{activity.action}}
             td
               | {{getDateFormatted(activity.createdAt)}}
+      table.table.table-striped(v-if="activities.length == 0")
+        tbody
+          tr
+            td No recent activities
 
 
   .row.mt30.box

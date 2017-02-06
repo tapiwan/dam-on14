@@ -50,6 +50,9 @@ h1.bold {
 .ml30 {
   margin-left: 30px;
 }
+.mb0 {
+  margin-bottom: 0;
+}
 .p0 {
   padding: 0;
 }
@@ -269,6 +272,7 @@ footer {
   }
 }
 
+.collections,
 .activity {
 
   table {
@@ -284,6 +288,10 @@ footer {
 
   tr td {
     padding: 7px!important;
+  }
+
+  a {
+    font-weight: bold;
   }
 }
 .uploadImage {
