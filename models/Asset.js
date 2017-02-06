@@ -5,6 +5,8 @@ const iptc = require('node-iptc');
 const sizeOf = require('image-size');
 const watson = require('watson-developer-cloud');
 const fs = require('fs');
+const piexif = require("piexifjs");
+
 const visual_recognition = watson.visual_recognition({
     url: 'https://gateway-a.watsonplatform.net/visual-recognition/api',
     api_key: process.env.WatsonAPI,
@@ -40,6 +42,7 @@ const assetSchema = new mongoose.Schema({
         }],
     metadata: Object,
     metadataFile: Object,
+    customMetadata: Object,
     iptc: Object,
     watsonImage: Object,
     watsonFace: Object,
@@ -50,10 +53,20 @@ const assetSchema = new mongoose.Schema({
 assetSchema.pre('save', function(next) {
     if (this.isNew) {
         const data = this;
-        // READ EXIF
-        if(data.suffix == "image/jpeg" || data.suffix == "image/tiff" )  {
 
-            new ExifImage({ image : data.fullpath }, function (error, exifData) {
+        var jpeg = fs.readFileSync(data.fullpath).toString("binary");
+
+        // READ EXIF
+        if(data.suffix == "image/jpeg")  {
+
+            var exifObj = piexif.load(jpeg);
+            data.metadata = exifObj;
+            next();
+
+
+
+            //
+            /*new ExifImage({ image : data.fullpath }, function (error, exifData) {
                 if (error)
                     console.log('Error: '+error.message);
                 else
@@ -62,6 +75,7 @@ assetSchema.pre('save', function(next) {
                 next();
 
             });
+            */
         }
         else {
             next();

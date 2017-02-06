@@ -10,7 +10,8 @@ const sharp = require('sharp');
 const http = require('http');
 const fs = require('fs');
 const icc = require('icc');
-const filepreview = require('filepreview');
+
+const piexif = require("piexifjs");
 
 
 
@@ -40,7 +41,27 @@ exports.getAsset = (req, res) => {
         }
     });
 };
+exports.getMetadata = (req, res) => {
+    var assetID = req.params.id;
 
+    Asset.find({_id: assetID}).sort({'_id': -1}).exec(function (err, result) {
+        if (!err) {
+            if(result[0].suffix == "image/jpeg"){
+                var obj = {
+                    image:result[0].metadata["0th"],
+                    exif:result[0].metadata["Exif"],
+                    photo:result[0].metadata["1st"],
+
+                }
+
+                res.json(obj);
+            }
+            else {
+                res.end();
+            }
+        }
+    });
+};
 exports.deleteAsset = (req,res) => {
 
     async.waterfall([
@@ -120,24 +141,69 @@ exports.editAsset = (req, res) => {
 
 exports.setRating = (req, res) => {
 
-    Asset.findOne({ _id: req.body.assetID }, (err, asset) => {
-        if(err){
-            console.log(err);
-        }
-        asset.rating = req.body.rating;
+    async.waterfall([
+        function(callback) {
+            Asset.findOne({ _id: req.body.assetID }, (err, asset) => {
+                if(err){
+                    console.log(err);
+                }
 
-        asset.save((err) => {
+                asset.rating = req.body.rating;
+                asset.save((err) => {
+                    callback(null, asset)
+
+                });
+            });
+        },
+        function(asset, callback) {
+            if(asset.suffix == "image/jpeg"){
+
+                // IF METADATA AVAILABLE
+                if(asset.metadata){
+                    var jpeg = fs.readFileSync(asset.fullpath);
+                    var data = jpeg.toString("binary");
+
+
+                    var exifbytes = piexif.dump(asset.metadata);
+
+                    var newData = piexif.insert(exifbytes, data);
+                    var newJpeg = new Buffer(newData, "binary");
+                    fs.writeFileSync(asset.fullpath, newJpeg)
+                    callback(null, asset)
+                }
+                else {
+                    callback(null, asset)
+
+                }
+
+
+            }
+            else {
+                callback(null, asset)
+
+            }
+
+
+
+        },
+        function(asset, callback) {
 
             //Activity
             new Activity({
                 user: req.user.profile.name,
                 action: 'rated '+asset.name
-            }).save();
+            }).save((err) => {
+                callback(null, asset);
+            });
 
-            res.send("Rated");
-            res.end();
-        });
+        },
+
+    ], function (err, result) {
+        res.send("Rated");
+        res.end();
     });
+
+
 
 };
 

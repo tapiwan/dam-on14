@@ -361,6 +361,18 @@ $(document).ready(function () {
     // ASSETS DETAILS
     if ($("#asset").length > 0) {
 
+        // TRANSLATE IDs
+        $(".exif li").each(function () {
+            var id = $(this).data("translate");
+            var translate = piexif.TAGS["Exif"][id]["name"];
+            $(this).find("strong").text(translate);
+        })
+        $(".images li").each(function () {
+            var id = $(this).data("translate");
+            var translate = piexif.TAGS["Image"][id]["name"];
+            $(this).find("strong").text(translate);
+        })
+
 
         var asset = new Vue({
             el: '#asset',
@@ -370,6 +382,7 @@ $(document).ready(function () {
                 collections: "",
                 settings: "",
                 rating: "",
+                metadata: "",
                 downloadFile: {
                     file: "",
                     settings: ""
@@ -399,8 +412,16 @@ $(document).ready(function () {
                     url: "/json/settings/"
                 }).done(function(json) {
                     that.settings = json[0].dimensions;
-
                 });
+
+                $.ajax({
+                    method: "GET",
+                    url: "/asset/get/metadata/"+that.assetID
+                }).done(function(json) {
+                    console.log(json)
+                    that.metadata = json;
+                });
+
             },
 
             methods: {
