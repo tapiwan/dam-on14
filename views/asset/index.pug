@@ -350,9 +350,10 @@ block content
                               - var suffix = asset.name.split('.').pop()
                               - var tags = asset.tags
                               input.form-control(type='hidden', name='assetID', id='assetID' value=asset._id)
-                              input.form-control(type='text', name='assetName', id='assetName' value=name)
+                              input.form-control(placeholder='Asset name',type='text', name='assetName', id='assetName' value=name)
                               input.form-control(type='hidden', name='assetSuffix', id='assetSuffix' value=suffix)
-                              input.form-control(type='text', name='assetTags', id='assetTags' value=tags)
+                          .form-group
+                              input.form-control(placeholder='enter,tags,like,this',type='text', name='assetTags', id='assetTags' value=tags)
                           .form-group
                               select#collectionID(name="collectionID").form-control
                                   option(selected='selected',v-bind:value="curCollection._id") {{curCollection.name}}
