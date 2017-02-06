@@ -95,6 +95,7 @@ exports.editAsset = (req, res) => {
             console.log("here")
             asset.name = req.body.assetName+"."+req.body.assetSuffix;
             asset._collectionId = req.body.collectionID;
+            asset.tags = req.body.assetTags;
 
             asset.save((err) => {
                 req.flash('success', { msg: 'Asset has been updated.' });
