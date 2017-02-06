@@ -186,6 +186,7 @@ app.post('/settings/add', passportConfig.isAuthenticated, settingsController.edi
 /**
  * Search
  */
+app.get('/search', passportConfig.isAuthenticated, searchController.showSearch);
 app.get('/searchCollections/:query', passportConfig.isAuthenticated, searchController.searchCollections);
 app.get('/searchAssets/:query', passportConfig.isAuthenticated, searchController.searchAssets);
 

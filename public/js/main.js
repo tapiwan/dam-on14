@@ -10,7 +10,7 @@ $(document).ready(function () {
 
     }
 
-    // SEARCH
+    // SEARCH (HEADER)
     if ($('[data-search]').length) {
         var searchInput = new Vue({
             el: '[data-search]',
@@ -66,6 +66,77 @@ $(document).ready(function () {
                     .done(function(json) {
                         that.assets = json;
                     });
+                },
+
+                splitTags: function(string) {
+                    if(string === undefined) {
+                        return '';
+                    }
+
+                    return string.split(',');
+                },
+
+                noSpaces: function(string) {
+                    return string.replace(/\s+/g, '')+"";
+                }
+            }
+        });
+    }
+
+    // SEARCH (HEADER)
+    if ($('[data-search-full]').length) {
+        var searchInput = new Vue({
+            el: '[data-search-full]',
+            data: {
+                query: '',
+                placeholder: 'Search',
+                collections: [],
+                assets: [],
+                fileIcons: fileIcons
+            },
+            watch: {
+                query: function() {
+                    if(this.query.length > 0) {
+                        this.search();
+                    }
+                    else if(this.query.length == 0) {
+                        this.reset();
+                    }
+                }
+            },
+            methods: {
+                search: function () {
+                    this.searchCollections();
+                    this.searchAssets();
+                },
+
+                reset: function() {
+                    this.collections = [];
+                    this.assets = [];
+                },
+
+                searchCollections: function() {
+                    var that = this;
+
+                    $.ajax({
+                        method: "GET",
+                        url: "/searchCollections/" + encodeURIComponent(that.query)
+                    })
+                        .done(function(json) {
+                            that.collections = json;
+                        });
+                },
+
+                searchAssets: function() {
+                    var that = this;
+
+                    $.ajax({
+                        method: "GET",
+                        url: "/searchAssets/" + encodeURIComponent(that.query)
+                    })
+                        .done(function(json) {
+                            that.assets = json;
+                        });
                 },
 
                 splitTags: function(string) {

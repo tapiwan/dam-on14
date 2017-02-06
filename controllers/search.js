@@ -2,6 +2,14 @@ const Collection = require('../models/Collection');
 const Asset = require('../models/Asset');
 
 /**
+ * GET /search
+ * Show search
+ */
+exports.showSearch = (req, res) => {
+  res.render('search/index');
+};
+
+/**
  * GET /searchCollections/:query
  * Search Collections
  */

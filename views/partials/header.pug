@@ -26,6 +26,9 @@
         if user
           li(class=(title == 'Settings') ? 'active' : undefined)
             a(href='/settings') Settings
+        if user
+          li(class=(title == 'Search') ? 'active' : undefined)
+            a(href='/search') Search
         //li(class=(title == 'Contact') ? 'active' : undefined)
           a(href='/contact') Contact
         //li
