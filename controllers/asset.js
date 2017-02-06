@@ -3,6 +3,7 @@ const Collection = require('../models/Collection');
 const Settings = require('../models/Settings');
 const Activity = require('../models/Activity');
 
+const async = require('async');
 const multer = require('multer');
 const path = require('path');
 const sharp = require('sharp');
@@ -42,9 +43,49 @@ exports.getAsset = (req, res) => {
 
 exports.deleteAsset = (req,res) => {
 
-    //TODO Löschen vom Filesystem
+    async.waterfall([
+        function(callback) {
+            //Find asset
+            Asset.findOne({_id:req.body.assetID}).exec(function(err, asset) {
+               if(!err) {
+                   //Pass asset to next function
+                   callback(null, asset);
+               }
+            });
+        },
+        function(asset, callback) {
+            //Remove asset
+            Asset.remove({ _id: asset._id }, (err) => {
+                if (err) { return next(err); }
+                req.flash('info', { msg: 'Asset has been deleted.' });
 
-    Asset.remove({ _id: req.body.assetID }, (err) => {
+                //Pass asset to next function
+                callback(null, asset);
+            });
+        },
+        function(asset, callback) {
+            //Remove asset from file system
+            fs.unlink(asset.fullpath);
+
+            //Pass asset to next function
+            callback(null, asset);
+        },
+        function(asset, callback) {
+            //Create Activity
+            new Activity({
+                user: req.user.profile.name,
+                action: 'deleted '+asset.name
+            }).save();
+
+            //Pass asset to next function
+            callback(null, asset);
+        }
+    ], function (err, result) {
+        //Redirect
+        res.redirect('/collections');
+    });
+
+    /*Asset.remove({ _id: req.body.assetID }, (err) => {
         if (err) { return next(err); }
         req.flash('info', { msg: 'Asset has been deleted.' });
 
@@ -55,7 +96,7 @@ exports.deleteAsset = (req,res) => {
         }).save();
 
         res.redirect('/collections');
-    });
+    });*/
 };
 
 exports.editAsset = (req, res) => {
