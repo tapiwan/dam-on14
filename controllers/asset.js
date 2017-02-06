@@ -92,10 +92,16 @@ exports.editAsset = (req, res) => {
             if(err){
                 console.log(err);
             }
-            console.log("here")
+            console.log("here");
             asset.name = req.body.assetName+"."+req.body.assetSuffix;
             asset._collectionId = req.body.collectionID;
-            asset.tags = req.body.assetTags;
+            if(req.body.assetTags.length > 0) {
+                asset.tags = req.body.assetTags;
+            }
+            else {
+                asset.tags = undefined;
+            }
+
 
             asset.save((err) => {
                 req.flash('success', { msg: 'Asset has been updated.' });

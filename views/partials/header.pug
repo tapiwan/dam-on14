@@ -67,7 +67,7 @@
                         | {{asset.name}}
                       .taglist
                         i.tag.label.label-primary(v-for="tag in splitTags(asset.tags)") {{tag}}
-                      .coll in: 
+                      .coll in:
                         a(v-bind:href="'/collections#'+noSpaces(asset._collectionId.name)")
                           | {{asset._collectionId.name}}
               .input-group-btn
