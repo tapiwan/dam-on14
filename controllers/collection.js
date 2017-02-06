@@ -1,5 +1,9 @@
 const Collection = require('../models/Collection');
 const Activity = require('../models/Activity');
+const Asset = require('../models/Asset');
+
+const fs = require('fs');
+const async = require('async');
 
 /**
  * GET /collections
@@ -85,17 +89,61 @@ exports.addCollection = (req, res) => {
 
 exports.deleteCollection = (req,res) => {
 
-    Collection.remove({ _id: req.body.collectionID }, (err) => {
-        if (err) { return next(err); }
-        req.flash('info', { msg: 'The collection has been deleted.' });
+    async.waterfall([
+        function(callback) {
+            //Find collection
+            Collection.findOne({_id:req.body.collectionID}).exec(function(err, collection) {
+                if(!err) {
+                    //Pass collection to next function
+                    callback(null, collection);
+                }
+            });
+        },
+        function(collection, callback) {
+            //Remove collection from database
+            Collection.remove({ _id: collection._id }, (err) => {
+                if (err) { return next(err); }
+                req.flash('info', { msg: 'The collection has been deleted.' });
 
-        //Activity
-        //TODO: use Collection Name, not ID
-        new Activity({
-            user: req.user.profile.name,
-            action: 'deleted '+req.body.collectionID
-        }).save();
+                //Pass collection to next function
+                callback(null, collection);
+            });
+        },
+        function(collection, callback) {
+            //Remove related assets from file system
+            Asset.find({_collectionId:req.body.collectionID}).exec(function(err, assets) {
+                if(!err) {
+                    assets.forEach(function(asset) {
+                        fs.unlink(asset.fullpath);
+                    });
 
+                    //Pass collection to next function
+                    callback(null, collection);
+                }
+            });
+        },
+        function(collection, callback) {
+            //Remove related assets from database
+            Asset.remove({_collectionId: collection._id}, (err) => {
+               if (err) { return next(err); }
+                req.flash('info', {msg: 'All of the related assets have been deleted.'});
+
+                //Pass collection to next function
+                callback(null, collection);
+            });
+        },
+        function(collection, callback) {
+            //Create Activity
+            new Activity({
+                user: req.user.profile.name,
+                action: 'deleted '+collection.name
+            }).save();
+
+            //Pass collection to next function
+            callback(null, collection);
+        }
+    ], function (err, result) {
+        //Redirect
         res.redirect('/collections');
     });
 }
