@@ -18,12 +18,18 @@ block content
                             i.fa.fa-folder-o.mr5
                             | {{collection.name}}
                     li.list-group-item(v-for="asset in assets")
-                        a(v-bind:href="'/details/asset/'+asset._id")
-                            i.fa.mr5(v-bind:class="fileIcons[asset.type]")
-                            | {{asset.name}}
-                        .taglist
-                            i.tag.label.label-primary(v-for="tag in splitTags(asset.tags)") {{tag}}
-                        .coll in:
-                            a(v-bind:href="'/collections#'+noSpaces(asset._collectionId.name)")
-                                | {{asset._collectionId.name}}
+                        .row
+                            .col-md-4
+                                a(v-bind:href="'/details/asset/'+asset._id")
+                                    i.fa.mr5(v-bind:class="fileIcons[asset.type]")
+                                    | {{asset.name}}
+                            .col-md-4
+                                span in:
+                                    a(v-bind:href="'/collections#'+noSpaces(asset._collectionId.name)")
+                                        | {{asset._collectionId.name}}
+                            .col-md-4
+                                .taglist
+                                    i.tag.label.label-primary(v-for="tag in splitTags(asset.tags)") {{tag}}
+
+
 
