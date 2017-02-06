@@ -19,6 +19,7 @@ const visual_recognition = watson.visual_recognition({
 
 const assetSchema = new mongoose.Schema({
     name: String,
+    description: String,
     fullpath: String,
     path: String,
     suffix: String,

@@ -109,50 +109,45 @@ exports.deleteAsset = (req,res) => {
 
 exports.editAsset = (req, res) => {
 
-        Asset.findOne({ _id: req.body.assetID }, (err, asset) => {
-            if(err){
-                console.log(err);
-            }
-            console.log("here");
-            asset.name = req.body.assetName+"."+req.body.assetSuffix;
-            asset._collectionId = req.body.collectionID;
-            if(req.body.assetTags.length > 0) {
-                asset.tags = req.body.assetTags;
-            }
-            else {
-                asset.tags = undefined;
-            }
-
-
-            asset.save((err) => {
-                req.flash('success', { msg: 'Asset has been updated.' });
-
-                //Activity
-                new Activity({
-                    user: req.user.profile.name,
-                    action: 'edited '+asset.name
-                }).save();
-
-                res.redirect(req.headers.referer);
-            });
-        });
-
-};
-
-exports.setRating = (req, res) => {
+    var meta ;
 
     async.waterfall([
         function(callback) {
             Asset.findOne({ _id: req.body.assetID }, (err, asset) => {
-                if(err){
+                if (err) {
                     console.log(err);
                 }
+                asset.name = req.body.assetName + "." + req.body.assetSuffix;
+                asset.description = req.body.description;
+                console.log(asset.metadata["0th"]["270"]);
+                asset.metadata["0th"]["270"] = asset.description;
+                console.log(asset.metadata["0th"]["270"]);
 
-                asset.rating = req.body.rating;
-                asset.save((err) => {
-                    callback(null, asset)
 
-                });
+                asset._collectionId = req.body.collectionID;
+                if (req.body.assetTags.length > 0) {
+                    asset.tags = req.body.assetTags;
+                }
+                else {
+                    asset.tags = undefined;
+                }
+
+                if (asset.suffix == "image/jpeg") {
+                    meta = asset.metadata;
+
+                    meta["0th"]["270"] = asset.description;
+
+                    asset.save((err) => {
+                        callback(null, asset)
+
+                    });
+                }
+                else {
+                    asset.save((err) => {
+                        callback(null, asset)
+
+                    });
+                }
             });
         },
         function(asset, callback) {
@@ -164,7 +159,7 @@ exports.setRating = (req, res) => {
                     var data = jpeg.toString("binary");
 
 
-                    var exifbytes = piexif.dump(asset.metadata);
+                    var exifbytes = piexif.dump(meta);
 
                     var newData = piexif.insert(exifbytes, data);
                     var newJpeg = new Buffer(newData, "binary");
@@ -186,6 +181,48 @@ exports.setRating = (req, res) => {
 
 
         },
+        function(asset, callback) {
+
+            req.flash('success', { msg: 'Asset has been updated.' });
+
+            //Activity
+            new Activity({
+                user: req.user.profile.name,
+                action: 'edited '+asset.name
+            }).save((err) => {
+                callback(null, asset);
+            });
+
+        },
+
+    ], function (err, result) {
+        res.redirect(req.headers.referer);
+
+    });
+
+
+};
+
+exports.setRating = (req, res) => {
+
+    async.waterfall([
+        function(callback) {
+            Asset.findOne({ _id: req.body.assetID }, (err, asset) => {
+                if(err){
+                    console.log(err);
+                }
+
+                asset.rating = req.body.rating;
+
+                    asset.save((err) => {
+                        callback(null, asset)
+
+                    });
+
+
+            });
+        },
+
         function(asset, callback) {
 
             //Activity

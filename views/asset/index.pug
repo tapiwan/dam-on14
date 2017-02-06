@@ -38,6 +38,16 @@ block content
                 li
                     strong Name:
                     |  #{asset.name}
+                if asset.metadata["0th"]["270"]
+                    li
+                        strong Description:
+                        |  #{asset.metadata["0th"]["270"]}
+                else if asset.description
+                    li
+                        strong Description:
+                        |  #{asset.description}
+                else
+                    li Currently no description
                 li
                     strong Type:
                     |  #{asset.suffix}
@@ -386,8 +396,11 @@ block content
                               - var suffix = asset.name.split('.').pop()
                               - var tags = asset.tags
                               input.form-control(type='hidden', name='assetID', id='assetID' value=asset._id)
-                              input.form-control(placeholder='Asset name',type='text', name='assetName', id='assetName' value=name)
+                              input.form-control(placeholder='Asset name',type='text', name='assetName', id='assetName' value=name, required)
                               input.form-control(type='hidden', name='assetSuffix', id='assetSuffix' value=suffix)
+                          .form-group
+                              textarea.form-control(name='description', rows="8", id='descr', placeholder='Asset description' required) #{asset.description}
+
                           .form-group
                               input.form-control(placeholder='enter,tags,like,this',type='text', name='assetTags', id='assetTags' value=tags)
                           .form-group
