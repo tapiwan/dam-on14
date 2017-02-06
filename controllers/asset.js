@@ -84,19 +84,6 @@ exports.deleteAsset = (req,res) => {
         //Redirect
         res.redirect('/collections');
     });
-
-    /*Asset.remove({ _id: req.body.assetID }, (err) => {
-        if (err) { return next(err); }
-        req.flash('info', { msg: 'Asset has been deleted.' });
-
-        //Activity
-        new Activity({
-            user: req.user.profile.name,
-            action: 'deleted '+req.body.assetID
-        }).save();
-
-        res.redirect('/collections');
-    });*/
 };
 
 exports.editAsset = (req, res) => {
