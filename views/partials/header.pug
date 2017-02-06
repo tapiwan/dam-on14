@@ -65,6 +65,8 @@
                       a(v-bind:href="'/details/asset/'+asset._id")
                         i.fa.mr5(v-bind:class="fileIcons[asset.type]")
                         | {{asset.name}}
+                        .taglist
+                          i.tag.label.label-primary(v-for="tag in splitTags(asset.tags)") {{tag}}
               .input-group-btn
                 button.btn.btn-default(type='submit')
                   i.fa.fa-search

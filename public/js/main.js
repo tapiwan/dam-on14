@@ -68,6 +68,14 @@ $(document).ready(function () {
                     });
                 },
 
+                splitTags: function(string) {
+                    if(string === undefined) {
+                        return '';
+                    }
+
+                    return string.split(',');
+                },
+
                 noSpaces: function(string) {
                     return string.replace(/\s+/g, '')+"";
                 }
