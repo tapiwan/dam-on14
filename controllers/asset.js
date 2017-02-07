@@ -141,6 +141,12 @@ exports.editAsset = (req, res) => {
                     meta = asset.metadata;
 
                     meta["0th"]["270"] = asset.description;
+                    meta["0th"]["18246"] = parseInt(asset.rating);
+                    meta["0th"]["18249"] = parseInt(asset.rating)/5*100;
+
+
+                   // meta["0th"]["37510"] = asset.tags;
+
 
                     asset.save((err) => {
                         callback(null, asset)
