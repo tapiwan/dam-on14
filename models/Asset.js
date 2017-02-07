@@ -87,13 +87,15 @@ assetSchema.pre('save', function(next) {
     }
 
 });
+
+
 // EXIFTOOL FILES
 assetSchema.pre('save', function(next) {
     const asset = this;
     if (this.isNew) {
 
 
-        if (asset.type != "image") {
+        if (asset.type != "image" || asset.suffix != "image/jpeg") {
             fs.readFile(asset.fullpath, function (err, data) {
                 if (err) {
                     throw err

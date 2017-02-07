@@ -120,7 +120,7 @@ exports.editAsset = (req, res) => {
                 asset.name = req.body.assetName + "." + req.body.assetSuffix;
                 asset.description = req.body.description;
                 console.log(asset.metadata["0th"]["270"]);
-                asset.metadata["0th"]["270"] = asset.description;
+                asset.metadata["0th"]["270"] = req.body.description;
                 console.log(asset.metadata["0th"]["270"]);
 
 
@@ -133,6 +133,7 @@ exports.editAsset = (req, res) => {
                 }
 
                 if (asset.suffix == "image/jpeg") {
+
                     meta = asset.metadata;
 
                     meta["0th"]["270"] = asset.description;

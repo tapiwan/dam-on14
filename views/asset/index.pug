@@ -38,7 +38,8 @@ block content
                 li
                     strong Name:
                     |  #{asset.name}
-                if asset.metadata["0th"]["270"]
+
+                if asset.suffix == "image/jpeg" && asset.metadata["0th"]["270"]
                     li
                         strong Description:
                         |  #{asset.metadata["0th"]["270"]}
@@ -145,39 +146,16 @@ block content
                         button.btn.btn-primary.btn-sm(type='button', data-toggle='modal', data-target='#exifDataModal') Show more
 
 
-            if asset.type == "image" && asset.suffix != "image/jpeg"
+
+
+            if asset.suffix != "image/jpeg"
                 hr
                 h3.cursor.collapsed Specific Information
                 ul.assetdetails#asset-specific-information
-                    li
-                        strong Dimensions:
-                        |  #{asset.width}px x #{asset.height}px
-                    if asset.suffix == "image/jpeg" && asset.metadata && asset.metadata.exif || asset.suffix == "image/tiff"
+                    if asset.width
                         li
-                            strong Camera:
-                            |  #{asset.metadata.image.Model}
-                        if asset.metadata.exif.ApertureValue
-                            li
-                                strong Aperture:
-                                |  #{asset.metadata.exif.ApertureValue}
-
-                        if asset.metadata.exif.ShutterSpeedValue
-                            li
-                                strong Shutter speed:
-                                |  #{asset.metadata.exif.ShutterSpeedValue}
-                        if asset.metadata.exif.ISO
-                            li
-                                strong ISO:
-                                |  #{asset.metadata.exif.ISO}
-                    if asset.metadata && asset.metadata.exif
-                        ul.assetdetails
-                            li
-                                button.btn.btn-primary.btn-sm(type='button', data-toggle='modal', data-target='#exifDataModal') Show more
-
-            if asset.type != "image"
-                hr
-                h3.cursor.collapsed Specific Information
-                ul.assetdetails#asset-specific-information
+                            strong Dimensions:
+                            |  #{asset.width}px x #{asset.height}px
                     if asset.metadataFile
                         button.btn.btn-primary.btn-sm(type='button', data-toggle='modal', data-target='#exifDataModal') Show meta information
 
