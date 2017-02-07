@@ -17,13 +17,20 @@ block content
 
         .col-md-6.imageArea
 
-
             if asset.type == "image"
                 img(src='/' + asset.path)
             if asset.type == "pdf"
                 i.thumb.fa.fa-5x.text-center(v-bind:class="fileClasses.pdf")
             if asset.type == "psd"
                 i.thumb.fa.fa-5x(v-bind:class="fileClasses.default")
+            if asset.type == "audio"
+                i.thumb.fa.fa-5x(v-bind:class="fileClasses.mp3")
+            if asset.type == "video"
+                i.thumb.fa.fa-5x(v-bind:class="fileClasses.mp4")
+            if asset.suffix == "video/quicktime"
+                i.thumb.fa.fa-5x(v-bind:class="fileClasses.mp4")
+            if asset.type == "word"
+                i.thumb.fa.fa-5x(v-bind:class="fileClasses.word")
             if asset.type == "default"
                 i.thumb.fa.fa-5x(v-bind:class="fileClasses.default")
         .col-md-1
@@ -39,7 +46,7 @@ block content
                     strong Name:
                     |  #{asset.name}
 
-                if asset.suffix == "image/jpeg" && asset.metadata["0th"]["270"]
+                if asset.suffix == "image/jpeg" && asset.metadata["0th"] && asset.metadata["0th"]["270"]
                     li
                         strong Description:
                         |  #{asset.metadata["0th"]["270"]}
@@ -133,17 +140,20 @@ block content
                 hr
                 h3.cursor.collapsed Specific Information
                 ul.assetdetails#asset-specific-information
-                    li
-                        strong Dimensions:
-                        |  #{asset.width}px x #{asset.height}px
+                    if asset.width
+                        li
+                            strong Dimensions:
+                            |  #{asset.width}px x #{asset.height}px
                     ul.assetdetails.images
-                        each val, key in asset.metadata["0th"]
-                            li(data-translate=key)
-                                strong
-                                |  #{val}
-                ul.assetdetails
-                    li
-                        button.btn.btn-primary.btn-sm(type='button', data-toggle='modal', data-target='#exifDataModal') Show more
+                        if asset.metadata["0th"]
+                            each val, key in asset.metadata["0th"]
+                                li(data-translate=key)
+                                    strong
+                                    |  #{val}
+                if asset.metadata["0th"] && asset.metadata["Exif"] && asset.metadata["1st"]
+                    ul.assetdetails
+                        li
+                            button.btn.btn-primary.btn-sm(type='button', data-toggle='modal', data-target='#exifDataModal') Show more
 
 
 
@@ -219,22 +229,24 @@ block content
                 .assetlist
                     .col-md-4.whitebox
                         h4 Original file
-                        span
-                            strong Dimensions:
-                            |  #{asset.width}px x #{asset.height}px
+                        if asset.width
+                            span
+                                strong Dimensions:
+                                |  #{asset.width}px x #{asset.height}px
                         hr
                         //a.btn-primary.btn(v-bind:href="'/asset/download/image/'+assetID+'/original'")
 
-                        a.btn-primary.btn(@click="requestDownload('image','original')", data-toggle='modal', data-target='#downloadAsset')
+                        a.btn-primary.btn(href="/asset/download/"+asset.path.split('/')[1]+"?name="+asset.name)
                             i.fa.fa-cloud-download
-                            | Request download
+                            | Download
 
                     .col-md-4.whitebox(v-for="dimension in settings")
                         h4 {{dimension.name}}
                         span
-                            strong Dimensions:
-                            - var ratio = asset.width / asset.height;
-                            |  {{dimension.width}}px x {{Math.round(dimension.width/#{ratio})}}px
+                            if asset.width
+                                strong Dimensions:
+                                - var ratio = asset.width / asset.height;
+                                |  {{dimension.width}}px x {{Math.round(dimension.width/#{ratio})}}px
                         hr
                         a.btn-primary.btn(@click="requestDownload('image',dimension)", data-toggle='modal', data-target='#downloadAsset')
                             i.fa.fa-cloud-download
@@ -251,7 +263,7 @@ block content
                             span(aria-hidden='true') ×
                         h4.modal-title File information
                     .modal-body
-                        if asset.suffix == "image/jpeg" && asset.metadata.Exif
+                        if asset.suffix == "image/jpeg" && asset.metadata["0th"]
                             .row
                                 .col-md-6
                                     if asset.type == "image"
@@ -267,6 +279,13 @@ block content
                                             li(data-translate=key)
                                                 strong
                                                 |  #{val}
+                                    if asset.iptc
+                                        h4 IPTC
+                                        ul.assetdetails
+                                            each val, key in asset.iptc
+                                                li
+                                                    strong #{key}
+                                                    |  #{val}
                                 .col-md-6
 
                                     h4.mt30 Exif
@@ -277,7 +296,7 @@ block content
                                                 |  #{val}
 
 
-                        if asset.metadata && asset.metadata.exif
+                        if asset.metadata && asset.suffix != "image/jpeg"
                             .row
                                 .col-md-6
                                     if asset.type == "image"
@@ -338,9 +357,12 @@ block content
                         span(v-if="downloadFile.settings.name")
                             strong Optimized for:
                             |  {{downloadFile.settings.name}}
-                        span(v-if="downloadFile.file.icc")
-                            strong Profile:
+                        span(v-if="downloadFile.file.icc && downloadFile.file.icc.colorSpace == 'RGB' && downloadFile.file.icc.deviceModelDescription ")
+                            strong Current Profile:
                             |  {{downloadFile.file.icc.colorSpace}} {{downloadFile.file.icc.deviceModelDescription}}
+                        span
+                            strong New Profile:
+                            |  sRGB
 
                         span(v-if="downloadFile.file.width")
                             strong Dimensions:

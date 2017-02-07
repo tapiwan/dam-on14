@@ -6,6 +6,7 @@ var fileClasses = {
     "jpeg" : "fa-file-image-o",
     "pdf" : "fa-file-pdf-o",
     "vnd.openxmlformats-officedocument.wordprocessingml.document" : "fa-file-word-o",
+    "word" : "fa-file-word-o",
     "mp3" : "fa-file-audio-o",
     "mid" : "fa-file-audio-o",
     "wav" : "fa-file-audio-o",

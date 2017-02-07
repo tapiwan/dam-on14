@@ -201,7 +201,7 @@ assetSchema.pre('save', function(next) {
 assetSchema.pre('save', function (next) {
     if (this.isNew) {
         const asset = this;
-        if(asset.type == "image") {
+        if(asset.type == "image" && asset.size < 2000000) {
 
             var params = {
                 images_file: fs.createReadStream(asset.fullpath)
@@ -233,7 +233,7 @@ assetSchema.pre('save', function (next) {
 assetSchema.pre('save', function (next) {
     if (this.isNew) {
         const asset = this;
-        if(asset.type == "image") {
+        if(asset.type == "image" && asset.size < 2000000)  {
 
             var params = {
                 images_file: fs.createReadStream(asset.fullpath)
@@ -273,9 +273,15 @@ assetSchema.pre('save', function(next) {
         if(data.type == "image" || data.type == "psd")  {
 
             sizeOf(data.fullpath, function (err, dimensions) {
-                data.width = dimensions.width;
-                data.height = dimensions.height;
-                next();
+                if(!err){
+                    data.width = dimensions.width;
+                    data.height = dimensions.height;
+                    next();
+                }
+                else {
+                    next();
+                }
+
             });
         }
         else {

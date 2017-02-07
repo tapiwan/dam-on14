@@ -48,16 +48,25 @@ block content
               .row
                 ul.assetlist.col-md-12.text-center
                   li.col-md-2(v-if="collectionSize > 0", v-for="asset in assets")
-
-                    // TODO: Eine Idee, wie man das dynamisch gestalten könnte? Dass die FontAwesome Klasse aus der config.js geladen wird. Also in der Art: fileClasses.asset.type
-
                     a(v-bind:href="'details/asset/' + asset._id")
-                      img.thumb(v-if="asset.type == 'image'",v-bind:src="asset.path")
+                        i.thumb.fa.fa-4x(v-if="asset.suffix == 'video/quicktime'",v-bind:class="fileClasses.mp4")
+                    a(v-bind:href="'details/asset/' + asset._id")
+                        img.thumb(v-if="asset.type == 'image'",v-bind:src="asset.path")
                     a(v-bind:href="'details/asset/' + asset._id")
                       i.thumb.fa.fa-4x(v-if="asset.type == 'pdf'",v-bind:class="fileClasses.pdf")
                     a(v-bind:href="'details/asset/' + asset._id")
                       i.thumb.fa.fa-4x(v-if="asset.type == 'psd'",v-bind:class="fileClasses.default")
-                    h5
+                    a(v-bind:href="'details/asset/' + asset._id")
+                        i.thumb.fa.fa-4x(v-if="asset.type == 'audio'",v-bind:class="fileClasses.mp3")
+                    a(v-bind:href="'details/asset/' + asset._id")
+                      i.thumb.fa.fa-4x(v-if="asset.type == 'video'",v-bind:class="fileClasses.mp4")
+                    a(v-bind:href="'details/asset/' + asset._id")
+                      i.thumb.fa.fa-4x(v-if="asset.type == 'word'",v-bind:class="fileClasses.word")
+
+
+
+
+                      h5
                       i.fa.fa-file-image-o
                       | {{asset.name}}
                     .editbar
