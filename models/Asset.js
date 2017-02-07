@@ -97,9 +97,11 @@ assetSchema.pre('save', function(next) {
 
         if (asset.type != "image" || asset.suffix != "image/jpeg") {
             fs.readFile(asset.fullpath, function (err, data) {
+                console.log(data);
                 if (err) {
                     throw err
                 }
+
                 exif.metadata(data, function (err, file) {
                     const meta = {
                         exiftoolVersionNumber: file.exiftoolVersionNumber,
