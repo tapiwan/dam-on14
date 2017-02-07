@@ -119,9 +119,6 @@ exports.editAsset = (req, res) => {
                 }
                 asset.name = req.body.assetName + "." + req.body.assetSuffix;
                 asset.description = req.body.description;
-                console.log(asset.metadata["0th"]["270"]);
-                asset.metadata["0th"]["270"] = req.body.description;
-                console.log(asset.metadata["0th"]["270"]);
 
 
                 asset._collectionId = req.body.collectionID;
@@ -132,8 +129,15 @@ exports.editAsset = (req, res) => {
                     asset.tags = undefined;
                 }
 
-                if (asset.suffix == "image/jpeg") {
+                if (asset.suffix == "image/jpeg" && asset.metadata) {
 
+                    // SPEICHER META DATA DESCRIPTION IN METADATA OBJECT IN DB
+                    console.log(asset.metadata["0th"]["270"]);
+                    asset.metadata["0th"]["270"] = req.body.description;
+                    console.log(asset.metadata["0th"]["270"]);
+
+
+                    // Metadata in lokales Object
                     meta = asset.metadata;
 
                     meta["0th"]["270"] = asset.description;
@@ -229,7 +233,7 @@ exports.setRating = (req, res) => {
             //Activity
             new Activity({
                 user: req.user.profile.name,
-                action: 'rated '+asset.name
+                action: 'rated '+asset.name+ ' with '+asset.rating+' stars.'
             }).save((err) => {
                 callback(null, asset);
             });
