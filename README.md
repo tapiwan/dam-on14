@@ -9,7 +9,9 @@
 To set up the local development environment run:
 ```
 git clone https://github.com/tapiwan/dam-on14.git
+cd dam-on14
 npm install
+npm install nodemon -g
 brew install exiftool
 ```
 
