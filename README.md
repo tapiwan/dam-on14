@@ -20,6 +20,6 @@ npm start
 ```
 
 ## Troubleshooting
-- On windows machines the module ```sharp`` will potentially not compile properly and lead to an error.
-- Ìf the asset upload fails for some reason check the console. Maybe ```brew install exiftool``` wasn't run.
+- On windows machines the module ``sharp`` will potentially not compile properly and lead to an error.
+- Ìf the asset upload fails for some reason check the console. Maybe ``brew install exiftool`` wasn't run.
 
