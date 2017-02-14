@@ -23,6 +23,8 @@ npm install nodemon -g
 # Install exiftool (Homebrew required)
 brew install exiftool
 ```
+## Starting Mongo Daemon
+mongod
 
 ## Starting the app
 To start the app run:
